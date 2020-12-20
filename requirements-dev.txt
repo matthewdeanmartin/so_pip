@@ -1,0 +1,31 @@
+################################################################################
+# This requirements file has been automatically generated from `Pipfile` with
+# `pipenv-to-requirements`
+#
+#
+# This has been done to maintain backward compatibility with tools and services
+# that do not support `Pipfile` yet.
+#
+# Do NOT edit it directly, use `pipenv install [-d]` to modify `Pipfile` and
+# `Pipfile.lock` and then regenerate `requirements*.txt`.
+################################################################################
+
+checksumdir==1.1.7
+dodgy==0.2.1
+gitchangelog==3.0.4
+gitpython
+hypothesis
+ifaddr
+liccheck==0.4.3
+pebble==4.5.0
+pip-check==2.6
+psutil==5.6.7
+pynt-contrib==0.2.0
+pynt==0.8.2
+pytest-cov>=2.10.1
+pytest-timeout
+pytest-xdist>=2.1.0
+pytest==6.0.1
+python-dotenv==0.11.0
+requests==2.22.0
+sshtunnel
