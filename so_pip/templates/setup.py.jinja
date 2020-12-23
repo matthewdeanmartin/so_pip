@@ -1,0 +1,12 @@
+from setuptools import setup, find_packages
+
+setup(
+    name='{{ item["package_name"] }}',
+    version='{{ item["version"] }}',
+    url='{{ item["url"] }}',
+    author='{{ item["author"] }}',
+    author_email='N/A',
+    description='{{ item["description"] }}',
+    packages=find_packages(),
+    install_requires=[{% for dependency in item["dependencies"] %}'{{ dependency }}'{% endfor %}],
+)

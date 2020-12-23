@@ -1,0 +1,21 @@
+include *.lock
+include *.py
+include *.txt
+include LICENSE
+include Pipfile
+recursive-include so_pip *.bak
+recursive-include so_pip *.html
+recursive-include so_pip *.ini
+recursive-include so_pip *.jinja
+recursive-include so_pip *.txt
+recursive-include test *.py
+recursive-include so_pip/dog_food/*
+
+prune .editorconfig
+prune  .pynt
+prune   .license_rules
+prune   .pylintrc
+prune  .dockerignore
+prune  .pylintrc_scripts
+prune  .pylintrc_test
+prune so_pip\tmp

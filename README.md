@@ -19,6 +19,21 @@ Ha, ha, ha... ok, now seriously.
 
 [Scholars have studied code reuse from SO](https://link.springer.com/article/10.1007/s10664-018-9634-5)
 
+Scenarios
+---------
+### Question has code and answer has complementary code.
+See `question.py` in main folder. Manually combine code.
+
+### Question has no code, only one answer is code you want.
+See answer subfolders, delete unused answers.
+
+### Answer has executable code with unit tests.
+Read code, run unit tests, split into two files manually.
+
+### Answer has executable code and is a script.
+Read code, run. Uncomment `if name == main`
+
+
 Things I can do now
 -------------------
 With help from a lot of libraries

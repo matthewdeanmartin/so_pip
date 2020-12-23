@@ -16,8 +16,13 @@ future
 fuzzywuzzy
 guesslang
 html2text
+jinja2
 pipreqs
 py-stackexchange
+pyflakes
+pypistats
 python-dotenv
 pyupgrade
 requests
+stdlib-list
+tensorflow>=2.2.1

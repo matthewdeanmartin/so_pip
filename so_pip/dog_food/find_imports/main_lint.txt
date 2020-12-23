@@ -1,0 +1,19 @@
+************* Module find_imports
+C:\Users\matth\GitHub\so_pip\output\find_imports\__init__.py:1: [C0305(trailing-newlines), ] Trailing newlines
+************* Module find_imports.answer_2572623.main
+C:\Users\matth\GitHub\so_pip\output\find_imports\answer_2572623\main.py:16: [E0001(syntax-error), ] invalid syntax (<unknown>, line 16)
+************* Module find_imports.answer_2572623.__init__
+C:\Users\matth\GitHub\so_pip\output\find_imports\answer_2572623\__init__.py:1: [C0305(trailing-newlines), ] Trailing newlines
+************* Module find_imports.answer_2572654.main
+C:\Users\matth\GitHub\so_pip\output\find_imports\answer_2572654\main.py:12: [C0103(invalid-name), find_imports] Argument name "toCheck" doesn't conform to snake_case naming style
+C:\Users\matth\GitHub\so_pip\output\find_imports\answer_2572654\main.py:12: [W0621(redefined-outer-name), find_imports] Redefining name 'toCheck' from outer scope (line 45)
+C:\Users\matth\GitHub\so_pip\output\find_imports\answer_2572654\main.py:19: [C0415(import-outside-toplevel), find_imports] Import outside toplevel (imp)
+C:\Users\matth\GitHub\so_pip\output\find_imports\answer_2572654\main.py:21: [C0103(invalid-name), find_imports] Variable name "importedItems" doesn't conform to snake_case naming style
+C:\Users\matth\GitHub\so_pip\output\find_imports\answer_2572654\main.py:22: [C0103(invalid-name), find_imports] Variable name "pyFile" doesn't conform to snake_case naming style
+C:\Users\matth\GitHub\so_pip\output\find_imports\answer_2572654\main.py:45: [W0123(eval-used), ] Use of eval
+************* Module find_imports.answer_2572654.__init__
+C:\Users\matth\GitHub\so_pip\output\find_imports\answer_2572654\__init__.py:1: [C0305(trailing-newlines), ] Trailing newlines
+
+-----------------------------------
+Your code has been rated at 1.76/10
+

@@ -1,32 +1,45 @@
+"""
+Generate all the python related files for a module
+- folder
+- each answer
+- sort imports
+"""
+import os
+
 import stackexchange
 from bs4 import BeautifulSoup
 
-from so_pip.code_transformations import html_to_python_comments, fix_interactive, \
-    fix_shell
+from so_pip.code_transformations import (
+    fix_interactive,
+    fix_shell,
+    html_to_python_comments,
+)
+from so_pip.external_commands import isort
 from so_pip.model import PythonSubmodule
 from so_pip.python_validator import validate_python
 from so_pip.settings import ASSUME_ONE_LINER_IS_NOT_CODE, IGNORE_SYNTAX_ERRORS
 from so_pip.upgrade_to_py3 import upgrade_string
 
 
-def handle_python_answer(html:str) -> PythonSubmodule:
-    """Build up lines to write as list."""
-    submodule = PythonSubmodule()
+def create_module_folder(target_folder: str, module_name: str) -> str:
+    """Create folder and init file"""
+    module_folder = f"{target_folder}/{module_name}"
+    os.makedirs(module_folder, exist_ok=True)
+    with open(f"{module_folder}/__init__.py", "w") as init_file:
+        init_file.write("\n")
+    return module_folder
 
-    regex_expression = (
-        '(<pre class="lang-py prettyprint-override"><code>'
-        '|<pre class="lang-python prettyprint-override"><code>'
-        "|<pre><code>|</code></pre>)"
-    )
+
+def handle_python_answer(html: str, name: str, description: str) -> PythonSubmodule:
+    """Build up lines to write as list."""
+    submodule = PythonSubmodule(package_name=name, description=description)
+
+    regex_expression = '(<pre class="[a-z -]*"><code>|<pre><code>|</code></pre>)'
     parts = stackexchange.re.split(regex_expression, html)
 
     in_comment = True
     for part in parts:
-        if part in (
-            "<pre><code>",
-            '<pre class="lang-python prettyprint-override"><code>',
-            '<pre class="lang-py prettyprint-override"><code>',
-        ):
+        if part.startswith("<pre") and part.endswith("<code>"):
             in_comment = False
             continue
         if part == "</code></pre>":
@@ -42,11 +55,12 @@ def handle_python_answer(html:str) -> PythonSubmodule:
 
         # handle html escapes in what is mostly not html
         soup = BeautifulSoup(
-            "<pre><code>" + part + "</pre></code>", features="html.parser"
+            "<pre><code>" + part + "</code></pre>", features="html.parser"
         )
         code = soup.findAll("code")[0].text
 
         if ASSUME_ONE_LINER_IS_NOT_CODE and "\n" not in code:
+            print(code)
             continue
 
         code = fix_interactive(code)
@@ -68,3 +82,8 @@ def handle_python_answer(html:str) -> PythonSubmodule:
 
     submodule.strip_trailing_blank()
     return submodule
+
+
+def isort_a_module(module_folder: str) -> None:
+    """Just call isort."""
+    isort(module_folder)

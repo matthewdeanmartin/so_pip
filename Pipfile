@@ -40,6 +40,14 @@ guesslang = "*"
 html2text = "*"
 future = "*"
 fuzzywuzzy = "*"
+pyflakes = "*"
+stdlib-list = "*"
+jinja2 = "*"
+pypistats = "*"
+tensorflow = ">=2.2.1"
 
 [requires]
 python_version = "3.8"
+
+[pipenv]
+allow_prereleases = true
