@@ -5,7 +5,6 @@ There should be no domain specific logic here, just a facade over the jinja2 lib
 """
 
 import logging
-from typing import Dict, Sequence, Tuple, Union
 
 from jinja2 import Environment, FileSystemLoader, Template
 
@@ -25,28 +24,3 @@ def load_template(template_filename: str = "") -> Template:
         autoescape=True,  # keeps bandit happy, more secure
     )
     return env.get_template(f"{template_filename}")
-
-
-def render_setup_py(
-    data: Dict[str, Union[str, Sequence[str]]],
-) -> str:
-    """
-    Render minimal setup.py suitable for `pip install -e .`
-    """
-    template = load_template(template_filename="setup.py.jinja")
-    output_text = template.render(item=data)
-    return output_text
-
-
-if __name__ == "__main__":
-    model = {
-        "package_name": "pn",
-        "version": "v",
-        "url": "url",
-        "author": "au",
-        "author_email": "twitter",
-        "description": "desc",
-        "dependencies": ["a", "b"],
-    }
-
-    print(render_setup_py(model))

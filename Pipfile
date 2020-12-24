@@ -45,6 +45,7 @@ stdlib-list = "*"
 jinja2 = "*"
 pypistats = "*"
 tensorflow = ">=2.2.1"
+stackapi = "*"
 
 [requires]
 python_version = "3.8"

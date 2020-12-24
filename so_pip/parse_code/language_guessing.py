@@ -41,25 +41,46 @@ FILE_EXTENSIONS = {
 GUESS = None
 
 
+def is_likely_bash(value: str) -> bool:
+    """Likely bash"""
+    parts = value.strip().split()
+    if parts and parts[0] in [
+        "sudo",
+        "pip",
+        "python",
+        "python2",
+        "python3",
+        "apt-get",
+        "yum",
+    ]:
+        return True
+    return False
+
+
 def assign_extension(all_code: str, failed_parse: bool) -> Tuple[str, str]:
     """Guess language and extension"""
-    if failed_parse:
-        diagnostics_all_code = "\n".join(all_code)
-        if diagnostics_all_code:
-            # pylint: disable=global-statement
-            global GUESS  # noqa
-            if not GUESS:
-                # SLOW. Event just importing is slow
-                # pylint: disable=import-outside-toplevel
-                from guesslang import Guess
+    if is_likely_bash(all_code):
+        return (
+            FILE_EXTENSIONS["Shell"],
+            "Shell",
+        )
 
-                GUESS = Guess()
-            language = GUESS.language_name(diagnostics_all_code)
-            if language not in POSSIBLE_LANGUAGES:
-                language = DEFAULT_LANGUAGE
-        else:
-            language = DEFAULT_LANGUAGE
-    else:
+    if not failed_parse:
+        return FILE_EXTENSIONS["Python"], "Python"
+
+    if not all_code:
+        return FILE_EXTENSIONS[DEFAULT_LANGUAGE], DEFAULT_LANGUAGE
+
+    # pylint: disable=global-statement
+    global GUESS  # noqa
+    if not GUESS:
+        # SLOW. Event just importing is slow
+        # pylint: disable=import-outside-toplevel
+        from guesslang import Guess
+
+        GUESS = Guess()
+    language = GUESS.language_name(all_code)
+    if "*" in POSSIBLE_LANGUAGES and language not in POSSIBLE_LANGUAGES:
         language = DEFAULT_LANGUAGE
     extension = FILE_EXTENSIONS.get(language, DEFAULT_LANGUAGE)
     return extension, language

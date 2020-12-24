@@ -9,9 +9,12 @@ recursive-include so_pip *.ini
 recursive-include so_pip *.jinja
 recursive-include so_pip *.txt
 recursive-include test *.py
-recursive-include so_pip/dog_food *
-recursive-include so_pip/dog_food *.*
-include so_pip/dog_food/find_imports/CHANGELOG
+
+recursive-include so_pip_packages *
+recursive-include so_pip_packages *.*
+recursive-include so_pip_packages *.bak
+recursive-include so_pip_packages *.html
+recursive-include so_pip_packages *.txt
 
 prune .editorconfig
 prune  .pynt

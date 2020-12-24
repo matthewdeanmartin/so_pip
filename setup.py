@@ -1,17 +1,16 @@
 # !/usr/bin/env python
-import codecs
 import os
-from setuptools import find_packages
 from distutils.core import setup
 
+from setuptools import find_packages
 
 PROJECT_NAME = "so_pip"
 
 here = os.path.abspath(os.path.dirname(__file__))
-#with codecs.open(os.path.join(here, "README.rst"), encoding="utf-8") as f:
-#long_description = f.read()
+# with codecs.open(os.path.join(here, "README.rst"), encoding="utf-8") as f:
+# long_description = f.read()
 #    print(long_description)
-#long_description = long_description.replace("\n\n", "\n").replace("\r\n", "\n")
+# long_description = long_description.replace("\n\n", "\n").replace("\r\n", "\n")
 long_description = "Generate module code from a stackoverflow answer"
 about = {}
 with open(os.path.join(here, PROJECT_NAME, "_version.py")) as f:
@@ -47,5 +46,22 @@ setup(
         "Programming Language :: Python :: Implementation :: CPython",
     ],
     cmdclass={},
-    setup_requires=[],
+    setup_requires=[
+        "requests",
+        "py-stackexchange",
+        "beautifulsoup4",
+        "python-dotenv",
+        "pipreqs",
+        "pyupgrade",
+        "2to3",
+        "guesslang",
+        "html2text",
+        "future",
+        "pyflakes",
+        "stdlib-list",
+        "jinja2",
+        "pypistats",
+        # "tensorflow = ">=2.2.1"
+        "stackapi",
+    ],
 )

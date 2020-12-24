@@ -1,27 +1,34 @@
 """
 Using source code, find requirements
 """
+import os
 import subprocess  # nosec
 
 from stdlib_list import stdlib_list
 
-from so_pip.dog_food.find_imports import main as find_imports
+from so_pip.api_clients.pypstats_facade import find_modules
 
 # ^\s*(from|import)\s+\w+
-from so_pip.external_commands import generate_requirements
-from so_pip.make_from_template import render_setup_py
+from so_pip.cli_clients.external_commands import generate_requirements
 from so_pip.model import PythonSubmodule
-from so_pip.pypstats_facade import find_modules
 from so_pip.settings import GENERATE_REQUIREMENTS_TXT
+from so_pip.support_files.setup_py import render_setup_py
+from so_pip_packages.find_imports import main as find_imports
 
 # https://github.com/ohjeah/pip-validate
 
 
 def requirements_for_file(
-    file_name: str, module_folder: str, python_submodule: PythonSubmodule
+    module_folder: str, python_submodule: PythonSubmodule
 ) -> None:
     """Requirements for running `safety`"""
-    all_imports = find_imports.find_imports(file_name)
+    all_imports = []
+    for filename in os.listdir(module_folder):
+        if filename.endswith(".py"):
+            py_file = os.path.join(module_folder, filename)
+            all_imports += find_imports.find_imports(py_file)
+        else:
+            continue
     if not all_imports:
         return
     # remove built ins

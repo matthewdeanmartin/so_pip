@@ -22,13 +22,21 @@ if __name__ == "__main__":
     import_so("time_zone_aware", 7065164)
     # https://stackoverflow.com/questions/466345/
     #converting-string-into-datetime/466376#466376
-    # import_so("string_to_date",466345)
+    import_so("string_to_date",466345)
     #https://stackoverflow.com/questions/3894265/
     #example-function-in-python-counting-words
     import_so("count_words", 3894265)
     #https://stackoverflow.com/questions/65373654/
     # cant-figure-out-how-to-check-my-list-and-input-with-each-other
     # question matters
-    #import_so("question_matters", 65373654)
+    import_so("question_matters", 65373654)
     # https://stackoverflow.com/questions/22743860/python-fizzbuzz
     import_so("fizzbuzz",22743860)
+    import_so("find_imports_better",9008451)
+    import_so("question_matters", 65373654)
+    # # https://stackoverflow.com/questions/2572582/return-a-list-of-imported-python-modules-used-in-a-script
+    import_so("find_imports", 2572582)
+    # # has fiddle, strong evidence of working code
+    # # https://stackoverflow.com/questions/5874652/prop-vs-attr
+    # 24139250
+    import_so("pyso_answers_by_user", 24139250)

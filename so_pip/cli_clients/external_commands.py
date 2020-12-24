@@ -71,8 +71,6 @@ def execute_get_text(
     """
     Execute shell command and return stdout txt
     """
-    if env is None:
-        env = {}
 
     completed = None
     try:
@@ -82,7 +80,7 @@ def execute_get_text(
             # shell=shell, # causes cross plat probs, security warnings, etc.
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
-            # env=env,
+            env=env,
         )
     except subprocess.CalledProcessError:
         if ignore_error and completed:
@@ -114,13 +112,12 @@ def pylint(folder: str) -> str:
     # isort MUST be installed with pipx! It is not compatible with pylint in the same
     # venv. Maybe someday, but it just isn't worth the effort.
     rcfile = find_file("pylintrc.ini", __file__)
-    message_template = "--msg-template={path}:{line}: [{msg_id}({symbol}), {obj}] {msg}"
     command = (
         f"{SHELL} pylint "
-        f"{message_template} --exit-zero --rcfile='{rcfile}' {folder}".strip().replace(
-            "  ", " "
-        )
+        "--msg-template='{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}' "
+        f"--exit-zero --rcfile='{rcfile}' {folder}".strip().replace("  ", " ")
     )
+    "".strip().replace("  ", " ")
     print(command)
     parts = shlex.split(command)
     result = execute_get_text(parts)

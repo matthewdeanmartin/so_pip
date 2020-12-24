@@ -33,7 +33,6 @@ Read code, run unit tests, split into two files manually.
 ### Answer has executable code and is a script.
 Read code, run. Uncomment `if name == main`
 
-
 Things I can do now
 -------------------
 With help from a lot of libraries
@@ -50,10 +49,19 @@ With help from a lot of libraries
 - Handle questions with no answers.
 - Generally assume that code is non-python comments interspersed with one files worth of code. (violated when it
 represents 2+ files)
+- Add Question code when answers make sense only with question, e.g. https://stackoverflow.com/questions/65373654/cant-figure-out-how-to-check-my-list-and-input-with-each-other
+- submodule version from answer revision
+- package dependencies for requirements.txt and setup.py
+  - find imports from source
+  - remove system modules
+  - check if package exists, assuming package name is module name
+- Put at least one LICENSE file in each answer module
+- Change log based on revisions
 
 Things I can't do yet
 ---------------------
-- Add Question code when answers make sense only with question, e.g. https://stackoverflow.com/questions/65373654/cant-figure-out-how-to-check-my-list-and-input-with-each-other
+- Handle contributors & multiple licenses
+- Find CC BY-SA 2.0 text for LICENSE file
 - Can't cope with IPython/Juputer notebook stuff
 - I can't tell a single line/single word of code from code tag being used on English for styling.
 - Can't fix imports without making a mess
@@ -64,7 +72,6 @@ Things I can't do yet
 - Give modules semantic names
 - Detect "pointless" constants (usually evaluated output from previous expression, i.e. not code but output.)
 - Fix broken indents
-- Exploit shebangs (#!/usr/bin/python) to indicate code block should be a file
 - Handle ad-hoc templating, e.g. `print(<your name goes here>)`
-- submodule version from answer revision
 - caching
+- Exploit shebangs (#!/usr/bin/python) to indicate code block should be a file

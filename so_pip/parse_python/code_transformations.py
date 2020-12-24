@@ -4,6 +4,8 @@ Clean up the code
 import html2text
 from bs4 import BeautifulSoup
 
+from so_pip.parse_code.language_guessing import is_likely_bash
+
 
 def fix_shell(code: str) -> str:
     """Strip out >>>  and output (lines without >>>)"""
@@ -13,16 +15,7 @@ def fix_shell(code: str) -> str:
         if line.strip().startswith("$ "):
             good_lines.append("# " + line)
             continue
-        parts = line.strip().split()
-        if parts and parts[0] in [
-            "sudo",
-            "pip",
-            "python",
-            "python2",
-            "python3",
-            "apt-get",
-            "yum",
-        ]:
+        if is_likely_bash(line):
             good_lines.append("# " + line)
             continue
         good_lines.append(line)
@@ -33,6 +26,10 @@ def fix_interactive(code: str) -> str:
     """Strip out >>>  and output (lines without >>>)"""
     lines = code.split("\n")
     good_lines = []
+
+    #
+    interactive = sum(1 for line in lines if ">>>" in line)
+
     for line in lines:
         if line.startswith("... "):
             good_lines.append(line.strip()[4:])
@@ -58,7 +55,9 @@ def fix_interactive(code: str) -> str:
         if line.startswith(">> "):
             good_lines.append("# " + str(line))
             continue
-        good_lines.append(line)
+        new_line = "# " + line if interactive else line
+        good_lines.append(new_line)
+
     return "\n".join(good_lines)
 
 

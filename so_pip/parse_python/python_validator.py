@@ -9,7 +9,7 @@ import ast
 import subprocess  # nosec
 from typing import List, Tuple
 
-from so_pip.external_commands import pyflakes
+from so_pip.cli_clients.external_commands import pyflakes
 
 
 def validate_python(code: str) -> Tuple[bool, List[str]]:

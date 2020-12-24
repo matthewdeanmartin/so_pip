@@ -42,7 +42,7 @@ def find_modules(
 def get_download_count(module: str) -> Optional[int]:
     """Get download count and cache it"""
     try:
-        item_string = pypistats.overall(module, format="json")
+        item_string = pypistats.overall(module.strip(), format="json")
     except requests.exceptions.HTTPError as error:
         if error.response.status_code == 404:
             return None
@@ -55,20 +55,3 @@ def get_download_count(module: str) -> Optional[int]:
             if "without_mirrors" in category.values():
                 downloads = category["downloads"]
     return downloads
-
-
-if __name__ == "__main__":
-    print(
-        find_modules(
-            [
-                "requests",
-                "compiler",
-                "str",
-                "boto3",
-                "jiggle_version",
-                "asdfasdf",
-                "kaslkjasdkflajslfkjlskdjflksjflkjsaldkfj",
-            ],
-            250,
-        )
-    )

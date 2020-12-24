@@ -1,4 +1,4 @@
-from so_pip.code_transformations import fix_shell, fix_interactive, wrap_with_run
+from so_pip.parse_python.code_transformations import fix_shell, fix_interactive, wrap_with_run
 
 
 def test_fix_shell():

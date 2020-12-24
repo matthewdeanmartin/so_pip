@@ -10,7 +10,12 @@ def changelog_for_post(
     post: Union[stackexchange.Question, stackexchange.Answer], module_folder: str
 ) -> None:
     """Requirements for running `safety`"""
-    post.revisions.fetch()
+    try:
+        post.revisions.fetch()
+    except KeyError as ke:
+        if "user_id" in str(ke):
+            # BUG: bug in fetch!
+            return
     if len(post.revisions) <= 1:
         return
     count = 0
@@ -26,7 +31,10 @@ def changelog_for_post(
                 comment = revision.comment
             else:
                 comment = ""
-            revision_number = revision.revision_number
+            if hasattr(revision, "revision_number"):
+                revision_number = revision.revision_number
+            else:
+                revision_number = -1
             rollback = "Rollback " if revision.is_rollback else ""
             log_entry = (
                 f"- {rollback} {revision_number}: {author} ({author_id}), {comment}"

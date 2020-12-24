@@ -1,7 +1,7 @@
 
 from unittest.mock import patch
 
-import so_pip.external_commands as commands
+import so_pip.cli_clients.external_commands as commands
 
 
 @patch('subprocess.run')
