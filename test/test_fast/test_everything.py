@@ -8,6 +8,6 @@ def test_import_it():
     #
     # import so_pip.create_requirements_txt
     # import so_pip.external_commands
-    import so_pip.main
-    dir(so_pip.main)
+    import so_pip.commands
+    dir(so_pip.commands)
     # import so_pip.transformations

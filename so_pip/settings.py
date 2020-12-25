@@ -4,13 +4,15 @@ Settings, eventually will be docopts
 import os
 
 # do we want this question/answer at all?
+from so_pip.file_writing import find_file
+
 MINIMUM_SCORE = 0
 KEEP_ANSWERS_WITH_NO_CODE = False
 KEEP_ANSWERS_WITH_THESE_LANGUAGES = ["*"]
 INCLUDE_QUESTION_CODE = True
 
 # this pattern won't work once so_pip is pip installed.
-TARGET_FOLDER = "../output"
+TARGET_FOLDER = find_file("../output", __file__)
 
 # how to make the module look
 # ------------------------

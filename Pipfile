@@ -46,6 +46,9 @@ jinja2 = "*"
 pypistats = "*"
 tensorflow = ">=2.2.1"
 stackapi = "*"
+markdown-readme-generator = "*"
+namegenerator = "*"
+so-pip = {editable = true,path = "."}
 
 [requires]
 python_version = "3.8"

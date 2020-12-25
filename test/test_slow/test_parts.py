@@ -1,12 +1,12 @@
 from so_pip.api_clients.pystackexchange_facade import question_by_id
-from so_pip.parse_python.module_maker import handle_python_answer
+from so_pip.parse_python.module_maker import handle_python_post
 
 
 def test_handle_python_answer():
     value = question_by_id(24139250)
 
     answer = value.answers[0]
-    submodule = handle_python_answer(
+    submodule = handle_python_post(
             answer.body, "answer_module_name", f"StackOverflow answer #{answer.id}"
         )
     assert submodule.code_blocks

@@ -19,19 +19,39 @@ Ha, ha, ha... ok, now seriously.
 
 [Scholars have studied code reuse from SO](https://link.springer.com/article/10.1007/s10664-018-9634-5)
 
-Scenarios
----------
-### Question has code and answer has complementary code.
-See `question.py` in main folder. Manually combine code.
+Usage for Alpha
+---------------
+Pipenv install, edit settings.py, script/try_out.py & run. Look at
+results in output folder. Vendorize module or `pip -e` install it.
 
-### Question has no code, only one answer is code you want.
-See answer subfolders, delete unused answers.
+Usage for Beta
+--------------
+NOT IMPLEMENTED YET
 
-### Answer has executable code with unit tests.
-Read code, run unit tests, split into two files manually.
+```
+# question and all it's answers
+> so_pip vendorize --question=31049648
+See output/ for results.
+Vendorized {package_name}, {package_name}, ... to so_pip_packages/
 
-### Answer has executable code and is a script.
-Read code, run. Uncomment `if name == main`
+# Just the one good answer
+> so_pip vendorize --answer=31049648
+Vendorized {package_name} to so_pip_packages/
+
+> so_pip uninstall {package_name}
+Removed {package_name} from so_pip_packages/
+
+> so_pip upgrade {package_name}
+Removed {package_name} from so_pip_packages/
+
+> so_pip list
+{package_name}
+{package_name}
+
+> so_pip freeze
+{package_name}
+{package_name}
+```
 
 Things I can do now
 -------------------
@@ -47,8 +67,8 @@ With help from a lot of libraries
 - Generate requirements.txt (sometimes)
 - Handle interactive console syntax (e.g. >>> and ... prefixes)
 - Handle questions with no answers.
-- Generally assume that code is non-python comments interspersed with one files worth of code. (violated when it
-represents 2+ files)
+- Generally assume that code is non-python comments interspersed with one files worth of code.
+- Splits source code across files when the are clues it should be many files
 - Add Question code when answers make sense only with question, e.g. https://stackoverflow.com/questions/65373654/cant-figure-out-how-to-check-my-list-and-input-with-each-other
 - submodule version from answer revision
 - package dependencies for requirements.txt and setup.py
@@ -60,18 +80,21 @@ represents 2+ files)
 
 Things I can't do yet
 ---------------------
+- execute from command line
+- README.md generated
+- Check package safety in requirements.txt
 - Handle contributors & multiple licenses
 - Find CC BY-SA 2.0 text for LICENSE file
 - Can't cope with IPython/Juputer notebook stuff
-- I can't tell a single line/single word of code from code tag being used on English for styling.
-- Can't fix imports without making a mess
-- Can't tell when some code blocks are "formulae" or "shell script" and rest is Python
 - Code comment syntax is python even though I can figure out that the main chunk of code is not python
-- Can't wrap in "def" block
+- Enable minimal units of code re-use, such as wrapping in "def" block
+- Caching
+- Exploit shebangs (#!/usr/bin/python) to indicate code block should be a file
+
+Maybe will never figure out
+------
 - Can't replace constants with parameters (ie. example code works on constants, re-usuable code needs parameters)
+- Handle ad-hoc templating, e.g. `print(<your name goes here>)`
 - Give modules semantic names
 - Detect "pointless" constants (usually evaluated output from previous expression, i.e. not code but output.)
 - Fix broken indents
-- Handle ad-hoc templating, e.g. `print(<your name goes here>)`
-- caching
-- Exploit shebangs (#!/usr/bin/python) to indicate code block should be a file

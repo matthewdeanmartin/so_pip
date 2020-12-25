@@ -1,4 +1,4 @@
-from so_pip.main import import_so
+from so_pip.commands.vendorize import import_so
 
 if __name__ == "__main__":
     # https://stackoverflow.com/questions/54290362/

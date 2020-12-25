@@ -27,7 +27,7 @@ def create_module_folder(target_folder: str, module_name: str, metadata: str) ->
     return module_folder
 
 
-def handle_python_answer(html: str, name: str, description: str) -> PythonSubmodule:
+def handle_python_post(html: str, name: str, description: str) -> PythonSubmodule:
     """Build up lines to write as list."""
     submodule = PythonSubmodule(package_name=name, description=description)
     submodule.code_blocks.extend(find_code_blocks(html))
