@@ -14,10 +14,19 @@ STACK = stackexchange.Site(stackexchange.StackOverflow, os.environ["key"])
 
 def question_by_id(question_id: int) -> stackexchange.Question:
     """Get question object graph"""
+    if not question_id:
+        raise TypeError("question_id is required")
     STACK.include_body = True
     question = STACK.question(question_id)
     return question
 
+def answer_by_id(answer_id: int) -> stackexchange.Question:
+    """Get answer object graph"""
+    if not answer_id:
+        raise TypeError("answer_id is required")
+    STACK.include_body = True
+    answer = STACK.answer(answer_id)
+    return answer
 
 def python_questions(search: str) -> List[stackexchange.Question]:
     """Get some questions and answers by keyword"""

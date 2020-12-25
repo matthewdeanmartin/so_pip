@@ -1,4 +1,4 @@
-from so_pip.model import CodeBlock, PythonSubmodule, CodeFile
+from so_pip.models.model import CodeBlock, PythonPackage, CodeFile
 
 
 def test_code_block():
@@ -44,6 +44,6 @@ def test_code_file_two_blocks():
     assert file.to_write()
 
 def test_python_submodule():
-    psm = PythonSubmodule("name", "desc")
+    psm = PythonPackage("name", "desc")
     # how to make an answer/question?
     # psm.extract_metadata()

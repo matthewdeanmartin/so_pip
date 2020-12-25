@@ -7,14 +7,15 @@ Generate all the python related files for a module
 import os
 
 from so_pip.cli_clients.external_commands import isort
-from so_pip.model import CodeFile, PythonSubmodule
+from so_pip.models.code_file_model import CodeFile
+from so_pip.models.python_package_model import PythonPackage
 from so_pip.parse_code.arbitrary_code_block import find_code_blocks
 from so_pip.parse_python.code_transformations import html_to_python_comments
 from so_pip.parse_python.upgrade_to_py3 import upgrade_string
 from so_pip.settings import ASSUME_ONE_LINER_IS_NOT_CODE
 
 
-def create_module_folder(target_folder: str, module_name: str, metadata: str) -> str:
+def create_package_folder(target_folder: str, module_name: str, metadata: str) -> str:
     """Create folder and init file"""
     module_folder = f"{target_folder}/{module_name}"
     os.makedirs(module_folder, exist_ok=True)
@@ -27,17 +28,17 @@ def create_module_folder(target_folder: str, module_name: str, metadata: str) ->
     return module_folder
 
 
-def handle_python_post(html: str, name: str, description: str) -> PythonSubmodule:
+def handle_python_post(html: str, name: str, description: str) -> PythonPackage:
     """Build up lines to write as list."""
-    submodule = PythonSubmodule(package_name=name, description=description)
-    submodule.code_blocks.extend(find_code_blocks(html))
-    if not submodule.code_blocks:
+    package = PythonPackage(package_name=name, description=description)
+    package.code_blocks.extend(find_code_blocks(html))
+    if not package.code_blocks:
         raise TypeError("Expected some code blocks by now")
     first = True
-    for block in submodule.code_blocks:
-        if block.starts_new_file or len(submodule.code_blocks) == 1 or first:
+    for block in package.code_blocks:
+        if block.starts_new_file or len(package.code_blocks) == 1 or first:
             code_file = CodeFile()
-            submodule.code_files.append(code_file)
+            package.code_files.append(code_file)
             first = False
         code_file.code_blocks.append(block)
         code = block.code_text
@@ -48,7 +49,7 @@ def handle_python_post(html: str, name: str, description: str) -> PythonSubmodul
             # comment out bad py code here.
             block.header_comments = html_to_python_comments(block.header_comments)
             block.footer_comments = html_to_python_comments(block.footer_comments)
-    for code_file in submodule.code_files:
+    for code_file in package.code_files:
         if not code_file.extension:
             code_file.analyze()
         if not code_file.extension:
@@ -71,7 +72,7 @@ def handle_python_post(html: str, name: str, description: str) -> PythonSubmodul
         #     code_file.to_write.append(block.footer_comments)
         #
         # code_file.strip_trailing_blank()
-    return submodule
+    return package
 
 
 def isort_a_module(module_folder: str) -> None:

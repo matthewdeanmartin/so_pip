@@ -12,8 +12,8 @@ def changelog_for_post(
     """Requirements for running `safety`"""
     try:
         post.revisions.fetch()
-    except KeyError as ke:
-        if "user_id" in str(ke):
+    except KeyError as key_error:
+        if "user_id" in str(key_error):
             # BUG: bug in fetch!
             return
     if len(post.revisions) <= 1:

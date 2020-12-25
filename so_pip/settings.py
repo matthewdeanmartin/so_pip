@@ -9,17 +9,18 @@ from so_pip.file_writing import find_file
 MINIMUM_SCORE = 0
 KEEP_ANSWERS_WITH_NO_CODE = False
 KEEP_ANSWERS_WITH_THESE_LANGUAGES = ["*"]
-INCLUDE_QUESTION_CODE = True
 
 # this pattern won't work once so_pip is pip installed.
 TARGET_FOLDER = find_file("../output", __file__)
+
+# {target_folder}/{package_prefix}_{package_name}/{submodule}.py
+# so_pip_packages/fizzbuzz_question_forest_cake/
 
 # how to make the module look
 # ------------------------
 COMMENT_OUT_BAD_PYTHON = True
 # one liners are often english with <code/> used for styling
 ASSUME_ONE_LINER_IS_NOT_CODE = True
-MODULE_NAME = "so_module"
 WRAP_IN_RUN = True
 TEXT_AS_COMMENTS = True
 GENERATE_REQUIREMENTS_TXT = True

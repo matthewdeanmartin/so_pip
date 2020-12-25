@@ -9,7 +9,7 @@ from typing import List
 
 from bs4 import BeautifulSoup
 
-from so_pip.model import CodeBlock
+from so_pip.models.code_block_model import CodeBlock
 from so_pip.parse_python.code_transformations import fix_interactive, fix_shell
 
 

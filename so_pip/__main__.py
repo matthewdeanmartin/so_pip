@@ -2,33 +2,37 @@
 Not associated with PyPA, nor StackOverflow.
 
 Usage:
-  so_pip vendorize (--question=<question_id>|--answer=<answer_id>|--package=<package>)
-  so_pip uninstall <package>...
-  so_pip list
-  so_pip freeze
-  so_pip show <package>...
+  so_pip vendorize (--question=<question_id>|--answer=<answer_id>|--package=<package>) [--vendor=<vendor>]
+  so_pip uninstall <package>...   [--vendor=<vendor>]
+  so_pip list   [--vendor=<vendor>]
+  so_pip freeze   [--vendor=<vendor>]
+  so_pip show <package>...   [--vendor=<vendor>]
   so_pip (-h | --help)
   so_pip --version
 
 Options:
   -h --help     Show this screen.
   --version     Show version.
-  --output      Folder for packages.
+  --vendor=<vendor>      Folder for packages.
+  --question=<question_id>    Stackoverflow question id
+  --answer=<answer_id>      Stackoverflow answer id
+  --package=<package>     Generated package name
+
 
 """
 from docopt import docopt
 
-import so_pip._version as meta
-import so_pip.commands.vendorize as vendorize
-import so_pip.commands.list_all as list_all
-import so_pip.commands.uninstall as uninstall
-import so_pip.commands.show as show
-from so_pip.settings import TARGET_FOLDER
+import so_pip.settings as settings
+from so_pip import _version as meta
+from so_pip.commands import list_all as list_all
+from so_pip.commands import show as show
+from so_pip.commands import uninstall as uninstall
+from so_pip.commands import vendorize as vendorize
 
 
-def process_docopts():
+def process_docopts() -> None:
     """Get the args object from command parameters"""
-    arguments = docopt(__doc__, version=f'so_pip {meta.__version__}')
+    arguments = docopt(__doc__, version=f"so_pip {meta.__version__}")
     # print(arguments)
 
     # example
@@ -43,17 +47,24 @@ def process_docopts():
     #            'show': False,
     #            'uninstall': False,
     #            'vendorize': True}
-    target_folder = TARGET_FOLDER
+    print(arguments)
+    target_folder = arguments["--vendor"]
+    if not target_folder:
+        settings.TARGET_FOLDER = target_folder
+    else:
+        settings.TARGET_FOLDER = "../output"
     if arguments["vendorize"]:
         question = arguments["--question"]
-        packages_made = vendorize.import_so(f"q{question}", question)
+        packages_made = vendorize.import_so_question(f"q{question}", question)
         print(f"Vendorized {','.join(packages_made)} at {target_folder}")
     if arguments["uninstall"]:
         packages = arguments["<package>"]
         for package in packages:
             uninstall.uninstall_package(target_folder, package)
-        print(f"Uninstalled {','.join(packages)} from vendorized folder.\n"
-              f"If you also installed with pip you will need to uninstall with pip")
+        print(
+            f"Uninstalled {','.join(packages)} from vendorized folder.\n"
+            f"If you also installed with pip you will need to uninstall with pip"
+        )
     if arguments["list"]:
         list_all.list_packages(target_folder)
     if arguments["show"]:
@@ -61,5 +72,6 @@ def process_docopts():
         for package in packages:
             show.show(target_folder, package)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     process_docopts()

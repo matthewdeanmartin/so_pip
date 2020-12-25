@@ -34,7 +34,8 @@ def write_as_md(
     """Dump post in readable form."""
     try:
         markdown = post.body_markdown
-        with open(submodule_name + ".md", "w", encoding="utf-8") as diagnostics:
-            diagnostics.write(markdown)
-    except Exception as ex:
-        print(ex)
+    except AttributeError as attribute_error:
+        print(attribute_error)
+        return
+    with open(submodule_name + ".md", "w", encoding="utf-8") as diagnostics:
+        diagnostics.write(markdown)

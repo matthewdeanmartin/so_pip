@@ -15,7 +15,7 @@ import pypistats
 # endpoints
 # -----------
 # recent downloads
-# ovarall downloads, broken down by mirrors
+# overall downloads, broken down by mirrors
 # major, minor, system, downloads by minor version, system, etc
 import requests
 

@@ -8,7 +8,7 @@ List meta data for one.
 import os
 
 
-def show(target_folder:str, package_name)->None:
+def show(target_folder: str, package_name: str) -> None:
     """Show pip style metadata"""
     package_path = os.path.join(target_folder, package_name)
     init_path = os.path.join(target_folder, package_name, "__init__.py")
@@ -26,7 +26,7 @@ def show(target_folder:str, package_name)->None:
                 if "author" in line:
                     author = line.split("=")[1].strip("'\"")
                 if "title" in line:
-                    title =  line.split("=")[1].strip("'\"")
+                    title = line.split("=")[1].strip("'\"")
     requirements_path = os.path.join(target_folder, package_name, "requirements.txt")
     requirements = []
     if os.path.exists(requirements_path):
@@ -43,12 +43,4 @@ def show(target_folder:str, package_name)->None:
     print(f"License: {the_license}")
     print(f"Location: {package_path}")
     print(f"Requires: {','.join(requirements)}")
-    print(f"Required-by: N/A")
-
-"""
-__title__ = 'example function in Python: counting words'
-__version__ = '1.0.1'
-__author__ = 'eumiro'
-__license__ = 'CC BY-SA 2.5'
-__copyright__ = 'Copyright 2010-10-08 17:04:40 by eumiro'
-"""
+    print("Required-by: N/A")

@@ -10,7 +10,7 @@ from so_pip.api_clients.pypstats_facade import find_modules
 
 # ^\s*(from|import)\s+\w+
 from so_pip.cli_clients.external_commands import generate_requirements
-from so_pip.model import PythonSubmodule
+from so_pip.models.python_package_model import PythonPackage
 from so_pip.settings import GENERATE_REQUIREMENTS_TXT
 from so_pip.support_files.setup_py import render_setup_py
 from so_pip_packages.find_imports import main as find_imports
@@ -18,9 +18,7 @@ from so_pip_packages.find_imports import main as find_imports
 # https://github.com/ohjeah/pip-validate
 
 
-def requirements_for_file(
-    module_folder: str, python_submodule: PythonSubmodule
-) -> None:
+def requirements_for_file(module_folder: str, python_submodule: PythonPackage) -> None:
     """Requirements for running `safety`"""
     all_imports = []
     for filename in os.listdir(module_folder):
@@ -29,8 +27,7 @@ def requirements_for_file(
             all_imports += find_imports.find_imports(py_file)
         else:
             continue
-    if not all_imports:
-        return
+
     # remove built ins
     libraries = stdlib_list("3.8")
     python_submodule.dependencies = set(all_imports) - set(libraries)

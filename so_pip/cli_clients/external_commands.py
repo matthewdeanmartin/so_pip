@@ -65,7 +65,7 @@ def pyupgrade(file_name: str) -> str:
 def execute_get_text(
     command: List[str],
     ignore_error: bool = False,
-    # shell: bool = True, # causes cross plat probs, security warnings, etc.
+    # shell: bool = True, # causes cross plat problems, security warnings, etc.
     env: Optional[Dict[str, str]] = None,
 ) -> str:
     """
@@ -77,7 +77,7 @@ def execute_get_text(
         completed = subprocess.run(  # nosec
             command,
             check=not ignore_error,
-            # shell=shell, # causes cross plat probs, security warnings, etc.
+            # shell=shell, # causes cross plat problems, security warnings, etc.
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             env=env,

@@ -17,6 +17,8 @@ fuzzywuzzy
 guesslang
 html2text
 jinja2
+markdown-readme-generator
+namegenerator
 pipreqs
 py-stackexchange
 pyflakes
