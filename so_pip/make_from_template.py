@@ -21,10 +21,10 @@ TEMPLATE_PATH = find_file("templates", __file__)
 def load_template(template_filename: str = "", autoescape: bool = True) -> Template:
     """Get template from file system"""
 
-    env = Environment(
-        loader=FileSystemLoader(TEMPLATE_PATH),
+    env = Environment(  # nosec
+        loader=FileSystemLoader(TEMPLATE_PATH),  # nosec
         # I'm using jina for html, MD, rst, etc
         # autoescape only escapes HTML!
         autoescape=autoescape,  # nosec
-    )
+    )  # nosec
     return env.get_template(f"{template_filename}")

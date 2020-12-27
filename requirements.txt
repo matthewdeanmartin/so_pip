@@ -19,7 +19,9 @@ html2text
 jinja2
 markdown-readme-generator
 namegenerator
+pip-upgrader
 pipreqs
+pur
 py-stackexchange
 pyflakes
 pypistats
