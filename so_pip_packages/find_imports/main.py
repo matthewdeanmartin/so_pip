@@ -6,18 +6,20 @@ Date: 2010-04-03 16:57:45
 Answer Url: http://stackoverflow.com/questions/2572582/2572654#2572654
 """
 
+import imp
 # Well, you could always write a simple script that searches the file for
 # `import` statements. This one finds all imported modules and files, including
 # those imported in functions or classes:
-def find_imports(toCheck, importable_only: bool = False):
+from typing import List
+
+
+def find_imports(toCheck: str, importable_only: bool = False) -> List[str]:
     """
     Given a filename, returns a list of modules imported by the program.
     Only modules that can be imported from the current directory
     will be included. This program does not run the code, so import statements
     in if/else or try/except blocks will always be included.
     """
-    import imp
-
     importedItems = []
     with open(toCheck) as pyFile:
         for raw_line in pyFile:

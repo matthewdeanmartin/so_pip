@@ -3,11 +3,10 @@ Authors file, inspired by google's format
 https://opensource.google/docs/releasing/authors/
 """
 
-from typing import Dict, Optional, Sequence, Set, Union
+from typing import Collection, Dict, Optional, Sequence, Set, Union
 
 import stackexchange
 
-from so_pip.api_clients.pystackexchange_facade import answer_by_id, question_by_id
 from so_pip.api_clients.stackapi_facade import get_json_revisions_by_post_id
 from so_pip.make_from_template import load_template
 
@@ -18,6 +17,7 @@ def normalize_user_link(url: str, user_id: int) -> str:
 
 
 def get_authors_for_question(question: stackexchange.Question) -> Set[str]:
+    """get authors for question"""
     authors: Set[str] = set()
     question.fetch()
     owner = question.owner
@@ -50,6 +50,7 @@ def get_authors_for_question(question: stackexchange.Question) -> Set[str]:
 
 
 def get_authors_for_answer(answer: stackexchange.Answer) -> Set[str]:
+    """Get authors for answer"""
     authors: Set[str] = set()
     if answer.owner_id:
         owner = answer.owner
@@ -86,6 +87,7 @@ def write_authors(
     question: stackexchange.Question,
     answer: Optional[stackexchange.Answer] = None,
 ) -> None:
+    """write file"""
     authors = get_authors_for_question(question)
     if answer:
         authors.union(get_authors_for_answer(answer))
@@ -98,7 +100,7 @@ def write_authors(
 
 
 def render_authors(
-    data: Dict[str, Union[str, Sequence[str]]],
+    data: Dict[str, Union[str, Sequence[str], Collection[str]]],
 ) -> str:
     """
     Render minimal setup.py suitable for `pip install -e .`
@@ -106,10 +108,3 @@ def render_authors(
     template = load_template(template_filename="AUTHORS.jinja", autoescape=False)
     output_text = template.render(item=data)
     return output_text
-
-
-if __name__ == "__main__":
-    q = question_by_id(9733638)
-    a = answer_by_id(26344315)
-    authors = get_authors_for_question(q)
-    more_authors = get_authors_for_answer(a)

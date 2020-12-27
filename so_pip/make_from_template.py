@@ -13,6 +13,8 @@ from so_pip.file_writing import find_file
 LOGGER = logging.getLogger(__name__)
 
 TEMPLATE_PATH = find_file("templates", __file__)
+
+
 # Path(__file__) / "/templates/"
 
 
@@ -21,6 +23,8 @@ def load_template(template_filename: str = "", autoescape: bool = True) -> Templ
 
     env = Environment(
         loader=FileSystemLoader(TEMPLATE_PATH),
-        autoescape=autoescape,  # keeps bandit happy, more secure
+        # I'm using jina for html, MD, rst, etc
+        # autoescape only escapes HTML!
+        autoescape=autoescape,  # nosec
     )
     return env.get_template(f"{template_filename}")

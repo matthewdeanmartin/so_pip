@@ -8,7 +8,8 @@ from so_pip.cli_clients.subprocess_utils import execute_get_text
 from so_pip.file_writing import find_file
 
 
-# https://stackoverflow.com/questions/24764549/upgrade-python-packages-from-requirements-txt-using-pip-command
+# https://stackoverflow.com/questions/24764549/
+# upgrade-python-packages-from-requirements-txt-using-pip-command
 def pip_upgrade(file: str) -> str:
     """
     Get latest versions & pip
@@ -38,6 +39,7 @@ def pur(file: str) -> str:
 
 
 def safety(file: str) -> str:
+    """Check if dep is malicious/insecure"""
     command = shlex.split(f"safety check --file {file}".strip().replace("  ", " "))
     print(command)
     result = execute_get_text(command)

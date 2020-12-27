@@ -48,16 +48,6 @@ class CodeFile:
         """Count code lines"""
         return sum(1 for x in self.all_code() if len(x) and not x.startswith("#"))
 
-    def strip_trailing_blank(self) -> None:
-        """Remove extra padding that keep creeping into the text"""
-        return
-        # this might not be a prob with recent refactoring
-        while self.to_write() and self.to_write()[-1].strip() in ("", "#"):
-            self.to_write().pop()
-
-        while self.all_code and self.all_code()[-1].strip() in ("", "#"):
-            self.all_code().pop()
-
     def preview_final_code(self) -> str:
         """For checking if a word is in the code for an answer"""
         return "\n".join(self.all_code())

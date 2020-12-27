@@ -206,7 +206,7 @@ def handle_answers(
                 if settings.METADATA_IN_INIT
                 else submodule.header
             )
-            if frequencies.get(code_file.extension) > 1:
+            if frequencies.get(code_file.extension, 0) > 1:
                 code_file_name = f"{submodule_path}_{i}{code_file.extension}"
             else:
                 code_file_name = f"{submodule_path}{code_file.extension}"

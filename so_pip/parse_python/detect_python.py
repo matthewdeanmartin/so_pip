@@ -4,14 +4,16 @@ Fast detect python.
 https://github.com/TomCrypto/Codex/blob/master/codex.py
 """
 import re
+from typing import List
 
 
-def _compiled_regex(pattern, dotall=True):
+def _compiled_regex(pattern: str, dotall: bool = True) -> re.Pattern:
+    """precompile some regex"""
     flags = (re.MULTILINE | re.DOTALL) if dotall else re.MULTILINE
     return re.compile(pattern, flags)
 
 
-MARKERS = [
+MARKERS: List[re.Pattern] = [
     # Python markers
     _compiled_regex(
         r"^(\s*from\s+[\.\w]+)?\s*import\s+[\*\.,\w]+(,\s*[\*\.,\w]+)*(\s+as\s+\w+)?$"

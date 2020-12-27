@@ -43,6 +43,7 @@ def divide_chunks(value: List[Any], number: int) -> Any:
 
 
 def number_from_name(name: str) -> int:
+    """Convert name into number"""
     initialize()
     if "_q_" in name:
         generated_part = name.split("_q_")
@@ -64,6 +65,7 @@ def number_from_name(name: str) -> int:
         index += NAMES.index(parts[1]) * 10000
         index += NAMES.index(parts[0])
         return index
+    raise TypeError("Don't know how ot deal with numbers this big.")
 
 
 def make_up_module_name(value: int, prefix: str, post_type: str) -> str:
