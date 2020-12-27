@@ -49,6 +49,8 @@ stackapi = "*"
 markdown-readme-generator = "*"
 namegenerator = "*"
 so-pip = {editable = true,path = "."}
+pip-upgrader = "*"
+pur = "*"
 
 [requires]
 python_version = "3.8"

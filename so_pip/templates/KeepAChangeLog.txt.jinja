@@ -1,0 +1,14 @@
+# Changelog
+{{ item["header"] }}
+
+## [Unreleased]
+
+{% for version in item %}
+## [{{ version["version"] }}] - {{ version["date"] }}
+### Added
+- {{ version["changes"]["comment"] }} {{ version["changes"]["content_license"] }} [{{ version["changes"]["user"]] }}]({{ version["changes"]["link"] }}).
+{% endfor %}
+
+{% for version in item %}
+[{{ version["version"] }}]: {{ version["revision_url"] }}
+{% endfor %}

@@ -71,3 +71,5 @@ class CodeFile:
         self.extension, self.language = assign_extension(
             final_code, self.is_valid_python
         )
+        if not self.extension:
+            self.extension = ".wtf"

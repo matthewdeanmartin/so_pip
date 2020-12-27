@@ -1,4 +1,6 @@
-from so_pip.models.model import CodeBlock, PythonPackage, CodeFile
+from so_pip.models.code_block_model import CodeBlock
+from so_pip.models.python_package_model import PythonPackage
+from so_pip.models.code_file_model import CodeFile
 
 
 def test_code_block():

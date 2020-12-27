@@ -3,7 +3,8 @@ What programming language is this text
 """
 from typing import Tuple
 
-from so_pip.settings import DEFAULT_LANGUAGE, POSSIBLE_LANGUAGES
+from so_pip import settings as settings
+from so_pip.parse_python.detect_python import score
 
 FILE_EXTENSIONS = {
     "Batchfile": ".bat",
@@ -69,7 +70,10 @@ def assign_extension(all_code: str, failed_parse: bool) -> Tuple[str, str]:
         return FILE_EXTENSIONS["Python"], "Python"
 
     if not all_code:
-        return FILE_EXTENSIONS[DEFAULT_LANGUAGE], DEFAULT_LANGUAGE
+        return FILE_EXTENSIONS[settings.DEFAULT_LANGUAGE], settings.DEFAULT_LANGUAGE
+
+    if score(all_code) > 5:
+        return FILE_EXTENSIONS["Python"], "Python"
 
     # pylint: disable=global-statement
     global GUESS  # noqa
@@ -80,7 +84,10 @@ def assign_extension(all_code: str, failed_parse: bool) -> Tuple[str, str]:
 
         GUESS = Guess()
     language = GUESS.language_name(all_code)
-    if "*" in POSSIBLE_LANGUAGES and language not in POSSIBLE_LANGUAGES:
-        language = DEFAULT_LANGUAGE
-    extension = FILE_EXTENSIONS.get(language, DEFAULT_LANGUAGE)
+    if (
+        "*" in settings.POSSIBLE_LANGUAGES
+        and language not in settings.POSSIBLE_LANGUAGES
+    ):
+        language = settings.DEFAULT_LANGUAGE
+    extension = FILE_EXTENSIONS.get(language, settings.DEFAULT_LANGUAGE)
     return extension, language

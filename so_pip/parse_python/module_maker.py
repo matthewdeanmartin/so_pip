@@ -6,13 +6,13 @@ Generate all the python related files for a module
 """
 import os
 
+from so_pip import settings as settings
 from so_pip.cli_clients.external_commands import isort
 from so_pip.models.code_file_model import CodeFile
 from so_pip.models.python_package_model import PythonPackage
 from so_pip.parse_code.arbitrary_code_block import find_code_blocks
 from so_pip.parse_python.code_transformations import html_to_python_comments
 from so_pip.parse_python.upgrade_to_py3 import upgrade_string
-from so_pip.settings import ASSUME_ONE_LINER_IS_NOT_CODE
 
 
 def create_package_folder(target_folder: str, module_name: str, metadata: str) -> str:
@@ -29,7 +29,7 @@ def create_package_folder(target_folder: str, module_name: str, metadata: str) -
 
 
 def handle_python_post(html: str, name: str, description: str) -> PythonPackage:
-    """Build up lines to write as list."""
+    """Given html of ap post, fill in a PythonPackage object."""
     package = PythonPackage(package_name=name, description=description)
     package.code_blocks.extend(find_code_blocks(html))
     if not package.code_blocks:
@@ -42,7 +42,7 @@ def handle_python_post(html: str, name: str, description: str) -> PythonPackage:
             first = False
         code_file.code_blocks.append(block)
         code = block.code_text
-        if ASSUME_ONE_LINER_IS_NOT_CODE and "\n" not in block.code_text:
+        if settings.ASSUME_ONE_LINER_IS_NOT_CODE and "\n" not in block.code_text:
             print(code)
         if block.extension == ".py":
             block.code_text = upgrade_string(block.code_text)

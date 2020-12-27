@@ -7,11 +7,12 @@ from typing import Union
 import html2text
 import stackexchange
 
+from so_pip import settings as settings
 from so_pip.file_writing import find_file
 
 
 def write_license(
-    post: Union[stackexchange.Question, stackexchange.Answer], submodule_folder: str
+    post: Union[stackexchange.Question, stackexchange.Answer], package_folder: str
 ) -> None:
     """Include license file
     Each revision could have different license!
@@ -21,13 +22,13 @@ def write_license(
         print(post.json)
         return
     license_path = find_file(f"../licenses/{license_name}.txt", __file__)
-    if "2.0" in license_name or "2.5" in license_name:
-        # Can't find text versions of 2.5 or 2.0
-        # ref https://wiki.creativecommons.org/wiki/License%20Versions
-        license_path_txt = find_file(f"../licenses/{license_name}.txt", __file__)
-        convert_html_to_text(license_path.replace(".txt", ".html"), license_path_txt)
+    # if "2.0" in license_name or "2.5" in license_name:
+    #     # Can't find text versions of 2.5 or 2.0
+    #     # ref https://wiki.creativecommons.org/wiki/License%20Versions
+    #     license_path_txt = find_file(f"../licenses/{license_name}.txt", __file__)
+    #     convert_html_to_text(license_path.replace(".txt", ".html"), license_path_txt)
 
-    destination_path = find_file(f"{submodule_folder}/LICENSE", __file__)
+    destination_path = find_file(f"{package_folder}/LICENSE", settings.TARGET_FOLDER)
 
     shutil.copy(license_path, destination_path)
 

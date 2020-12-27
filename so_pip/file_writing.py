@@ -4,6 +4,7 @@ File writing stuff
 import os
 from typing import Union
 
+import html2text
 import stackexchange
 
 
@@ -26,6 +27,15 @@ def write_as_html(
         diagnostics.write("<html><body>")
         diagnostics.write(post.body)
         diagnostics.write("</body></html>")
+
+
+def write_as_text(
+    post: Union[stackexchange.Question, stackexchange.Answer], submodule_name: str
+) -> None:
+    """Dump answer in readable form."""
+    with open(submodule_name + ".txt", "w", encoding="utf-8") as diagnostics:
+        text = html2text.html2text(post.body)
+        diagnostics.write(text)
 
 
 def write_as_md(

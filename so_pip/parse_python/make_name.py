@@ -42,7 +42,31 @@ def divide_chunks(value: List[Any], number: int) -> Any:
         yield value[index : index + number]
 
 
-def make_up_module_name(value: int) -> str:
+def number_from_name(name: str) -> int:
+    initialize()
+    if "_q_" in name:
+        generated_part = name.split("_q_")
+    elif "_a_" in name:
+        generated_part = name.split("_a_")
+    else:
+        raise TypeError("Needs _q_ or _a_ to split prefix from generated name")
+
+    parts = generated_part[1].split("_")
+    if len(parts) == 1:
+        index = NAMES.index(parts[0])
+        return index
+    if len(parts) == 2:
+        index = NAMES.index(parts[1]) * 10000
+        index += NAMES.index(parts[0])
+        return index
+    if len(parts) == 3:
+        index = NAMES.index(parts[2]) * 10000 * 10000
+        index += NAMES.index(parts[1]) * 10000
+        index += NAMES.index(parts[0])
+        return index
+
+
+def make_up_module_name(value: int, prefix: str, post_type: str) -> str:
     """Convert number into repeatable random name"""
     initialize()
     parts = []
@@ -52,7 +76,7 @@ def make_up_module_name(value: int) -> str:
     for chunk in divide_chunks(list(reversed(str(value))), 4):
         index = int("".join(list(reversed(chunk))))
         parts.append(NAMES[index])
-    return "_".join(parts)
+    return "_".join([prefix, post_type] + parts)
 
 
 if __name__ == "__main__":
@@ -61,6 +85,10 @@ if __name__ == "__main__":
         """exercise code"""
         for _ in range(0, 200):
             value = random.randint(1, 100000000)  # nosec
-            print(make_up_module_name(value))
+            print(
+                value,
+                make_up_module_name(value, "foo", "a"),
+                number_from_name(make_up_module_name(value, "foo", "a")),
+            )
 
     run()

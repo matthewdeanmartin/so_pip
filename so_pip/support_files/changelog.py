@@ -1,45 +1,55 @@
 """
 Generate a CHANGELOG type file based on the edit log in SO
 """
-from typing import Union
+import time
+from typing import Dict, Sequence, Union
 
 import stackexchange
 
+from so_pip.api_clients.stackapi_facade import get_json_revisions_by_post_id
+from so_pip.make_from_template import load_template
+from so_pip.support_files.authors import normalize_user_link
+
 
 def changelog_for_post(
-    post: Union[stackexchange.Question, stackexchange.Answer], module_folder: str
+    post: Union[stackexchange.Question, stackexchange.Answer], package_folder: str
 ) -> None:
     """Requirements for running `safety`"""
-    try:
-        post.revisions.fetch()
-    except KeyError as key_error:
-        if "user_id" in str(key_error):
-            # BUG: bug in fetch!
-            return
-    if len(post.revisions) <= 1:
+    versions = []
+    revision_json = get_json_revisions_by_post_id(post.id)
+    if len(revision_json.get("items", [])) <= 1:
         return
-    count = 0
-    with open(
-        module_folder + "/CHANGELOG", "w", encoding="utf-8", errors="replace"
-    ) as log:
-        log.write("Change Log\n\n")
-        for revision in post.revisions:
-            count += 1
-            author = revision.user.display_name
-            author_id = revision.user.id
-            if hasattr(revision, "comment"):
-                comment = revision.comment
-            else:
-                comment = ""
-            if hasattr(revision, "revision_number"):
-                revision_number = revision.revision_number
-            else:
-                revision_number = -1
-            rollback = "Rollback " if revision.is_rollback else ""
-            log_entry = (
-                f"- {rollback} {revision_number}: {author} ({author_id}), {comment}"
-            )
+    for revision in revision_json.get("items", []):
+        # if "content_license" not in revision:
+        #     print("but why")
+        version = {
+            "version": f"0.1.{revision['revision_number']}",
+            "date": f"{time.ctime(revision['creation_date'])}",
+            "changes": {"content_license": revision.get("content_license", "")},
+        }
+        if revision["user"]["user_type"] != "does_not_exist":
+            display_name = revision["user"]["display_name"]
+            url = revision["user"]["link"]
+            link = normalize_user_link(url, revision["user"]["user_id"])
+            version["changes"]["user"] = f"{display_name} <{link}>"
+        else:
+            version["changes"]["user"] = "No user."
+        version["changes"]["comment"] = revision.get("comment", "")
+        versions.append(version)
 
-            log.write(log_entry + "\n")
-    if count == 0:
-        raise TypeError("What")
+    with open(
+        package_folder + "/CHANGELOG", "w", encoding="utf-8", errors="replace"
+    ) as log:
+
+        log.write(render_change_log(data=versions))
+
+
+def render_change_log(
+    data: Dict[str, Union[str, Sequence[str]]],
+) -> str:
+    """
+    Render minimal setup.py suitable for `pip install -e .`
+    """
+    template = load_template(template_filename="HISTORY.rst.jinja", autoescape=False)
+    output_text = template.render(item=data)
+    return output_text

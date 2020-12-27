@@ -1,6 +1,7 @@
 """
 Abstract model of the submodule I'm extracting from an answer.
 """
+import collections
 from dataclasses import dataclass, field
 from typing import List, Set, Union
 
@@ -8,8 +9,6 @@ import stackexchange
 
 from so_pip.models.code_block_model import CodeBlock
 from so_pip.models.code_file_model import CodeFile
-from so_pip.parse_code.language_guessing import assign_extension
-from so_pip.parse_python.python_validator import validate_python
 
 
 @dataclass()
@@ -32,6 +31,10 @@ class PythonPackage:
     author: str = ""
     author_email: str = ""
     dependencies: Union[List[str], Set[str]] = field(default_factory=list)
+
+    def file_frequencies(self) -> collections.Counter:
+        """How many of each file type?"""
+        return collections.Counter([file.extension for file in self.code_files])
 
     def extract_metadata(
         self, answer: Union[stackexchange.Question, stackexchange.Answer]

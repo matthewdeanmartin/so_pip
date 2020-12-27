@@ -12,7 +12,7 @@ def render_setup_py(
     """
     Render minimal setup.py suitable for `pip install -e .`
     """
-    template = load_template(template_filename="setup.py.jinja")
+    template = load_template(template_filename="setup.py.jinja", autoescape=False)
     output_text = template.render(item=data)
     return output_text
 

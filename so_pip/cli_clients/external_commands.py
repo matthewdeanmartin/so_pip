@@ -2,16 +2,53 @@
 Shell out to run a few commands
 """
 import shlex
-import subprocess  # nosec
-from typing import Dict, List, Optional
 
+from so_pip import settings as settings
+from so_pip.cli_clients.subprocess_utils import execute_get_text
 from so_pip.file_writing import find_file
-from so_pip.settings import SHELL
+
+
+# https://stackoverflow.com/questions/24764549/upgrade-python-packages-from-requirements-txt-using-pip-command
+def pip_upgrade(file: str) -> str:
+    """
+    Get latest versions & pip
+    """
+    # pip-upgrade
+    command_text = f"pip-upgrade --default-index-url --file {file}".strip().replace(
+        "  ", " "
+    )
+    print(command_text)
+    command = shlex.split(command_text)
+    result = execute_get_text(command)
+    return result
+
+
+def pur(file: str) -> str:
+    """
+    Get latest versions & pip
+    """
+    # alternative... this one updgrades pinned, too
+    # https://github.com/alanhamlett/pip-update-requirements
+
+    command_text = f"pur -f --requirement {file}".strip().replace("  ", " ")
+    print(command_text)
+    command = shlex.split(command_text)
+    result = execute_get_text(command)
+    return result
+
+
+def safety(file: str) -> str:
+    command = shlex.split(f"safety check --file {file}".strip().replace("  ", " "))
+    print(command)
+    result = execute_get_text(command)
+    return result
 
 
 def pyflakes(file: str) -> str:
     """Just run pyflakes"""
-    command = shlex.split(f"{SHELL} pyflakes {file}".strip().replace("  ", " "))
+    command = shlex.split(
+        f"{settings.SHELL} pyflakes {file}".strip().replace("  ", " ")
+    )
     print(command)
     result = execute_get_text(command)
     return result
@@ -20,7 +57,7 @@ def pyflakes(file: str) -> str:
 def generate_requirements(folder: str) -> str:
     """Make more installable"""
     command = shlex.split(
-        f"{SHELL} pipreqs {folder} --force".strip().replace("  ", " ")
+        f"{settings.SHELL} pipreqs {folder} --force".strip().replace("  ", " ")
     )
     print(command)
     result = execute_get_text(command)
@@ -29,7 +66,7 @@ def generate_requirements(folder: str) -> str:
 
 def futurize(file_name: str) -> str:
     """Yet another py2 to 3 converter"""
-    text = f"{SHELL} futurize --stage1 -w {file_name}"
+    text = f"{settings.SHELL} futurize --stage1 -w {file_name}"
     print(text)
     command = shlex.split(text)
     result = execute_get_text(command)
@@ -39,7 +76,7 @@ def futurize(file_name: str) -> str:
 
 def two_to_three(file_name: str) -> str:
     """fix print"""
-    text = f"{SHELL} 2to3 -w {file_name}"
+    text = f"{settings.SHELL} 2to3 -w {file_name}"
     print(text)
     command = shlex.split(text)
     result = execute_get_text(command)
@@ -50,7 +87,7 @@ def two_to_three(file_name: str) -> str:
 def pyupgrade(file_name: str) -> str:
     """Bump to 3.7+"""
     command = (
-        f"{SHELL} pyupgrade "
+        f"{settings.SHELL} pyupgrade "
         f"--py37-plus "
         f"--exit-zero-even-if-changed {file_name}".strip().replace("  ", " ")
     )
@@ -62,34 +99,6 @@ def pyupgrade(file_name: str) -> str:
     return result
 
 
-def execute_get_text(
-    command: List[str],
-    ignore_error: bool = False,
-    # shell: bool = True, # causes cross plat problems, security warnings, etc.
-    env: Optional[Dict[str, str]] = None,
-) -> str:
-    """
-    Execute shell command and return stdout txt
-    """
-
-    completed = None
-    try:
-        completed = subprocess.run(  # nosec
-            command,
-            check=not ignore_error,
-            # shell=shell, # causes cross plat problems, security warnings, etc.
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            env=env,
-        )
-    except subprocess.CalledProcessError:
-        if ignore_error and completed:
-            return completed.stdout.decode("utf-8") + completed.stderr.decode("utf-8")
-        raise
-    else:
-        return completed.stdout.decode("utf-8") + completed.stderr.decode("utf-8")
-
-
 def isort(folder: str) -> str:
     """Sort the imports to discover import order bugs and prevent import order bugs"""
     # This must run before black. black doesn't change import order but it wins
@@ -97,7 +106,7 @@ def isort(folder: str) -> str:
     # isort MUST be installed with pipx! It is not compatible with pylint in the same
     # venv. Maybe someday, but it just isn't worth the effort.
 
-    command = f"{SHELL} isort --profile black {folder}"
+    command = f"{settings.SHELL} isort --profile black {folder}"
     print(command)
     parts = shlex.split(command)
     result = execute_get_text(parts)
@@ -113,7 +122,7 @@ def pylint(folder: str) -> str:
     # venv. Maybe someday, but it just isn't worth the effort.
     rcfile = find_file("pylintrc.ini", __file__)
     command = (
-        f"{SHELL} pylint "
+        f"{settings.SHELL} pylint "
         "--msg-template='{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}' "
         f"--exit-zero --rcfile='{rcfile}' {folder}".strip().replace("  ", " ")
     )

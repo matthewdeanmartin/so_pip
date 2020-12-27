@@ -1,4 +1,4 @@
-from so_pip.commands.vendorize import import_so_question
+from so_pip.commands.vendorize import import_so_question, import_so_answer
 
 
 def test_import_so():
@@ -11,3 +11,6 @@ def test_import_so():
     # # https://stackoverflow.com/questions/5874652/prop-vs-attr
     # 24139250
     #import_so("pyso_answers_by_user", 24139250)
+
+def test_import_so_answer():
+    import_so_answer("test", 2572654)

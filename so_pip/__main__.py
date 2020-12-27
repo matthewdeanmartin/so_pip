@@ -2,7 +2,7 @@
 Not associated with PyPA, nor StackOverflow.
 
 Usage:
-  so_pip vendorize (--question=<question_id>|--answer=<answer_id>|--package=<package>) [--vendor=<vendor>]
+  so_pip vendorize --name=<name> (--question=<question_id>|--answer=<answer_id>|--package=<package>) [--vendor=<vendor>]
   so_pip uninstall <package>...   [--vendor=<vendor>]
   so_pip list   [--vendor=<vendor>]
   so_pip freeze   [--vendor=<vendor>]
@@ -20,10 +20,10 @@ Options:
 
 
 """
-from docopt import docopt
+import docopt
 
-import so_pip.settings as settings
 from so_pip import _version as meta
+from so_pip import settings as settings
 from so_pip.commands import list_all as list_all
 from so_pip.commands import show as show
 from so_pip.commands import uninstall as uninstall
@@ -32,7 +32,7 @@ from so_pip.commands import vendorize as vendorize
 
 def process_docopts() -> None:
     """Get the args object from command parameters"""
-    arguments = docopt(__doc__, version=f"so_pip {meta.__version__}")
+    arguments = docopt.docopt(__doc__, version=f"so_pip {meta.__version__}")
     # print(arguments)
 
     # example
@@ -49,13 +49,18 @@ def process_docopts() -> None:
     #            'vendorize': True}
     print(arguments)
     target_folder = arguments["--vendor"]
-    if not target_folder:
+    if target_folder:
         settings.TARGET_FOLDER = target_folder
     else:
         settings.TARGET_FOLDER = "../output"
     if arguments["vendorize"]:
+        prefix = arguments["--name"]
         question = arguments["--question"]
-        packages_made = vendorize.import_so_question(f"q{question}", question)
+        answer = arguments["--answer"]
+        if question:
+            packages_made = vendorize.import_so_question(prefix, question)
+        if answer:
+            packages_made = vendorize.import_so_answer(prefix, answer)
         print(f"Vendorized {','.join(packages_made)} at {target_folder}")
     if arguments["uninstall"]:
         packages = arguments["<package>"]

@@ -6,7 +6,7 @@ from typing import List
 import black
 from black import format_str
 
-from so_pip.settings import COMMENT_OUT_BAD_PYTHON
+from so_pip import settings as settings
 
 
 def write_and_format_python_file(file_name: str, to_write: List[str]) -> bool:
@@ -33,7 +33,7 @@ def write_and_format_python_file(file_name: str, to_write: List[str]) -> bool:
             generated.write(blackened)
             return True
         except black.InvalidInput:
-            if COMMENT_OUT_BAD_PYTHON:
+            if settings.COMMENT_OUT_BAD_PYTHON:
                 generated.write(joined)
                 return True
     return False

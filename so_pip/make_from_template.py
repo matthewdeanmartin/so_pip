@@ -16,11 +16,11 @@ TEMPLATE_PATH = find_file("templates", __file__)
 # Path(__file__) / "/templates/"
 
 
-def load_template(template_filename: str = "") -> Template:
+def load_template(template_filename: str = "", autoescape: bool = True) -> Template:
     """Get template from file system"""
 
     env = Environment(
         loader=FileSystemLoader(TEMPLATE_PATH),
-        autoescape=True,  # keeps bandit happy, more secure
+        autoescape=autoescape,  # keeps bandit happy, more secure
     )
     return env.get_template(f"{template_filename}")

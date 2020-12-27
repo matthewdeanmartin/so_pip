@@ -1,0 +1,8 @@
+=======
+History
+=======
+{% for version in item %}
+{{ version["version"] }} ({{ version["date"]}})
+-----------------------
+* {{ version["changes"]["user"] }},{{ version["changes"]["content_license"] }}, {{ version["changes"]["comment"] }}
+{% endfor %}
