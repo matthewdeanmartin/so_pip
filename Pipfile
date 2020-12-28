@@ -26,6 +26,7 @@ sshtunnel = "*"
 # colorama = "==0.4.1"
 # click = "==6.7"
 ifaddr = "*"
+vendorize = "*"
 
 [packages]
 # black = "*"
@@ -51,6 +52,7 @@ namegenerator = "*"
 so-pip = {editable = true,path = "."}
 pip-upgrader = "*"
 pur = "*"
+pypinfo = "*"
 
 [requires]
 python_version = "3.8"

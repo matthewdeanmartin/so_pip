@@ -100,7 +100,7 @@ def load_config() -> configparser.SectionProxy:
     Load config
     """
     config = configparser.ConfigParser()
-    config.read(".pynt")
+    config.read(".config/.pynt")
     return config["DEFAULT"]
 
 
@@ -249,9 +249,9 @@ def check_command_exists(
     """
     Check if exists by a variety of methods that vary by shell
     """
-    if not os.path.exists(".build_state"):
-        os.mkdir(".build_state")
-    state_file = ".build_state/exists_" + command + ".txt"
+    if not os.path.exists(".config/.build_state"):
+        os.mkdir(".config/.build_state")
+    state_file = ".config/.build_state/exists_" + command + ".txt"
     if os.path.exists(state_file):
         return True
     venv_shell = [_ for _ in VENV_SHELL.split(" ") if _ != ""]
@@ -287,7 +287,7 @@ def check_command_exists(
                 if exit_on_missing:
                     sys.exit(-1)
                 return False
-            with open(".build_state/exists_" + command + ".txt", "w+") as handle:
+            with open(".config/.build_state/exists_" + command + ".txt", "w+") as handle:
                 handle.write("OK")
     except OSError as os_error:
         print(os_error)
@@ -331,9 +331,9 @@ class BuildState:
         """
         self.what = what
         self.where = where
-        if not os.path.exists(".build_state"):
-            os.makedirs(".build_state")
-        self.state_file_name = f".build_state/last_change_{what}.txt"
+        if not os.path.exists(".config/.build_state"):
+            os.makedirs(".config/.build_state")
+        self.state_file_name = f".config/.build_state/last_change_{what}.txt"
 
     def oh_never_mind(self) -> None:
         """
@@ -461,7 +461,7 @@ def skip_if_this_file_does_not_change(name: str, file: str) -> F:
         @functools.wraps(func)
         def wrapper(*args: Any, **kwargs: Any) -> Callable:
             """Wrapper"""
-            state_file = ".build_state/file_hash_" + name + ".txt"
+            state_file = ".config/.build_state/file_hash_" + name + ".txt"
             previous_hash = "catdog"
             if os.path.exists(state_file):
                 with open(state_file) as old_file:
@@ -471,8 +471,8 @@ def skip_if_this_file_does_not_change(name: str, file: str) -> F:
             if new_hash == previous_hash:
                 print("Nothing changed, won't re-" + name)
                 return lambda x: f"Skipping {name}, no change"
-            if not os.path.exists(".build_state"):
-                os.mkdir(".build_state")
+            if not os.path.exists(".config/.build_state"):
+                os.mkdir(".config/.build_state")
             with open(state_file, "w+") as state:
                 state.write(new_hash)
             try:
@@ -594,9 +594,9 @@ def is_it_worse(task_name: str, current_rows: int, margin: int) -> bool:
 
     You will never fix it all, just don't make it worse.
     """
-    if not os.path.exists(".build_state"):
-        os.makedirs(".build_state")
-    file_name = f".build_state/last_count_{task_name}.txt"
+    if not os.path.exists(".config/.build_state"):
+        os.makedirs(".config/.build_state")
+    file_name = f".config/.build_state/last_count_{task_name}.txt"
 
     last_rows = sys.maxsize
     if os.path.isfile(file_name):
@@ -908,15 +908,15 @@ def total_loc() -> int:
     """
     Get Lines of Code for app
     """
-    if not os.path.exists(".build_state"):
-        os.mkdir(".build_state")
+    if not os.path.exists(".config/.build_state"):
+        os.mkdir(".config/.build_state")
     # pylint: disable=bare-except
     try:
-        with open(".build_state/pygount_total_loc.txt") as file_handle:
+        with open(".config/.build_state/pygount_total_loc.txt") as file_handle:
             total_loc_value = file_handle.read()
     except:  # noqa: B001
         do_count_lines_of_code()
-        with open(".build_state/pygount_total_loc.txt") as file_handle:
+        with open(".config/.build_state/pygount_total_loc.txt") as file_handle:
             total_loc_value = file_handle.read()
 
     return int(total_loc_value)
@@ -942,9 +942,9 @@ def do_count_lines_of_code() -> None:
         lines = sum(int(line.split("\t")[0]) for line in file_handle if line != "\n")
 
     total_loc_local = lines
-    if not os.path.exists(".build_state"):
-        os.mkdir(".build_state")
-    with open(".build_state/pygount_total_loc.txt", "w+") as state_file:
+    if not os.path.exists(".config/.build_state"):
+        os.mkdir(".config/.build_state")
+    with open(".config/.build_state/pygount_total_loc.txt", "w+") as state_file:
         state_file.write(str(total_loc_local))
 
     print(f"Lines of code: {total_loc_local}")
@@ -1035,10 +1035,10 @@ def reset() -> None:
     """
     Delete all .build_state & to force all steps to re-run next build
     """
-    if os.path.exists(".build_state"):
-        shutil.rmtree(".build_state")
-    if not os.path.exists(".build_state"):
-        os.mkdir(".build_state")
+    if os.path.exists(".config/.build_state"):
+        shutil.rmtree(".config/.build_state")
+    if not os.path.exists(".config/.build_state"):
+        os.mkdir(".config/.build_state")
 
 
 @task(pipenv_installs)
@@ -1225,10 +1225,10 @@ def do_liccheck() -> str:
     return
     with safe_cd(SRC):
         check_command_exists("liccheck")
-        if not os.path.exists("requirements.txt"):
+        if not os.path.exists("reports/requirements.txt"):
             print("No requirements.txt file, assuming we have no external deps")
             return "Skipping, not requirements.txt"
-        command = "liccheck -r requirements.txt -s .license_rules -l paranoid"
+        command = "liccheck -r requirements.txt -s .config/.license_rules -l paranoid"
 
         command = prep_print_simple(command, no_project=True)
         execute(*(command.split(" ")))
@@ -1528,10 +1528,10 @@ def do_lint(folder_name: str) -> str:
     # pylint: disable=too-many-locals
     check_command_exists("pylint")
     if folder_name == PROJECT_NAME:
-        pylintrc = ".pylintrc"
+        pylintrc = ".config/.pylintrc"
         lint_output_file_name = f"{PROBLEMS_FOLDER}/lint.txt"
     else:
-        pylintrc = f".pylintrc_{folder_name}"
+        pylintrc = f".config/.pylintrc_{folder_name}"
         lint_output_file_name = f"{PROBLEMS_FOLDER}/lint_{folder_name}.txt"
 
     with safe_cd(SRC):

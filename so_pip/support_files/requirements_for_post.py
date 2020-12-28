@@ -54,15 +54,6 @@ def requirements_for_file(package_folder: str, python_submodule: PythonPackage) 
     return file_to_write
 
 
-def create_setup_cfg() -> None:
-    """[metadata]
-    name = some_name
-    version = attr: some_package.VERSION
-    description = Some description
-    long_description = file: README
-    keywords = one, two
-    license = BSD 3-Clause License"""
-    raise NotImplementedError()
 
 
 def create_setup_py(package_folder: str, python_submodule: PythonPackage) -> None:

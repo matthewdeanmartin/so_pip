@@ -1,7 +1,7 @@
 [DEFAULT]
 PROJECT_NAME = so_pip
 SRC  = .
-PROBLEMS_FOLDER = problems
+PROBLEMS_FOLDER = reports
 REPORTS_FOLDER = reports
 VENV_SHELL = pipenv run
 PIPENV = pipenv run

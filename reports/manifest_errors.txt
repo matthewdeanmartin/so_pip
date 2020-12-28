@@ -1,0 +1,6 @@
+suggested MANIFEST.in rules:
+  include *.dic
+  include *.sh
+  recursive-include test *.html
+  recursive-include test *.py
+  recursive-include test *.txt
