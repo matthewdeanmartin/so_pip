@@ -4,7 +4,7 @@ Settings, eventually will be docopts
 import os
 
 # do we want this question/answer at all?
-from so_pip.file_writing import find_file
+from so_pip.utils.files_utils import find_file
 
 MINIMUM_SCORE = 0
 KEEP_ANSWERS_WITH_NO_CODE = False

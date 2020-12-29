@@ -5,7 +5,7 @@ import shlex
 
 from so_pip import settings as settings
 from so_pip.cli_clients.subprocess_utils import execute_get_text
-from so_pip.file_writing import find_file
+from so_pip.utils.files_utils import find_file
 
 
 # https://stackoverflow.com/questions/24764549/

@@ -8,7 +8,7 @@ import logging
 
 from jinja2 import Environment, FileSystemLoader, Template
 
-from so_pip.file_writing import find_file
+from so_pip.utils.files_utils import find_file
 
 LOGGER = logging.getLogger(__name__)
 

@@ -1,13 +1,17 @@
 """
 Authors file, inspired by google's format
 https://opensource.google/docs/releasing/authors/
+
+https://www.npmjs.com/package/stringify-author
+https://www.npmjs.com/package/author-regex
 """
 
 from typing import Collection, Dict, Optional, Sequence, Set, Union
 
 import stackexchange
 
-from so_pip.api_clients.stackapi_facade import get_json_revisions_by_post_id
+from so_pip.api_clients.stackapi_facade import get_json_revisions_by_post_id, \
+    get_json_comments_by_post_id
 from so_pip.make_from_template import load_template
 
 
@@ -23,10 +27,7 @@ def get_authors_for_question(question: stackexchange.Question) -> Set[str]:
     owner = question.owner
     link = normalize_user_link(owner.link, owner.id)
     authors.add(f"{owner.display_name} <{link}>")
-    # try:
-    #     question.revisions.fetch()
-    # except KeyError as key_error:
-    #     print(key_error)
+
 
     revision_json = get_json_revisions_by_post_id(question.id)
     for revision in revision_json.get("items", []):
@@ -36,15 +37,24 @@ def get_authors_for_question(question: stackexchange.Question) -> Set[str]:
         url = revision["user"]["link"]
         link = normalize_user_link(url, revision["user"]["user_id"])
 
+        # First Last <email> (url)
+        # First Last <@twitter> (url)
         authors.add(f"{display_name} <{link}>")
 
-    # user_cache = {}
-    #
-    # for revision in question.revisions:
-    #     user= user_cache.get(revision.user.id, user_by_id(revision.user.id))
-    #     if not hasattr(user, "url"):
-    #         print(user)
-    #     authors.add(f"{user.display_name} <{user.url}>")
+    # question.comments.fetch()
+    # for comment in question.comments:
+    #     print(comment)
+    comments =get_json_comments_by_post_id(question.id)
+    for comment in comments.get("items",[]):
+        if comment["owner"]["user_type"] == "does_not_exist":
+            continue
+        display_name = comment["owner"]["display_name"]
+        url = comment["owner"]["link"]
+        link = normalize_user_link(url, comment["owner"]["user_id"])
+
+        # First Last <email> (url)
+        # First Last <@twitter> (url)
+        authors.add(f"{display_name} <{link}>")
 
     return authors
 
@@ -59,11 +69,6 @@ def get_authors_for_answer(answer: stackexchange.Answer) -> Set[str]:
         if answer.json["user"]["user_type"] != "does_not_exist":
             print("What sort of user is this?")
 
-    # try:
-    #     answer.revisions.fetch()
-    # except KeyError as key_error:
-    #     print(key_error)
-
     revision_json = get_json_revisions_by_post_id(answer.id)
     for revision in revision_json.get("items", []):
         if revision["user"]["user_type"] == "does_not_exist":
@@ -72,11 +77,17 @@ def get_authors_for_answer(answer: stackexchange.Answer) -> Set[str]:
         url = normalize_user_link(revision["user"]["link"], revision["user"]["user_id"])
         authors.add(f"{display_name} <{url}>")
 
-    # for revision in answer.revisions:
-    #     user = user_cache.get(revision.user.id, user_by_id(revision.user.id))
-    #     if not hasattr(user, "url"):
-    #         print(user)
-    #     authors.add(f"{user.display_name} <{user.url}>")
+    comments =get_json_comments_by_post_id(answer.id)
+    for comment in comments.get("items",[]):
+        if comment["owner"]["user_type"] == "does_not_exist":
+            continue
+        display_name = comment["owner"]["display_name"]
+        url = comment["owner"]["link"]
+        link = normalize_user_link(url, comment["owner"]["user_id"])
+
+        # First Last <email> (url)
+        # First Last <@twitter> (url)
+        authors.add(f"{display_name} <{link}>")
 
     return authors
 

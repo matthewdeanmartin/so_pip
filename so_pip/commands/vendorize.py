@@ -83,6 +83,7 @@ def handle_question(
     write_as_html(question, submodule_path)
     write_as_md(question, submodule_path)
     write_as_text(question, submodule_path)
+
     write_license(question, module_folder)
     changelog_for_post(question, module_folder)
     write_authors(module_folder, submodule_name, question)

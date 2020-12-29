@@ -49,3 +49,12 @@ def get_json_revisions_by_post_id(post_id: int) -> Dict[str, Any]:
             post_id,
         ],
     )
+
+def get_json_comments_by_post_id(post_id: int) -> Dict[str, Any]:
+    """Low level access, returns unprocessed json"""
+    return SITE.fetch(
+        "posts/{ids}/comments",
+        ids=[
+            post_id,
+        ],
+    )

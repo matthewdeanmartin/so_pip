@@ -7,26 +7,29 @@ from typing import Union
 import html2text
 import stackexchange
 
+from so_pip.make_from_template import load_template
 
-def find_file(file_name: str, executing_file: str) -> str:
-    """
-    Create/find a valid file name relative to a source file, e.g.
-    find_file("foo/bar.txt", __file__)
-    """
-    file_path = os.path.join(
-        os.path.dirname(os.path.abspath(executing_file)), file_name
-    ).replace("\\", "/")
-    return file_path
+
+
 
 
 def write_as_html(
     post: Union[stackexchange.Question, stackexchange.Answer], submodule_name: str
 ) -> None:
     """Dump answer in readable form."""
+    # with open(submodule_name + ".html", "w", encoding="utf-8") as diagnostics:
+    #     diagnostics.write("<html><body>")
+    #     diagnostics.write(post.body)
+    #     diagnostics.write("</body></html>")
+    template= load_template("post.html.jinja", autoescape=False)
+    data = {
+        "title": post.title if hasattr(post, "title") else "",
+        "content":post.body,
+        "comments":post.comments
+    }
+    result = template.render(data=data)
     with open(submodule_name + ".html", "w", encoding="utf-8") as diagnostics:
-        diagnostics.write("<html><body>")
-        diagnostics.write(post.body)
-        diagnostics.write("</body></html>")
+        diagnostics.write(result)
 
 
 def write_as_text(
