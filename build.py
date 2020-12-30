@@ -1277,7 +1277,7 @@ def do_flake8() -> str:
     """
     Flake8 Checks
     """
-    # too strict if I include SO answer source!
+    # too strict if I include SO post source!
     return
     with safe_cd(SRC):
         command = "flake8"

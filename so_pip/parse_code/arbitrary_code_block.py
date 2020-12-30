@@ -13,7 +13,7 @@ from so_pip.models.code_block_model import CodeBlock
 from so_pip.parse_python.code_transformations import fix_interactive, fix_shell
 
 
-def find_code_blocks(html: str) -> List[CodeBlock]:
+def find_code_blocks(html: str, tags:List[str]) -> List[CodeBlock]:
     """Build up code blocks of potentially many languages."""
     blocks: List[CodeBlock] = []
     regex_expression = '(<pre class="[a-z -]*"><code>|<pre><code>|</code></pre>)'
@@ -74,7 +74,7 @@ def find_code_blocks(html: str) -> List[CodeBlock]:
 
         block.code_text = code
 
-        block.analyze()
+        block.analyze(tags)
         if block.extension == ".py" and (
             code.startswith("import ") or code.startswith("from ")
         ):
@@ -93,5 +93,5 @@ def find_code_blocks(html: str) -> List[CodeBlock]:
             blocks.pop()
     for block in blocks:
         if not block.extension:
-            block.analyze()
+            block.analyze(tags=tags)
     return blocks

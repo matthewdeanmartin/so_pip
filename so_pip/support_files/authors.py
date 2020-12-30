@@ -6,9 +6,7 @@ https://www.npmjs.com/package/stringify-author
 https://www.npmjs.com/package/author-regex
 """
 
-from typing import Collection, Dict, Optional, Sequence, Set, Union
-
-import stackexchange
+from typing import Collection, Dict, Optional, Sequence, Set, Union, Any
 
 from so_pip.api_clients.stackapi_facade import get_json_revisions_by_post_id, \
     get_json_comments_by_post_id
@@ -20,16 +18,15 @@ def normalize_user_link(url: str, user_id: int) -> str:
     return f"{url.split(str(user_id))[0]}{user_id}"
 
 
-def get_authors_for_question(question: stackexchange.Question) -> Set[str]:
+def get_authors_for_question(question: Dict[str,Any]) -> Set[str]:
     """get authors for question"""
     authors: Set[str] = set()
-    question.fetch()
-    owner = question.owner
-    link = normalize_user_link(owner.link, owner.id)
-    authors.add(f"{owner.display_name} <{link}>")
 
+    owner = question["owner"]
+    link = normalize_user_link(owner["link"], owner["user_id"])
+    authors.add(f"{owner['display_name']} <{link}>")
 
-    revision_json = get_json_revisions_by_post_id(question.id)
+    revision_json = get_json_revisions_by_post_id(question["question_id"])
     for revision in revision_json.get("items", []):
         if revision["user"]["user_type"] == "does_not_exist":
             continue
@@ -44,7 +41,7 @@ def get_authors_for_question(question: stackexchange.Question) -> Set[str]:
     # question.comments.fetch()
     # for comment in question.comments:
     #     print(comment)
-    comments =get_json_comments_by_post_id(question.id)
+    comments =get_json_comments_by_post_id(question["question_id"])
     for comment in comments.get("items",[]):
         if comment["owner"]["user_type"] == "does_not_exist":
             continue
@@ -59,17 +56,17 @@ def get_authors_for_question(question: stackexchange.Question) -> Set[str]:
     return authors
 
 
-def get_authors_for_answer(answer: stackexchange.Answer) -> Set[str]:
-    """Get authors for answer"""
+def get_authors_for_answer(answer: Dict[str,Any]) -> Set[str]:
+    """Get authors for post"""
     authors: Set[str] = set()
-    if answer.owner_id:
-        owner = answer.owner
-        authors.add(f"{owner.display_name} <{owner.url}>")
+    if answer["owner"]:
+        owner = answer["owner"]
+        authors.add(f"{owner['display_name']} <{owner['link']}>")
     else:
-        if answer.json["user"]["user_type"] != "does_not_exist":
+        if answer["user"]["user_type"] != "does_not_exist":
             print("What sort of user is this?")
 
-    revision_json = get_json_revisions_by_post_id(answer.id)
+    revision_json = get_json_revisions_by_post_id(answer["answer_id"])
     for revision in revision_json.get("items", []):
         if revision["user"]["user_type"] == "does_not_exist":
             continue
@@ -77,7 +74,7 @@ def get_authors_for_answer(answer: stackexchange.Answer) -> Set[str]:
         url = normalize_user_link(revision["user"]["link"], revision["user"]["user_id"])
         authors.add(f"{display_name} <{url}>")
 
-    comments =get_json_comments_by_post_id(answer.id)
+    comments =get_json_comments_by_post_id(answer["answer_id"])
     for comment in comments.get("items",[]):
         if comment["owner"]["user_type"] == "does_not_exist":
             continue
@@ -95,8 +92,8 @@ def get_authors_for_answer(answer: stackexchange.Answer) -> Set[str]:
 def write_authors(
     package_folder: str,
     package_name: str,
-    question: stackexchange.Question,
-    answer: Optional[stackexchange.Answer] = None,
+    question: Dict[str,Any],
+    answer: Optional[Dict[str,Any]] = None,
 ) -> None:
     """write file"""
     authors = get_authors_for_question(question)

@@ -1,5 +1,5 @@
 """
-Convert a post id to a english name in a hopefully reversable manner
+Convert a post id to a english name in a hopefully reversible manner
 """
 
 # word list ultimately from wictionary
@@ -34,7 +34,7 @@ def initialize() -> None:
         raise TypeError("Init failed, didn't find 10,000 words.")
 
 
-# TODO: replace with a SO sourced answer.
+# TODO: replace with a SO sourced post.
 # https://www.geeksforgeeks.org/break-list-chunks-size-n-python/
 def divide_chunks(value: List[Any], number: int) -> Any:
     """ looping till length l"""

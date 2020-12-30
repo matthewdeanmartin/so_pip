@@ -1,7 +1,7 @@
 import so_pip.commands.freeze as freeze
 import so_pip.commands.list_all as list_all
 import so_pip.commands.show as show
-from so_pip.file_writing import find_file
+from so_pip.utils.files_utils import find_file
 
 
 def test_freeze():

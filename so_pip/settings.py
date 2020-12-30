@@ -3,7 +3,7 @@ Settings, eventually will be docopts
 """
 import os
 
-# do we want this question/answer at all?
+# do we want this question/post at all?
 from so_pip.utils.files_utils import find_file
 
 MINIMUM_SCORE = 0
@@ -29,7 +29,7 @@ IMPORT_STARTS_NEW_FILE = True
 METADATA_IN_INIT = True
 
 # parse code stuff (i.e. could be anything)
-DEFAULT_LANGUAGE = "Python"
+DEFAULT_LANGUAGE = (".py", "python")
 # Language guesser needs hints.
 POSSIBLE_LANGUAGES = ["*"]  # "Python", "Jupyter Notebook", "Shell"]
 

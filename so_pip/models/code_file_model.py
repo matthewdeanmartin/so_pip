@@ -1,5 +1,5 @@
 """
-Abstract model of the submodule I'm extracting from an answer.
+Abstract model of the submodule I'm extracting from an post.
 """
 from dataclasses import dataclass, field
 from typing import List
@@ -49,17 +49,17 @@ class CodeFile:
         return sum(1 for x in self.all_code() if len(x) and not x.startswith("#"))
 
     def preview_final_code(self) -> str:
-        """For checking if a word is in the code for an answer"""
+        """For checking if a word is in the code for an post"""
         return "\n".join(self.all_code())
 
-    def analyze(self) -> None:
+    def analyze(self, tags:List[str]) -> None:
         """Do expensive checks"""
         final_code = self.preview_final_code()
 
         self.is_valid_python, self.errors = validate_python(final_code)
 
         self.extension, self.language = assign_extension(
-            final_code, self.is_valid_python
+            final_code, self.is_valid_python, tags
         )
         if not self.extension:
             self.extension = ".wtf"

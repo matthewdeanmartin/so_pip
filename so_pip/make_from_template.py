@@ -23,7 +23,7 @@ def load_template(template_filename: str = "", autoescape: bool = True) -> Templ
 
     env = Environment(  # nosec
         loader=FileSystemLoader(TEMPLATE_PATH),  # nosec
-        # I'm using jina for html, MD, rst, etc
+        # I'm using jinja for html, MD, rst, etc
         # autoescape only escapes HTML!
         autoescape=autoescape,  # nosec
     )  # nosec

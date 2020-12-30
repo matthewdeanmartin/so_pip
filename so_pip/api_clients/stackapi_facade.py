@@ -17,6 +17,14 @@ def get_json_by_question_id(question_id: int) -> Dict[str, Any]:
         ids=[
             question_id,
         ],
+        # magic string to return more fields
+        #       !9_bDDx5Ia
+        # answers
+        # comments
+        # body
+        # body_markdown
+        # tags
+        filter="!--1nZwHGSSZl"
     )
 
 
@@ -27,6 +35,15 @@ def get_json_by_answer_id(answer_id: int) -> Dict[str, Any]:
         ids=[
             answer_id,
         ],
+        # magic string to include certain fields.
+        # need:
+        #   link
+        #   body_markdown
+        #   body
+        #   comments
+        #   tags (of q)
+        #   title (of q)
+        filter="!3zl2.DbpKHRASLD)i"
     )
 
 

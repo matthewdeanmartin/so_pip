@@ -1,12 +1,11 @@
 """
-Abstract model of the submodule I'm extracting from an answer.
+Abstract model of the submodule I'm extracting from an post.
 """
 import collections
 from dataclasses import dataclass, field
-from typing import List, Set, Union
+from typing import List, Set, Union, Dict, Any
 
-import stackexchange
-
+from so_pip.api_clients.stackapi_facade import get_json_revisions_by_post_id
 from so_pip.models.code_block_model import CodeBlock
 from so_pip.models.code_file_model import CodeFile
 
@@ -37,7 +36,7 @@ class PythonPackage:
         return collections.Counter([file.extension for file in self.code_files])
 
     def extract_metadata(
-        self, answer: Union[stackexchange.Question, stackexchange.Answer]
+        self, post: Dict[str, Any]
     ) -> None:
         """
         Add credits and license
@@ -45,30 +44,30 @@ class PythonPackage:
         self.brief_header = ['"""']
         self.header = ['"""']
 
-        try:
-            author_name = answer.owner.json.get("display_name", "N/A").replace(
-                "'", "\\'"
-            )
-            self.author = author_name
-            self.author_email = answer.owner.json.get("link", "N/A")
-            self.header.extend(
-                [
-                    f"Author: {self.author}",
-                    f"Author Link: {self.author_email}",
-                ]
-            )
-        except stackexchange.core.StackExchangeError:
-            # no owner?
-            self.author = "N/A"
-            self.author_email = "N/A"
-            self.header.extend(["Author info missing."])
-        self.url = answer.url
-        license_text = answer.json.get("content_license", "N/A")
+        #try:
+        author_name = post["owner"].get("display_name", "N/A").replace(
+            "'", "\\'"
+        )
+        self.author = author_name
+        self.author_email = post["owner"].get("link", "N/A")
+        self.header.extend(
+            [
+                f"Author: {self.author}",
+                f"Author Link: {self.author_email}",
+            ]
+        )
+        # except stackexchange.core.StackExchangeError:
+        #     # no owner?
+        #     self.author = "N/A"
+        #     self.author_email = "N/A"
+        #     self.header.extend(["Author info missing."])
+        self.url = post['link']
+        license_text = post.get("content_license", "N/A")
         self.header.extend(
             [
                 f"License: {license_text}",
-                f"Date: {answer.creation_date}",
-                f"Answer Url: {answer.url}",
+                f"Date: {post['creation_date']}",
+                f"Answer Url: {post['link']}",
                 '"""',
                 "",
             ]
@@ -76,37 +75,32 @@ class PythonPackage:
         self.brief_header.extend(
             [
                 f"{license_text} {self.author}",
-                f"{answer.url}",
+                f"{post['link']}",
                 '"""',
                 "",
             ]
         )
 
-        try:
-            answer.revisions.fetch()
-            self.version = f"1.0.{len(answer.revisions) - 1}"
-            coauthors = set()
-            if len(answer.revisions) > 1:
-                for revision in answer.revisions:
-                    # todo... handle closed accounts
-                    coauthors.add((revision.user.display_name, revision.user.id))
-            if len(coauthors) > 1:
-                print(coauthors)
-        except KeyError:
-            # bug in client, fails when user no longer exists/user_id missing
+        revision_json = get_json_revisions_by_post_id(post.get("answer_id",post["question_id"]))
+        if len(revision_json.get("items", [])) >= 1:
+            self.version = f"1.0.{len(revision_json.get('items', [])) - 1}"
+            for revision in revision_json.get("items", []):
+                coauthors = set()
+                if "user" in revision:
+                    coauthors.add((revision["user"]["display_name"], revision["user"]["user_id"]))
+
+
+        else:
             self.version = "0.1.0 # can't get revision"
 
-        if hasattr(answer, "question"):
-            title = answer.question.title.replace("'", "\\'")
-        else:
-            title = answer.title.replace("'", "\\'")
+        title = post['title'].replace("'", "\\'")
         # version & author described in pep 8
         self.python_metadata.extend(
             [
                 f"__title__ = '{title}'",
                 f"__version__ = '{self.version}'",
                 f"__author__ = '{self.author}'",
-                f"__license__ = '{answer.json.get('content_license', 'N/A')}'",
-                f"__copyright__ = 'Copyright {answer.creation_date} by {self.author}'",
+                f"__license__ = '{post.get('content_license', 'N/A')}'",
+                f"__copyright__ = 'Copyright {post['creation_date']} by {self.author}'",
             ]
         )

@@ -10,7 +10,7 @@ if __name__ == "__main__":
     # # https://stackoverflow.com/questions/13137817/
     # #how-to-download-image-using-requests
     # import_so_question("requests_help", 13137817)  # requests, excellent example
-    # import_so_question("idenitfy_py2", 38604451)  # has negative answer
+    # import_so_question("idenitfy_py2", 38604451)  # has negative post
     # # https://stackoverflow.com/questions/151199/
     # #how-to-calculate-number-of-days-between-two-given-dates
     # import_so_question("days_between", 151199)  # has interactive e.g. >>>

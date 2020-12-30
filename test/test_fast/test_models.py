@@ -10,7 +10,8 @@ def test_code_block():
     block.raw_text = "print hello, but html style"
     block.code_text = "print('hello world')"
     block.footer_comments = "I wrote that."
-    block.analyze()
+    tags=["python"]
+    block.analyze(tags=tags)
 
 def test_code_file_single_block():
     # Maybe many chunks of code.
@@ -47,5 +48,5 @@ def test_code_file_two_blocks():
 
 def test_python_submodule():
     psm = PythonPackage("name", "desc")
-    # how to make an answer/question?
+    # how to make an post/question?
     # psm.extract_metadata()

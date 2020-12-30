@@ -1,21 +1,19 @@
 """
-Install one question or answer.
+Install one question or post.
 
 Vendorize because I'm not installing it to a venv.
 """
 
 # TODO:
 # install question 142
-# install answer 142
+# install post 142
 # install some_random_name
 # install some_random_name==0.2.1
 
-from typing import Iterable, List, Tuple, Union
+from typing import Iterable, List, Tuple, Dict, Any
 
-import stackexchange
-
+import so_pip.api_clients.stackapi_facade as stackapi_client
 from so_pip import settings as settings
-from so_pip.api_clients.pystackexchange_facade import answer_by_id, question_by_id
 from so_pip.cli_clients.external_commands import isort, pur, pylint, safety
 from so_pip.file_writing import write_as_html, write_as_md, write_as_text
 from so_pip.models.python_package_model import PythonPackage
@@ -32,7 +30,7 @@ from so_pip.support_files.requirements_for_post import requirements_for_file
 
 
 def handle_question(
-    module_folder: str, question: stackexchange.Question, submodule: PythonPackage
+    module_folder: str, question: Dict[str, Any], submodule: PythonPackage
 ) -> List[str]:
     """same as answers, but for 1 question."""
     # unlike answers, if we decide to include the question, we include the question
@@ -44,7 +42,7 @@ def handle_question(
     i = 0
     for code_file in submodule.code_files:
         if not code_file.extension:
-            code_file.analyze()
+            code_file.analyze(question["tags"])
         if not code_file.extension:
             raise TypeError("need extension by this point")
         i += 1
@@ -66,7 +64,7 @@ def handle_question(
 
             wrote_file = write_and_format_python_file(submodule_path, code_to_write)
 
-            if wrote_file and code_file.language == "Python" and settings.BUMP_TO_PY3:
+            if wrote_file and code_file.language == "python" and settings.BUMP_TO_PY3:
                 upgrade_file(submodule_path)
         else:
             headers = (
@@ -100,30 +98,33 @@ def handle_question(
 def import_so_answer(package_prefix: str, answer_id: int) -> List[str]:
     """main entry point
 
-    package_prefix - prefix for question and answer modules
+    package_prefix - prefix for question and post modules
 
     All modules will be at same tree level
     """
     packages_made: List[str] = []
-    answer = answer_by_id(answer_id)
+    answer_data = stackapi_client.get_json_by_answer_id(answer_id)
+    answer = answer_data["items"][0]
 
     # /vendor/prefix_name/main.py
     # default is relative to so_pip root already.
     # if user supplied, it is what it is.
     output_folder = settings.TARGET_FOLDER
-    packages_made.extend(handle_answers(output_folder, package_prefix, [answer]))
+    question_id = answer["question_id"]
+    question = stackapi_client.get_json_by_question_id(question_id)["items"][0]
+    packages_made.extend(handle_answers(output_folder, package_prefix,  question, [answer]))
     return packages_made
 
 
 def import_so_question(package_prefix: str, question_id: int) -> List[str]:
     """main entry point
 
-    package_prefix - prefix for question and answer modules
+    package_prefix - prefix for question and post modules
 
     All modules will be at same tree level
     """
     packages_made: List[str] = []
-    question = question_by_id(question_id)
+    question = stackapi_client.get_json_by_question_id(question_id)["items"][0]
 
     # /vendor/prefix_name/main.py
     # default is relative to so_pip root already.
@@ -138,7 +139,7 @@ def import_so_question(package_prefix: str, question_id: int) -> List[str]:
 
     # answers...
     packages_made.extend(
-        handle_answers(output_folder, package_prefix, question.answers)
+        handle_answers(output_folder, package_prefix,question, question["answers"])
     )
     return packages_made
 
@@ -146,19 +147,21 @@ def import_so_question(package_prefix: str, question_id: int) -> List[str]:
 def create_package_for_post(
     output_folder: str,
     package_prefix: str,
-    post: Union[stackexchange.Question, stackexchange.Answer],
+    post: Dict[str, Any],
 ) -> Tuple[str, PythonPackage]:
     """
     Create package info and folder for a package.
 
-    Could be question or answer.
+    Could be question or post.
 
     Flat folder structure (setup.py along with __init__.py)
     """
-    post_type = "q" if isinstance(post, stackexchange.Question) else "a"
-    package_name = make_up_module_name(post.id, package_prefix, post_type)
+    post_type = "a" if hasattr(post, "answer_id") else "q"
+    post_id = post["answer_id"] if "answer_id" in post else post["question_id"]
+    package_name = make_up_module_name(post_id, package_prefix, post_type)
     package_info = handle_python_post(
-        post.body, name=package_name, description=post.title
+        post["body"], name=package_name, description=post["title"],
+        tags=post["tags"]
     )
     if settings.METADATA_IN_INIT:
         metadata_for_init = "\n".join(
@@ -173,18 +176,23 @@ def create_package_for_post(
 
 
 def handle_answers(
-    output_folder: str, package_prefix: str, answers: Iterable[stackexchange.Answer]
+    output_folder: str, package_prefix: str, question:[Dict[str,Any]], answers: Iterable[Dict[str, Any]]
 ) -> List[str]:
     """Loop through answers"""
     packages_made: List[str] = []
-    for answer in answers:
-        if answer.score < settings.MINIMUM_SCORE:
+
+    for shallow_answer in answers:
+        if shallow_answer["score"] < settings.MINIMUM_SCORE:
             continue
-        answer_module_name = make_up_module_name(answer.id, package_prefix, "a")
+        answer = stackapi_client.get_json_by_answer_id(shallow_answer["answer_id"])["items"][0]
+        answer_module_name = make_up_module_name(answer["answer_id"], package_prefix,
+                                                 "a")
         packages_made.append(answer_module_name)
         # TODO: assumes we already know the language & that we are 1 file, 1 language
         submodule = handle_python_post(
-            answer.body, answer_module_name, f"StackOverflow answer #{answer.id}"
+            answer["body"], answer_module_name,
+            f"StackOverflow post #{answer['answer_id']}",
+            tags=question["tags"]
         )
 
         i = 0
@@ -224,7 +232,7 @@ def handle_answers(
                 )
                 if (
                     wrote_py_file
-                    and code_file.language == "Python"
+                    and code_file.language == "python"
                     and settings.BUMP_TO_PY3
                 ):
                     upgrade_file(submodule_path)
@@ -240,12 +248,12 @@ def handle_answers(
                     code_to_write,
                 )
 
-        write_as_html(answer, f"{answer_folder}/answer")
-        write_as_md(answer, f"{answer_folder}/answer")
-        write_as_text(answer, f"{answer_folder}/answer")
+        write_as_html(answer, f"{answer_folder}/post")
+        write_as_md(answer, f"{answer_folder}/post")
+        write_as_text(answer, f"{answer_folder}/post")
         write_license(answer, answer_folder)
         changelog_for_post(answer, answer_folder)
-        write_authors(answer_folder, answer_module_name, answer.question, answer)
+        write_authors(answer_folder, answer_module_name, question, answer)
 
         if wrote_py_file:
             requirements_txt = requirements_for_file(answer_folder, submodule)

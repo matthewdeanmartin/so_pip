@@ -1,3 +1,7 @@
+"""
+As soon as there is 1 column missing from a result, I'm lost on how to include it.
+Also, this library blows up a lot.
+"""
 from so_pip.api_clients.pypstats_facade import find_modules
 from so_pip.api_clients.pystackexchange_facade import question_by_id
 from so_pip.api_clients.stackapi_facade import get_json_by_answer_id, \

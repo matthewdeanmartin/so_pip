@@ -1,42 +1,42 @@
 """
 What programming language is this text
 """
-from typing import Tuple
+from typing import Tuple, List, Optional
 
-from so_pip import settings as settings
 from so_pip.parse_python.detect_python import score
+from so_pip.settings import DEFAULT_LANGUAGE
 
 FILE_EXTENSIONS = {
-    "Batchfile": ".bat",
-    "C": ".c",
-    "C#": ".cs",
-    "C++": ".cpp",
-    "CSS": ".css",
-    "CoffeeScript": ".coffee",
-    "Erlang": ".erlang",
-    "Go": ".go",
-    "HTML": ".html",
-    "Haskell": ".haskell",
-    "Java": ".java",
-    "JavaScript": ".js",
-    "Jupyter Notebook": ".nb",
-    "Lua": ".lua",
-    "Markdown": ".md",
-    "Matlab": ".matlab",
-    "Objective-C": ".objc",
-    "PHP": ".php",
-    "Perl": ".perl",
-    "PowerShell": ".ps1",
-    "Python": ".py",
-    "R": ".r",
-    "Ruby": ".rb",
-    "Rust": ".rust",
-    "SQL": ".sql",
-    "Scala": ".scala",
-    "Shell": ".sh",
-    "Swift": ".swift",
-    "TeX": ".tex",
-    "TypeScript": ".ts",
+    "batchfile": ".bat",
+    "c": ".c",
+    "c#": ".cs",
+    "c++": ".cpp",
+    "css": ".css",
+    "coffeescript": ".coffee",
+    "erlang": ".erlang",
+    "go": ".go",
+    "html": ".html",
+    "haskell": ".haskell",
+    "java": ".java",
+    "javascript": ".js",
+    "jupyter notebook": ".nb",
+    "lua": ".lua",
+    "markdown": ".md",
+    "matlab": ".matlab",
+    "objective-C": ".objc",
+    "php": ".php",
+    "perl": ".perl",
+    "powershell": ".ps1",
+    "python": ".py",
+    "r": ".r",
+    "ruby": ".rb",
+    "rust": ".rust",
+    "sql": ".sql",
+    "scala": ".scala",
+    "shell": ".sh",
+    "swift": ".swift",
+    "tex": ".tex",
+    "typescript": ".ts",
 }
 
 GUESS = None
@@ -58,36 +58,38 @@ def is_likely_bash(value: str) -> bool:
     return False
 
 
-def assign_extension(all_code: str, failed_parse: bool) -> Tuple[str, str]:
+def assign_extension(all_code: str, failed_parse: bool, tags: List[str]) -> Tuple[
+    str, str]:
     """Guess language and extension"""
     if is_likely_bash(all_code):
         return (
-            FILE_EXTENSIONS["Shell"],
+            FILE_EXTENSIONS["shell"],
             "Shell",
         )
 
     if not failed_parse:
-        return FILE_EXTENSIONS["Python"], "Python"
+        return FILE_EXTENSIONS["python"], "python"
 
     if not all_code:
-        return FILE_EXTENSIONS[settings.DEFAULT_LANGUAGE], settings.DEFAULT_LANGUAGE
+        return DEFAULT_LANGUAGE
 
     if score(all_code) > 5:
-        return FILE_EXTENSIONS["Python"], "Python"
+        return FILE_EXTENSIONS["python"], "python"
 
-    # pylint: disable=global-statement
-    global GUESS  # noqa
-    if not GUESS:
-        # SLOW. Event just importing is slow
-        # pylint: disable=import-outside-toplevel
-        from guesslang import Guess
+    # convert tag to language here.
+    extension_language = match_tag_to_language(tags)
+    if extension_language:
+        extension, guessed_language = extension_language
+        return extension, guessed_language
 
-        GUESS = Guess()
-    language = GUESS.language_name(all_code)
-    if (
-        "*" in settings.POSSIBLE_LANGUAGES
-        and language not in settings.POSSIBLE_LANGUAGES
-    ):
-        language = settings.DEFAULT_LANGUAGE
-    extension = FILE_EXTENSIONS.get(language, settings.DEFAULT_LANGUAGE)
-    return extension, language
+    return DEFAULT_LANGUAGE
+
+
+def match_tag_to_language(tags: List[str]) -> Optional[Tuple[str, str]]:
+    """Guess language by tag"""
+    for tag in (_.lower() for _ in tags):
+        if not tag:
+            continue
+        if tag in FILE_EXTENSIONS:
+            return FILE_EXTENSIONS[tag], tag
+    return None

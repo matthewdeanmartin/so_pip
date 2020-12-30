@@ -2,7 +2,8 @@ from so_pip.parse_code.arbitrary_code_block import find_code_blocks
 
 def test_find_code_blocks_question_text_only():
     result = find_code_blocks(
-        "Just tell me the answer"
+        "Just tell me the post",
+        tags=["English"]
     )
     assert result
     assert result[0].header_comments
@@ -12,7 +13,8 @@ def test_find_code_blocks():
         "<pre><code>\n"
         "def run():\n"
         "   print('hello world')\n"
-        "</code></pre>\n"
+        "</code></pre>\n",
+        tags=["Python"]
     )
     assert result
     assert len(result)==1
@@ -28,7 +30,8 @@ def test_find_code_blocks_with_header():
         "<pre><code>\n"
         "def run():\n"
         "   print('hello world')\n"
-        "</code></pre>\n"
+        "</code></pre>\n",
+        tags = ["python"]
     )
     assert result
     assert len(result)==1
@@ -45,7 +48,8 @@ def test_find_code_blocks_with_header_and_footer():
         "def run():\n"
         "   print('hello world')\n"
         "</code></pre>"
-        "so a footer\n"
+        "so a footer\n",
+        tags = ["Python"]
     )
     assert result
     assert len(result)==1

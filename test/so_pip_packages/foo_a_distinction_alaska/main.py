@@ -1,6 +1,6 @@
 """
 CC BY-SA 2.5 Daniel G
-http://stackoverflow.com/questions/2572582/2572654#2572654
+https://stackoverflow.com/questions/2572582/return-a-list-of-imported-python-modules-used-in-a-script/2572654#2572654
 """
 
 # Well, you could always write a simple script that searches the file for

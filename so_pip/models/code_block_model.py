@@ -1,5 +1,5 @@
 """
-Abstract model of the submodule I'm extracting from an answer.
+Abstract model of the submodule I'm extracting from an post.
 """
 from dataclasses import dataclass, field
 from typing import List
@@ -29,11 +29,11 @@ class CodeBlock:
     extension: str = ""
     language: str = ""
 
-    def analyze(self) -> None:
+    def analyze(self, tags:List[str]) -> None:
         """Do expensive checks"""
         self.is_ipython_block = ">>>" in self.code_text
         self.is_valid_python, self.errors = validate_python(self.code_text)
 
         self.extension, self.language = assign_extension(
-            self.code_text, self.is_valid_python
+            self.code_text, self.is_valid_python, tags
         )

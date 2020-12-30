@@ -5,7 +5,7 @@ from so_pip.__main__ import process_docopts
 
 
 def test_process_docopts():
-    anything= {'--answer': '2572654',
+    anything= {'--post': '2572654',
  '--help': False,
  '--name': 'foo',
  '--package': None,

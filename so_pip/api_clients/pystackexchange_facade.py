@@ -22,7 +22,7 @@ def question_by_id(question_id: int) -> stackexchange.Question:
 
 
 def answer_by_id(answer_id: int) -> stackexchange.Question:
-    """Get answer object graph"""
+    """Get post object graph"""
     if not answer_id:
         raise TypeError("answer_id is required")
     STACK.include_body = True

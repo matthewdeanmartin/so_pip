@@ -2,7 +2,7 @@
 Not associated with PyPA, nor StackOverflow.
 
 Usage:
-  so_pip vendorize --name=<name> (--question=<question_id>|--answer=<answer_id>|--package=<package>) [--vendor=<vendor>]
+  so_pip vendorize --name=<name> (--question=<question_id>|--post=<answer_id>|--package=<package>) [--vendor=<vendor>]
   so_pip uninstall <package>...   [--vendor=<vendor>]
   so_pip list   [--vendor=<vendor>]
   so_pip freeze   [--vendor=<vendor>]
@@ -15,7 +15,7 @@ Options:
   --version     Show version.
   --vendor=<vendor>      Folder for packages.
   --question=<question_id>    Stackoverflow question id
-  --answer=<answer_id>      Stackoverflow answer id
+  --post=<answer_id>      Stackoverflow post id
   --package=<package>     Generated package name
 
 
@@ -36,7 +36,7 @@ def process_docopts() -> None:
     # print(arguments)
 
     # example
-    # arguments = {'--answer': None,
+    # arguments = {'--post': None,
     #            '--help': False,
     #            '--package': '123',
     #            '--question': None,
@@ -56,7 +56,7 @@ def process_docopts() -> None:
     if arguments["vendorize"]:
         prefix = arguments["--name"]
         question = arguments["--question"]
-        answer = arguments["--answer"]
+        answer = arguments["--post"]
         if question:
             packages_made = vendorize.import_so_question(prefix, question)
         if answer:

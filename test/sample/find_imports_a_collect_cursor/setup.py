@@ -6,7 +6,7 @@ setup(
     url='http://stackoverflow.com/questions/2572582/22441743#22441743',
     author='Tony Suffolk 66',
     author_email='N/A',
-    description='StackOverflow answer #22441743',
+    description='StackOverflow post #22441743',
     packages=find_packages(),
     install_requires=[],
 )

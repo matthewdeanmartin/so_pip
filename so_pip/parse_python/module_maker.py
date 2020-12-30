@@ -1,10 +1,11 @@
 """
 Generate all the python related files for a module
 - folder
-- each answer
+- each post
 - sort imports
 """
 import os
+from typing import List
 
 from so_pip import settings as settings
 from so_pip.cli_clients.external_commands import isort
@@ -28,10 +29,10 @@ def create_package_folder(target_folder: str, module_name: str, metadata: str) -
     return module_folder
 
 
-def handle_python_post(html: str, name: str, description: str) -> PythonPackage:
+def handle_python_post(html: str, name: str, description: str, tags:List[str]) -> PythonPackage:
     """Given html of ap post, fill in a PythonPackage object."""
     package = PythonPackage(package_name=name, description=description)
-    package.code_blocks.extend(find_code_blocks(html))
+    package.code_blocks.extend(find_code_blocks(html, tags))
     if not package.code_blocks:
         raise TypeError("Expected some code blocks by now")
     first = True
@@ -51,7 +52,7 @@ def handle_python_post(html: str, name: str, description: str) -> PythonPackage:
             block.footer_comments = html_to_python_comments(block.footer_comments)
     for code_file in package.code_files:
         if not code_file.extension:
-            code_file.analyze()
+            code_file.analyze(tags)
         if not code_file.extension:
             raise TypeError("Expected Extension by now")
 

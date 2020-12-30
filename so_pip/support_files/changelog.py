@@ -2,9 +2,7 @@
 Generate a CHANGELOG type file based on the edit log in SO
 """
 import time
-from typing import Dict, Sequence, Union
-
-import stackexchange
+from typing import Dict, Sequence, Union, Any
 
 from so_pip.api_clients.stackapi_facade import get_json_revisions_by_post_id
 from so_pip.make_from_template import load_template
@@ -12,11 +10,12 @@ from so_pip.support_files.authors import normalize_user_link
 
 
 def changelog_for_post(
-    post: Union[stackexchange.Question, stackexchange.Answer], package_folder: str
+    post: Dict[str,Any], package_folder: str
 ) -> None:
     """Requirements for running `safety`"""
     versions = []
-    revision_json = get_json_revisions_by_post_id(post.id)
+    post_id = post["answer_id"] if "answer_id" in post else post["question_id"]
+    revision_json = get_json_revisions_by_post_id(post_id)
     if len(revision_json.get("items", [])) <= 1:
         return
     for revision in revision_json.get("items", []):

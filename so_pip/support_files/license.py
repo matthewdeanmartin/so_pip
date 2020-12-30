@@ -11,28 +11,27 @@ Since other tools only look at LICENSE, I'll put the "principal" one there.
 
 """
 import shutil
-from typing import Union, List
+from typing import List, Any, Dict
 
 import html2text
-import stackexchange
 
 from so_pip import settings as settings
 from so_pip.api_clients.stackapi_facade import get_json_revisions_by_post_id, \
     get_json_comments_by_post_id
-from so_pip.support_files.authors import normalize_user_link
 from so_pip.utils.files_utils import find_file
 
 
 def write_license(
-    post: Union[stackexchange.Question, stackexchange.Answer], package_folder: str
+    post: Dict[str, Any], package_folder: str
 ) -> None:
     """Include license file
     Each revision could have different license!
     """
-    licenses:List[str]=[]
-    post_license = post.json.get("content_license", "N/A")
+    licenses: List[str] = []
+    post_license = post.get("content_license", "N/A")
     licenses.append(post_license)
-    revision_json = get_json_revisions_by_post_id(post.id)
+    post_id = post["answer_id"] if "answer_id" in post else post["question_id"]
+    revision_json = get_json_revisions_by_post_id(post_id)
 
     for revision in revision_json.get("items", []):
         # if revision["user"]["user_type"] == "does_not_exist":
@@ -40,10 +39,9 @@ def write_license(
         # display_name = revision["user"]["display_name"]
         # url = revision["user"]["link"]
         # link = normalize_user_link(url, revision["user"]["user_id"])
-        licenses.append(revision.get("content_license","N/A"))
+        licenses.append(revision.get("content_license", "N/A"))
 
-
-    comments = get_json_comments_by_post_id(post.id)
+    comments = get_json_comments_by_post_id(post_id)
     for comment in comments.get("items", []):
         # if comment["owner"]["user_type"] == "does_not_exist":
         #     continue
@@ -52,7 +50,6 @@ def write_license(
         # link = normalize_user_link(url, comment["user"]["user_id"])
 
         licenses.append(comment.get("content_license", "N/A"))
-
 
         # First Last <email> (url)
         # First Last <@twitter> (url)
@@ -69,7 +66,8 @@ def write_license(
         #     license_path_txt = find_file(f"../licenses/{license_name}.txt", __file__)
         #     convert_html_to_text(license_path.replace(".txt", ".html"), license_path_txt)
 
-        destination_path = find_file(f"{package_folder}/LICENSE", settings.TARGET_FOLDER)
+        destination_path = find_file(f"{package_folder}/LICENSE",
+                                     settings.TARGET_FOLDER)
 
         shutil.copy(license_path, destination_path)
 
