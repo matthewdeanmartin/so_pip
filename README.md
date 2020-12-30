@@ -89,9 +89,14 @@ With help from a lot of libraries
 
 Things I can't do yet
 ---------------------
-- Get code from pastebin or the like:
+- Generate CODE_OF_CONDUCT, (link to SO's https://stackoverflow.com/conduct)
+- Get code from pastebin, gists or the like:
    - e.g. https://stackoverflow.com/questions/26188763/python-3-x-text-based-adventure-game-save-game-function
 - Generate README.md
+    - Table of conents
+    - recap authors (date, author, license, contrib type- e.g. question, comment, revision)
+    -
+- Parsable authors with links
 - Handle contributors & multiple licenses (Almost! Got ChangeLog & Authors)
 - Can't cope with IPython/Juputer notebook stuff
    - e.g. https://stackoverflow.com/questions/25748473/python-text-based-adventure-game-need-assistance
