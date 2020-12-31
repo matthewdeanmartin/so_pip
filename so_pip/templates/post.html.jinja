@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ title }}</title>
+    <title>{{ item["title"] }}</title>
 </head>
 <link rel="stylesheet" href="https://latex.now.sh/style.css">
 <link rel="stylesheet" href="https://latex.now.sh/prism/prism.css">
@@ -14,11 +14,11 @@
     }
 </style>
 <body>
-{{ content }}
+{{ item["content"] }}
 
 <hr/>
-<ul>{% for comment in comments %}
-<li>comment</li>
+<ul>{% for comment in item["comments"] %}
+<li>{{ comment }}</li>
 {% endfor %}</ul>
 </body>
 </html>

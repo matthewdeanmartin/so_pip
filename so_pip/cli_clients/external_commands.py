@@ -1,6 +1,7 @@
 """
 Shell out to run a few commands
 """
+import os
 import shlex
 
 from so_pip import settings as settings
@@ -132,5 +133,21 @@ def pylint(folder: str) -> str:
     print(command)
     parts = shlex.split(command)
     result = execute_get_text(parts)
+    print(result)
+    return result
+
+
+def pypinfo(packge:str)->str:
+    """
+    Pypi info
+    """
+    # https://pypi.org/project/pypinfo/
+    if not os.environ.get('GOOGLE_APPLICATION_CREDENTIALS', None):
+        return "You must set up credentials " \
+               "to run pypinfo https://pypi.org/project/pypinfo/"
+    command = f"{settings.SHELL} pypinfo {packge}"
+    print(command)
+    parts = shlex.split(command)
+    result = execute_get_text(parts, ignore_error=True)
     print(result)
     return result

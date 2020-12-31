@@ -4,5 +4,5 @@ History
 {% for version in item %}
 {{ version["version"] }} ({{ version["date"]}})
 -----------------------
-* {{ version["changes"]["user"] }},{{ version["changes"]["content_license"] }}, {{ version["changes"]["comment"] }}
+* {{ version["changes"]["user"] }},{{ version["changes"]["content_license"] }},{{ ('\n' ~ version["changes"]["comment"]) | wordwrap(140) | replace('\n', '\n# ') }}
 {% endfor %}

@@ -21,6 +21,10 @@ def changelog_for_post(
     for revision in revision_json.get("items", []):
         # if "content_license" not in revision:
         #     print("but why")
+        if "revision_number" not in revision:
+            # happens with protected posts
+            # no revision number, no version number
+            continue
         version = {
             "version": f"0.1.{revision['revision_number']}",
             "date": f"{time.ctime(revision['creation_date'])}",

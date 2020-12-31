@@ -4,19 +4,8 @@ What
 ----
 Everyone copies code from StackOverflow, but no one is formalizing it.
 
-Security Considerations
------------------------
-Ha, ha, ha... ok, now seriously.
-
-- Read code before you run it
-- Do not run this as part of an automated build pipeline
-- Only run this interactively
-- This app won't run code from StackOverflow, you'll have to run that code.
-
-[Copying code from stackover flow ...](https://stackoverflow.blog/2019/11/26/copying-code-from-stack-overflow-you-might-be-spreading-security-vulnerabilities/)
-- Consider using this plugin: https://github.com/paper-materials-crowd-sourced/materials/tree/master/web-extension
-
-[Scholars have studied code reuse from SO](https://link.springer.com/article/10.1007/s10664-018-9634-5)
+This will vendorize the source code of question or answer into a folder and
+generate the accessory files to make it look like a python package.
 
 Usage for Alpha
 ---------------
@@ -50,6 +39,21 @@ Removed {package_name} from so_pip_packages/
 {package_name}
 {package_name}
 ```
+
+Security Considerations
+-----------------------
+Ha, ha, ha... ok, now seriously.
+
+- Read code before you run it
+- Do not run this as part of an automated build pipeline
+- Only run this interactively
+- This app won't run code from StackOverflow, you'll have to run that code.
+
+[Copying code from stackover flow ...](https://stackoverflow.blog/2019/11/26/copying-code-from-stack-overflow-you-might-be-spreading-security-vulnerabilities/)
+- Consider using this plugin: https://github.com/paper-materials-crowd-sourced/materials/tree/master/web-extension
+
+[Scholars have studied code reuse from SO](https://link.springer.com/article/10.1007/s10664-018-9634-5)
+
 
 Things I can do now
 -------------------

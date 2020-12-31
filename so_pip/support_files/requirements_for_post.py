@@ -3,6 +3,7 @@ Using source code, find requirements
 """
 import os
 import subprocess  # nosec
+from typing import Tuple
 
 from stdlib_list import stdlib_list
 
@@ -18,8 +19,9 @@ from so_pip_packages.find_imports import main as find_imports
 # https://github.com/ohjeah/pip-validate
 
 
-def requirements_for_file(package_folder: str, python_submodule: PythonPackage) -> str:
+def requirements_for_file(package_folder: str, python_submodule: PythonPackage) -> Tuple[str, int]:
     """Requirements for running `safety`"""
+    package_count = 0
     file_to_write = None
     all_imports = []
     for filename in os.listdir(package_folder):
@@ -46,12 +48,13 @@ def requirements_for_file(package_folder: str, python_submodule: PythonPackage) 
             requirements.write("# module names often don't match package names!\n\n")
             for _import in packages_of_same_name:
                 requirements.write(_import + "\n")
+                package_count+=1
             for bad_import in not_in_pypi:
                 item = f"# {bad_import} # module imported but no package of same name\n"
                 requirements.write(item)
 
     create_setup_py(package_folder, python_submodule)
-    return file_to_write
+    return file_to_write, package_count
 
 
 

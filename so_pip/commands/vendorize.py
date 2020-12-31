@@ -78,16 +78,21 @@ def handle_question(
                 code_to_write,
             )
 
-    write_as_html(question, submodule_path)
-    write_as_md(question, submodule_path)
-    write_as_text(question, submodule_path)
+    if settings.POSTS_AS_HTML:
+        write_as_html(question, submodule_path)
+    if settings.POSTS_AS_MD:
+        write_as_md(question, submodule_path)
+    if settings.POSTS_AS_TXT:
+        write_as_text(question, submodule_path)
 
     write_license(question, module_folder)
-    changelog_for_post(question, module_folder)
-    write_authors(module_folder, submodule_name, question)
+    if settings.GENERATE_CHANGE_LOG:
+        changelog_for_post(question, module_folder)
+    if settings.GENERATE_AUTHORS:
+        write_authors(module_folder, submodule_name, question)
 
-    requirements_txt = requirements_for_file(module_folder, submodule)
-    if requirements_txt:
+    requirements_txt, count = requirements_for_file(module_folder, submodule)
+    if requirements_txt and count>0:
         pur(requirements_txt)
         result = safety(requirements_txt)
         print(result)
@@ -112,7 +117,8 @@ def import_so_answer(package_prefix: str, answer_id: int) -> List[str]:
     output_folder = settings.TARGET_FOLDER
     question_id = answer["question_id"]
     question = stackapi_client.get_json_by_question_id(question_id)["items"][0]
-    packages_made.extend(handle_answers(output_folder, package_prefix,  question, [answer]))
+    packages_made.extend(
+        handle_answers(output_folder, package_prefix, question, [answer]))
     return packages_made
 
 
@@ -138,9 +144,10 @@ def import_so_question(package_prefix: str, question_id: int) -> List[str]:
     packages_made.extend(handle_question(package_folder, question, question_package))
 
     # answers...
-    packages_made.extend(
-        handle_answers(output_folder, package_prefix,question, question["answers"])
-    )
+    if question["is_answered"]:
+        packages_made.extend(
+            handle_answers(output_folder, package_prefix, question, question["answers"])
+        )
     return packages_made
 
 
@@ -176,7 +183,8 @@ def create_package_for_post(
 
 
 def handle_answers(
-    output_folder: str, package_prefix: str, question:[Dict[str,Any]], answers: Iterable[Dict[str, Any]]
+    output_folder: str, package_prefix: str, question: [Dict[str, Any]],
+    answers: Iterable[Dict[str, Any]]
 ) -> List[str]:
     """Loop through answers"""
     packages_made: List[str] = []
@@ -184,7 +192,8 @@ def handle_answers(
     for shallow_answer in answers:
         if shallow_answer["score"] < settings.MINIMUM_SCORE:
             continue
-        answer = stackapi_client.get_json_by_answer_id(shallow_answer["answer_id"])["items"][0]
+        answer = \
+        stackapi_client.get_json_by_answer_id(shallow_answer["answer_id"])["items"][0]
         answer_module_name = make_up_module_name(answer["answer_id"], package_prefix,
                                                  "a")
         packages_made.append(answer_module_name)
@@ -248,16 +257,22 @@ def handle_answers(
                     code_to_write,
                 )
 
-        write_as_html(answer, f"{answer_folder}/post")
+        if settings.POSTS_AS_HTML:
+            write_as_html(answer, f"{answer_folder}/post")
+
         write_as_md(answer, f"{answer_folder}/post")
-        write_as_text(answer, f"{answer_folder}/post")
+        if settings.POSTS_AS_TXT:
+            write_as_text(answer, f"{answer_folder}/post")
+
         write_license(answer, answer_folder)
-        changelog_for_post(answer, answer_folder)
-        write_authors(answer_folder, answer_module_name, question, answer)
+        if settings.GENERATE_CHANGE_LOG:
+            changelog_for_post(answer, answer_folder)
+        if settings.GENERATE_AUTHORS:
+            write_authors(answer_folder, answer_module_name, question, answer)
 
         if wrote_py_file:
-            requirements_txt = requirements_for_file(answer_folder, submodule)
-            if requirements_txt:
+            requirements_txt, count = requirements_for_file(answer_folder, submodule)
+            if requirements_txt and count > 0:
                 pur(requirements_txt)
                 result = safety(requirements_txt)
                 print(result)

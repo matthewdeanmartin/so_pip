@@ -87,7 +87,7 @@ class PythonPackage:
             for revision in revision_json.get("items", []):
                 coauthors = set()
                 if "user" in revision:
-                    coauthors.add((revision["user"]["display_name"], revision["user"]["user_id"]))
+                    coauthors.add((revision["user"]["display_name"], revision["user"].get("user_id",-1)))
 
 
         else:

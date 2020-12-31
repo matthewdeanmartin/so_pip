@@ -3,11 +3,19 @@ Low level access. Makes no effort to parse results.
 """
 
 import os
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 from stackapi import StackAPI
 
 SITE = StackAPI("stackoverflow", key=os.environ["key"])
+
+def get_json_by_search(query:str,tagged:List[str])->Dict[str,Any]:
+    """Low level access, returns unprocessed json"""
+    return SITE.fetch(
+        "search?tagged={tagged}&intitle={intitle}",
+        tagged=[";".join(tagged)],
+        intitle=[query]
+    )
 
 
 def get_json_by_question_id(question_id: int) -> Dict[str, Any]:

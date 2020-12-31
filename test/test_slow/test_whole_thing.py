@@ -14,3 +14,6 @@ def test_import_so():
 
 def test_import_so_answer():
     import_so_answer("test", 2572654)
+
+def test_handle_answer_escape_in_source():
+    import_so_answer("escape", 64476551)

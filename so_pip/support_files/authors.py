@@ -61,7 +61,10 @@ def get_authors_for_answer(answer: Dict[str,Any]) -> Set[str]:
     authors: Set[str] = set()
     if answer["owner"]:
         owner = answer["owner"]
-        authors.add(f"{owner['display_name']} <{owner['link']}>")
+        if "link" not in owner:
+            authors.add(f"{owner['display_name']}")
+        else:
+            authors.add(f"{owner['display_name']} <{owner['link']}>")
     else:
         if answer["user"]["user_type"] != "does_not_exist":
             print("What sort of user is this?")

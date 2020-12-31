@@ -1,11 +1,15 @@
 """
 File writing stuff
 """
+import html
 from typing import Dict, Any
 
 import html2text
 
 from so_pip.make_from_template import load_template
+
+WINDOWS_LINE_ENDING = '\r\n'
+UNIX_LINE_ENDING = '\n'
 
 
 def write_as_html(
@@ -20,9 +24,9 @@ def write_as_html(
     data = {
         "title": post.title if hasattr(post, "title") else "",
         "content": post["body"],
-        "comments": post.get("comments",[])
+        "comments": post.get("comments", [])
     }
-    result = template.render(data=data)
+    result = template.render(item=data)
     with open(submodule_name + ".html", "w", encoding="utf-8") as diagnostics:
         diagnostics.write(result)
 
@@ -41,5 +45,12 @@ def write_as_md(
 ) -> None:
     """Dump post in readable form."""
     markdown = post["body_markdown"]
+
+
     with open(submodule_name + ".md", "w", encoding="utf-8") as diagnostics:
+        # https://stackoverflow.com/a/43678795/33264
+        markdown = markdown.replace(WINDOWS_LINE_ENDING, UNIX_LINE_ENDING)
+        # don't know why it has html escapes, possibly a security feature
+        # for when you know you're going to put it into HTML?
+        markdown = html.unescape(markdown)
         diagnostics.write(markdown)

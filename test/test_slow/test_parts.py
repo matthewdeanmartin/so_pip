@@ -4,6 +4,7 @@ from so_pip.api_clients.stackapi_facade import get_json_by_question_id, \
 from so_pip.parse_python.module_maker import handle_python_post
 
 
+
 def test_handle_python_answer():
     answer = get_json_by_answer_id(24139629)["items"][0]
     question = get_json_by_question_id(answer["question_id"])["items"][0]

@@ -19,6 +19,8 @@ import pypistats
 # major, minor, system, downloads by minor version, system, etc
 import requests
 
+from so_pip.pypi_query.main import PackageInfo
+
 
 def find_modules(
     module_list: List[str], minimum_downloads: int
@@ -37,14 +39,23 @@ def find_modules(
             not_in_pypi.append(module)
     return packages_of_same_name, not_in_pypi
 
-
+PYPI = None
 @lru_cache(maxsize=1000)
 def get_download_count(module: str) -> Optional[int]:
     """Get download count and cache it"""
+    # TODO: move elsewhere
+    global PYPI
+    if not PYPI:
+        PYPI =PackageInfo()
+    return 1 if PYPI.search(module) else 0
+
     try:
         item_string = pypistats.overall(module.strip(), format="json")
     except requests.exceptions.HTTPError as error:
         if error.response.status_code == 404:
+            return None
+        if error.response.status_code == 429:
+            # BUG: This is wrong
             return None
         raise
     # print(item_string)

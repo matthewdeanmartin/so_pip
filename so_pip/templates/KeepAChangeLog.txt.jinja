@@ -6,7 +6,8 @@
 {% for version in item %}
 ## [{{ version["version"] }}] - {{ version["date"] }}
 ### Added
-- {{ version["changes"]["comment"] }} {{ version["changes"]["content_license"] }} [{{ version["changes"]["user"]] }}]({{ version["changes"]["link"] }}).
+- {{ ('\n' ~ version["changes"]["comment"]) | wordwrap(140) | replace('\n', '\n# ') }}
+  {{ version["changes"]["content_license"] }} [{{ version["changes"]["user"] }}]({{ version["changes"]["link"] }}).
 {% endfor %}
 
 {% for version in item %}
