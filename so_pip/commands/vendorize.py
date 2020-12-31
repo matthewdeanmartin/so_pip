@@ -27,6 +27,7 @@ from so_pip.support_files.authors import write_authors
 from so_pip.support_files.changelog import changelog_for_post
 from so_pip.support_files.code_of_conduct import render_code_of_conduct
 from so_pip.support_files.license import write_license
+from so_pip.support_files.readme_md import create_readme_md
 from so_pip.support_files.requirements_for_post import requirements_for_file
 
 
@@ -91,6 +92,8 @@ def handle_question(
         changelog_for_post(question, module_folder)
     if settings.GENERATE_AUTHORS:
         write_authors(module_folder, submodule_name, question)
+    if settings.GENERATE_README:
+        create_readme_md(module_folder, submodule, question)
     if settings.GENERATE_CODE_OF_CONDUCT:
         render_code_of_conduct(module_folder)
 
@@ -274,6 +277,8 @@ def handle_answers(
             changelog_for_post(answer, answer_folder)
         if settings.GENERATE_AUTHORS:
             write_authors(answer_folder, answer_module_name, question, answer)
+        if settings.GENERATE_README:
+            create_readme_md(answer_folder, submodule, question, answer)
         if settings.GENERATE_CODE_OF_CONDUCT:
             render_code_of_conduct(answer_folder)
 

@@ -1,7 +1,7 @@
 from unittest.mock import patch
 
 from so_pip.__main__ import process_docopts
-
+from so_pip.utils.files_utils import find_file
 
 
 def test_process_docopts():
@@ -10,7 +10,7 @@ def test_process_docopts():
  '--name': 'foo',
  '--package': None,
  '--question': None,
- '--vendor': 'so_pip_packages',
+ '--vendor': find_file('../../output/unit_tests/', __file__),
  '--version': False,
  '<package>': [],
  'freeze': False,

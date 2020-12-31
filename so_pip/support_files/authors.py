@@ -11,7 +11,7 @@ https://www.npmjs.com/package/stringify-author
 https://www.npmjs.com/package/author-regex
 """
 
-from typing import Collection, Dict, Optional, Sequence, Set, Union, Any
+from typing import Collection, Dict, Optional, Sequence, Set, Union, Any, List
 
 from so_pip.api_clients.stackapi_facade import get_json_revisions_by_post_id, \
     get_json_comments_by_post_id
@@ -64,6 +64,7 @@ def get_authors_for_question(question: Dict[str,Any]) -> Set[str]:
 def get_authors_for_answer(answer: Dict[str,Any]) -> Set[str]:
     """Get authors for post"""
     authors: Set[str] = set()
+
     if answer["owner"]:
         owner = answer["owner"]
         if "link" not in owner:

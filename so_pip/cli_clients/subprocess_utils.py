@@ -25,9 +25,10 @@ def execute_get_text(
             stderr=subprocess.PIPE,
             env=env,
         )
-    except subprocess.CalledProcessError:
+    except subprocess.CalledProcessError as cpe:
         if ignore_error and completed:
             return completed.stdout.decode("utf-8") + completed.stderr.decode("utf-8")
+        print(cpe)
         raise
     else:
         return completed.stdout.decode("utf-8") + completed.stderr.decode("utf-8")

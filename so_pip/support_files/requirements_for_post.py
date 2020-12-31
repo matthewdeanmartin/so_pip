@@ -20,7 +20,7 @@ from so_pip import settings as settings
 from so_pip.cli_clients.external_commands import generate_requirements
 from so_pip.models.python_package_model import PythonPackage
 from so_pip.pypi_query.main import find_modules
-from so_pip.support_files.setup_py import render_setup_py
+from so_pip.support_files.setup_py import render_setup_py, create_setup_py
 from so_pip_packages.find_imports import main as find_imports
 
 # https://github.com/ohjeah/pip-validate
@@ -70,25 +70,6 @@ def requirements_for_file(package_folder: str, python_submodule: PythonPackage) 
     create_setup_py(package_folder, python_submodule)
     return file_to_write, package_count
 
-
-
-
-def create_setup_py(package_folder: str, python_submodule: PythonPackage) -> None:
-    """Just the setup.py part"""
-    with open(
-        package_folder + "/setup.py", "w", encoding="utf-8", errors="replace"
-    ) as setup:
-        data = {
-            "package_name": python_submodule.package_name,
-            "version": python_submodule.version,
-            "url": python_submodule.url,
-            "author": python_submodule.author,
-            "author_email": python_submodule.author_email,
-            "description": python_submodule.description,
-            "dependencies": python_submodule.dependencies,
-        }
-        source = render_setup_py(data)
-        setup.write(source)
 
 
 def process_requirements_for_a_module(package_folder: str) -> None:

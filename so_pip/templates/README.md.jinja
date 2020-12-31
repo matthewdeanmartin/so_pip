@@ -1,0 +1,24 @@
+## Table of contents
+* [General info](#general-info)
+* [Setup](#setup)
+
+## General info
+This project is code extracted from the question ["{{ item["title"] }}"]({{ item["url"] }})
+
+## Setup
+To build and install this package:
+
+```
+# Read code to see if it all looks legit
+$ python setup.py build bdist_wheel
+# copy vendor_packages folder to your code base
+# Add vendor folder to PYTHONPATH
+$ pip install vendor_packages/*.whl -t vendor
+```
+Don't push to pypi unless you put substantial effort into it, pypi is already full of junk.
+
+Credits and License
+-------------------
+{% for author in item["authors"] %}{{ author }}
+{% endfor %}
+

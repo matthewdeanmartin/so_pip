@@ -99,6 +99,6 @@ def find_code_blocks(html: str, tags:List[str]) -> List[CodeBlock]:
     for block in blocks:
         if not block.extension:
             block.analyze(tags=tags)
-    if len(blocks) != expected_blocks:
+    if len(blocks) < expected_blocks:
         raise TypeError("lost some blocks")
     return blocks

@@ -31,6 +31,8 @@ class PythonPackage:
     author_email: str = ""
     dependencies: Union[List[str], Set[str]] = field(default_factory=list)
 
+    answer_revisions: Dict[str,Any]= field(default_factory=dict)
+
     def file_frequencies(self) -> collections.Counter:
         """How many of each file type?"""
         return collections.Counter([file.extension for file in self.code_files])
@@ -81,10 +83,12 @@ class PythonPackage:
             ]
         )
 
-        revision_json = get_json_revisions_by_post_id(post.get("answer_id",post["question_id"]))
-        if len(revision_json.get("items", [])) >= 1:
-            self.version = f"1.0.{len(revision_json.get('items', [])) - 1}"
-            for revision in revision_json.get("items", []):
+        if not self.answer_revisions:
+            self.answer_revisions = get_json_revisions_by_post_id(post.get("answer_id",post["question_id"]))
+        if len(self.answer_revisions.get("items", [])) >= 1:
+
+            self.version = f"0.1.{len(self.answer_revisions.get('items', []))}"
+            for revision in self.answer_revisions.get("items", []):
                 coauthors = set()
                 if "user" in revision:
                     coauthors.add((revision["user"]["display_name"], revision["user"].get("user_id",-1)))
