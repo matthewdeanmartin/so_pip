@@ -20,7 +20,7 @@ def create_package_folder(target_folder: str, module_name: str, metadata: str) -
     """Create folder and init file"""
     module_folder = f"{target_folder}/{module_name}"
     os.makedirs(module_folder, exist_ok=True)
-    with open(f"{module_folder}/__init__.py", "w") as init_file:
+    with open(f"{module_folder}/__init__.py", "w", encoding="utf-8", errors="replace") as init_file:
         if metadata:
             init_file.write(metadata)
         else:

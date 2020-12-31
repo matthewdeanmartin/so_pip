@@ -21,7 +21,7 @@ def find_imports(toCheck: str, importable_only: bool = False) -> List[str]:
     in if/else or try/except blocks will always be included.
     """
     importedItems = []
-    with open(toCheck) as pyFile:
+    with open(toCheck, encoding="utf-8", errors="ignore") as pyFile:
         for raw_line in pyFile:
             # ignore comments
             line = raw_line.strip().partition("#")[0].partition(" as ")[0].split(" ")

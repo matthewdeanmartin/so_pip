@@ -16,10 +16,6 @@ def write_as_html(
     post: Dict[str, Any], submodule_name: str
 ) -> None:
     """Dump post in readable form."""
-    # with open(submodule_name + ".html", "w", encoding="utf-8") as diagnostics:
-    #     diagnostics.write("<html><body>")
-    #     diagnostics.write(post.body)
-    #     diagnostics.write("</body></html>")
     template = load_template("post.html.jinja", autoescape=False)
     data = {
         "title": post.title if hasattr(post, "title") else "",

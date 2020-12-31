@@ -70,7 +70,7 @@ def write_license(
 
 def convert_html_to_text(license_path: str, license_path_txt: str) -> None:
     """One time convert html to txt"""
-    with open(license_path) as license_as_html:
+    with open(license_path, encoding="utf-8", errors="replace") as license_as_html:
         text = html2text.html2text(license_as_html.read())
-    with open(license_path_txt, "w") as write_text:
+    with open(license_path_txt, "w", encoding="utf-8", errors="replace") as write_text:
         write_text.write(text)
