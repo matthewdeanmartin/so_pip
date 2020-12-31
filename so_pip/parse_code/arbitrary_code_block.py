@@ -35,6 +35,8 @@ def find_code_blocks(html: str, tags:List[str]) -> List[CodeBlock]:
     # code/comment
     # but for longer runs, we assume comment/code/file break
     first = True
+    expected_blocks =sum(1 for part in parts if part.startswith("<pre><code"))
+
     for part in parts:
         if part.isspace():
             continue
@@ -88,10 +90,15 @@ def find_code_blocks(html: str, tags:List[str]) -> List[CodeBlock]:
     #    text
     if len(blocks) >= 2:
         last = blocks[-1]
-        if last.header_comments and blocks[-2].code_text:
+        # If the last block is just header comments
+        # move them to footer & delete.
+        # I hate this code.
+        if last.header_comments and not last.code_text:
             blocks[-2].footer_comments = last.header_comments
             blocks.pop()
     for block in blocks:
         if not block.extension:
             block.analyze(tags=tags)
+    if len(blocks) != expected_blocks:
+        raise TypeError("lost some blocks")
     return blocks

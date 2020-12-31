@@ -11,8 +11,8 @@ from so_pip import settings as settings
 
 def write_and_format_python_file(file_name: str, to_write: List[str]) -> bool:
     """format and dump it"""
-    if "." not in file_name:
-        raise TypeError("missing extension, likely")
+    if not file_name.endswith(".py"):
+        raise TypeError("Why don't we have a .py extension?")
 
     while to_write[-1].strip() in ("", "#"):
         to_write.pop()

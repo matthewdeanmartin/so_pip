@@ -5,7 +5,7 @@ Generate all the python related files for a module
 - sort imports
 """
 import os
-from typing import List
+from typing import List, Dict, Any
 
 from so_pip import settings as settings
 from so_pip.cli_clients.external_commands import isort
@@ -24,14 +24,17 @@ def create_package_folder(target_folder: str, module_name: str, metadata: str) -
         if metadata:
             init_file.write(metadata)
         else:
+            raise TypeError("Where is our meta data?")
             init_file.write("\n")
 
     return module_folder
 
 
-def handle_python_post(html: str, name: str, description: str, tags:List[str]) -> PythonPackage:
+def handle_python_post(post:Dict[str,Any], html: str, name: str, description: str, tags:List[str]) -> PythonPackage:
     """Given html of ap post, fill in a PythonPackage object."""
-    package = PythonPackage(package_name=name, description=description)
+    package = PythonPackage(package_name=name,
+                            description=description)
+    package.extract_metadata(post=post)
     package.code_blocks.extend(find_code_blocks(html, tags))
     if not package.code_blocks:
         raise TypeError("Expected some code blocks by now")

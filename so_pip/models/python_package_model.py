@@ -88,19 +88,19 @@ class PythonPackage:
                 coauthors = set()
                 if "user" in revision:
                     coauthors.add((revision["user"]["display_name"], revision["user"].get("user_id",-1)))
-
-
         else:
             self.version = "0.1.0 # can't get revision"
 
         title = post['title'].replace("'", "\\'")
         # version & author described in pep 8
-        self.python_metadata.extend(
-            [
+        if self.python_metadata and "__title__" in "".join(self.python_metadata):
+            print("Erasing old self.python_metadata, TODO: code shouldn't get here.")
+
+        self.python_metadata=[
                 f"__title__ = '{title}'",
                 f"__version__ = '{self.version}'",
                 f"__author__ = '{self.author}'",
                 f"__license__ = '{post.get('content_license', 'N/A')}'",
                 f"__copyright__ = 'Copyright {post['creation_date']} by {self.author}'",
             ]
-        )
+

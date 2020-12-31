@@ -76,6 +76,15 @@ def futurize(file_name: str) -> str:
     print(result)
     return result
 
+def black(folder_name: str) -> str:
+    """Format files to keep pylint happy"""
+    text = f"{settings.SHELL} black {folder_name}"
+    print(text)
+    command = shlex.split(text)
+    result = execute_get_text(command)
+    print(result)
+    return result
+
 
 def two_to_three(file_name: str) -> str:
     """fix print"""
@@ -124,6 +133,7 @@ def pylint(folder: str) -> str:
     # isort MUST be installed with pipx! It is not compatible with pylint in the same
     # venv. Maybe someday, but it just isn't worth the effort.
     rcfile = find_file("pylintrc.ini", __file__)
+
     command = (
         f"{settings.SHELL} pylint "
         "--msg-template='{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}' "

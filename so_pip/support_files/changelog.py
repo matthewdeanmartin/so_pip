@@ -16,7 +16,7 @@ def changelog_for_post(
     versions = []
     post_id = post["answer_id"] if "answer_id" in post else post["question_id"]
     revision_json = get_json_revisions_by_post_id(post_id)
-    if len(revision_json.get("items", [])) <= 1:
+    if len(revision_json.get("items", [])) == 0:
         return
     for revision in revision_json.get("items", []):
         # if "content_license" not in revision:

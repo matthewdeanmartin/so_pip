@@ -11,7 +11,6 @@ from functools import lru_cache
 from typing import List, Optional, Tuple
 
 import pypistats
-
 # endpoints
 # -----------
 # recent downloads
@@ -19,36 +18,15 @@ import pypistats
 # major, minor, system, downloads by minor version, system, etc
 import requests
 
-from so_pip.pypi_query.main import PackageInfo
+from so_pip.pypi_query.main import package_exists
 
 
-def find_modules(
-    module_list: List[str], minimum_downloads: int
-) -> Tuple[List[str], List[str]]:
-    """Assuming package exists of same name, see if it exists
-    This is not true for a lot of packages.
-    """
-    packages_of_same_name: List[str] = []
-    not_in_pypi: List[str] = []
-    for module in module_list:
-        downloads = get_download_count(module)
 
-        if downloads and downloads > minimum_downloads:
-            packages_of_same_name.append(module)
-        else:
-            not_in_pypi.append(module)
-    return packages_of_same_name, not_in_pypi
 
-PYPI = None
+
 @lru_cache(maxsize=1000)
 def get_download_count(module: str) -> Optional[int]:
     """Get download count and cache it"""
-    # TODO: move elsewhere
-    global PYPI
-    if not PYPI:
-        PYPI =PackageInfo()
-    return 1 if PYPI.search(module) else 0
-
     try:
         item_string = pypistats.overall(module.strip(), format="json")
     except requests.exceptions.HTTPError as error:
@@ -66,3 +44,6 @@ def get_download_count(module: str) -> Optional[int]:
             if "without_mirrors" in category.values():
                 downloads = category["downloads"]
     return downloads
+
+
+print(get_download_count("pymarc"))

@@ -1,3 +1,8 @@
+"""
+Use this to package and install.
+
+I don't recommend putting this into PyPi, it has too much junk in it already.
+"""
 from setuptools import setup, find_packages
 
 setup(
@@ -8,5 +13,5 @@ setup(
     author_email='N/A',
     description='{{ item["description"] }}',
     packages=find_packages(),
-    install_requires=[{% for dependency in item["dependencies"] %}'{{ dependency }}'{% endfor %}],
+    install_requires=[{% for dependency in item["dependencies"] %}'{{ dependency }}',{% endfor %}],
 )

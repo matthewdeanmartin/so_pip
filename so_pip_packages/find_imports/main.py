@@ -25,29 +25,36 @@ def find_imports(toCheck: str, importable_only: bool = False) -> List[str]:
         for raw_line in pyFile:
             # ignore comments
             line = raw_line.strip().partition("#")[0].partition(" as ")[0].split(" ")
-            if line[0] == "import":
-                for imported in line[1:]:
-                    # remove commas (this doesn't check for commas if
-                    # they're supposed to be there!
-                    imported = imported.strip(", ")
-                    try:
-                        # check to see if the module can be imported
-                        # (doesn't actually import - just finds it if it exists)
-                        imp.find_module(imported)
-                        # add to the list of items we imported
-                        importedItems.append(imported)
-                    except ImportError:
-                        # ignore items that can't be imported
-                        # (unless that isn't what you want?)
-                        if not importable_only:
-                            importedItems.append(imported)
+            if line[0] == "import" or line[0]=="from":
+                process_line(importable_only, importedItems, line)
 
     return importedItems
 
 
+def process_line(importable_only, importedItems, line):
+    for imported in line[1:]:
+        if imported == "import":
+            break
+
+        # remove commas (this doesn't check for commas if
+        # they're supposed to be there!
+        imported = imported.strip(", ")
+        try:
+            # check to see if the module can be imported
+            # (doesn't actually import - just finds it if it exists)
+            imp.find_module(imported)
+            # add to the list of items we imported
+            importedItems.append(imported)
+        except ImportError:
+            # ignore items that can't be imported
+            # (unless that isn't what you want?)
+            if not importable_only:
+                importedItems.append(imported)
+
+
 if __name__ == "__main__":
     # toCheck = eval(input("Which file should be checked: "))
-    print(find_imports("main.py"))
+    print(find_imports("question_1_.py"))
 
 # This doesn't do anything for `from module import something` style imports,
 # though that could easily be added, depending on how you want to deal with

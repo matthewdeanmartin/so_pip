@@ -8,7 +8,7 @@ from so_pip.parse_python.module_maker import handle_python_post
 def test_handle_python_answer():
     answer = get_json_by_answer_id(24139629)["items"][0]
     question = get_json_by_question_id(answer["question_id"])["items"][0]
-    submodule = handle_python_post(
+    submodule = handle_python_post(answer,
             answer["body"], "answer_module_name", f"StackOverflow answer #{answer['answer_id']}",
             question["tags"]
         )
@@ -21,7 +21,7 @@ def test_handle_python_answer():
 
 def test_handle_python_question():
     value = get_json_by_question_id(24139250)["items"][0]
-    submodule = handle_python_post(
+    submodule = handle_python_post(value,
         value["body"], "answer_module_name", f"StackOverflow answer #{value['question_id']}",
         value["tags"]
     )

@@ -14,7 +14,7 @@ from typing import Iterable, List, Tuple, Dict, Any
 
 import so_pip.api_clients.stackapi_facade as stackapi_client
 from so_pip import settings as settings
-from so_pip.cli_clients.external_commands import isort, pur, pylint, safety
+from so_pip.cli_clients.external_commands import isort, pur, pylint, safety, black
 from so_pip.file_writing import write_as_html, write_as_md, write_as_text
 from so_pip.models.python_package_model import PythonPackage
 from so_pip.parse_code.write_anything import write_and_format_any_file
@@ -60,10 +60,10 @@ def handle_question(
             submodule.brief_header if settings.METADATA_IN_INIT else submodule.header
         )
 
-        if submodule_path.endswith(".py"):
+        if code_file.file_name.endswith(".py"):
             code_to_write = headers + metadata + code_file.to_write()
 
-            wrote_file = write_and_format_python_file(submodule_path, code_to_write)
+            wrote_file = write_and_format_python_file(code_file.file_name, code_to_write)
 
             if wrote_file and code_file.language == "python" and settings.BUMP_TO_PY3:
                 upgrade_file(submodule_path)
@@ -75,7 +75,7 @@ def handle_question(
             )
             code_to_write = headers + code_file.to_write()
             write_and_format_any_file(
-                submodule_path,
+                code_file.file_name,
                 code_to_write,
             )
 
@@ -170,6 +170,7 @@ def create_package_for_post(
     post_id = post["answer_id"] if "answer_id" in post else post["question_id"]
     package_name = make_up_module_name(post_id, package_prefix, post_type)
     package_info = handle_python_post(
+        post,
         post["body"], name=package_name, description=post["title"],
         tags=post["tags"]
     )
@@ -202,6 +203,7 @@ def handle_answers(
         packages_made.append(answer_module_name)
         # TODO: assumes we already know the language & that we are 1 file, 1 language
         submodule = handle_python_post(
+            answer,
             answer["body"], answer_module_name,
             f"StackOverflow post #{answer['answer_id']}",
             tags=question["tags"]
@@ -282,7 +284,8 @@ def handle_answers(
                 result = safety(requirements_txt)
                 print(result)
             isort(output_folder)
+            black(output_folder)
             lint_file_name = answer_folder + "/lint.txt"
-            with open(lint_file_name, "w", errors="replace") as lint_writer:
+            with open(lint_file_name, "w", encoding="utf-8", errors="replace") as lint_writer:
                 lint_writer.write(pylint(answer_folder))
     return packages_made

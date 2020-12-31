@@ -1,10 +1,40 @@
 import os
-from typing import List
+from functools import lru_cache
+from typing import List, Tuple
 
 import requests
 
 from so_pip.utils.files_utils import find_file
 
+
+
+PYPI=None
+
+def find_modules(
+    module_list: List[str], minimum_downloads: int
+) -> Tuple[List[str], List[str]]:
+    """Assuming package exists of same name, see if it exists
+    This is not true for a lot of packages.
+    """
+    packages_of_same_name: List[str] = []
+    not_in_pypi: List[str] = []
+    for module in module_list:
+        # The API runs into rate limits
+        # downloads = get_download_count(module)
+        # downloads and downloads > minimum_downloads:
+        if package_exists(module):
+            packages_of_same_name.append(module)
+        else:
+            not_in_pypi.append(module)
+    return packages_of_same_name, not_in_pypi
+
+@lru_cache(maxsize=1000)
+def package_exists(module: str) -> bool:
+    """Get download count and cache it"""
+    global PYPI
+    if not PYPI:
+        PYPI =PackageInfo()
+    return PYPI.search(module)
 
 class PackageInfo():
     def __init__(self):

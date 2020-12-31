@@ -17,3 +17,6 @@ def test_import_so_answer():
 
 def test_handle_answer_escape_in_source():
     import_so_answer("escape", 64476551)
+
+def test_answer_missing_last_code_block():
+    import_so_answer("missing_cb", 22489076)

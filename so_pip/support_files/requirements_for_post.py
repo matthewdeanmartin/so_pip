@@ -14,11 +14,12 @@ from typing import Tuple
 from stdlib_list import stdlib_list
 
 from so_pip import settings as settings
-from so_pip.api_clients.pypstats_facade import find_modules
+
 
 # ^\s*(from|import)\s+\w+
 from so_pip.cli_clients.external_commands import generate_requirements
 from so_pip.models.python_package_model import PythonPackage
+from so_pip.pypi_query.main import find_modules
 from so_pip.support_files.setup_py import render_setup_py
 from so_pip_packages.find_imports import main as find_imports
 
@@ -27,15 +28,22 @@ from so_pip_packages.find_imports import main as find_imports
 
 def requirements_for_file(package_folder: str, python_submodule: PythonPackage) -> Tuple[str, int]:
     """Requirements for running `safety`"""
+
     package_count = 0
     file_to_write = None
     all_imports = []
-    for filename in os.listdir(package_folder):
-        if filename.endswith(".py"):
-            py_file = os.path.join(package_folder, filename)
-            all_imports += find_imports.find_imports(py_file)
-        else:
-            continue
+    with os.scandir(package_folder) as root_dir:
+        for path in root_dir:
+            if path.is_file():
+                filename = path.name
+                # for filename in os.listdir(package_folder):
+                if "." not in filename:
+                    raise TypeError("All files must have an extension")
+                if filename.endswith(".py"):
+                    py_file = path.path
+                    all_imports += find_imports.find_imports(py_file)
+                else:
+                    continue
 
     # remove built ins
     libraries = stdlib_list("3.8")
