@@ -1,5 +1,11 @@
 """
-Using source code, find requirements
+Using source code, find requirements.
+
+Removes python 3.8 system libraries.
+
+Assumes module names match package names. This is not true.
+
+Does not run safety if no modules are successfully guessed.
 """
 import os
 import subprocess  # nosec

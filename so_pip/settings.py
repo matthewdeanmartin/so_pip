@@ -44,6 +44,7 @@ POSTS_AS_MD = ast.literal_eval(section["POSTS_AS_MD"])
 METADATA_IN_INIT = ast.literal_eval(section["METADATA_IN_INIT"])
 GENERATE_REQUIREMENTS_TXT = ast.literal_eval(section["GENERATE_REQUIREMENTS_TXT"])
 GENERATE_AUTHORS = ast.literal_eval(section["GENERATE_AUTHORS"])
+GENERATE_CODE_OF_CONDUCT = ast.literal_eval(section["GENERATE_CODE_OF_CONDUCT"])
 GENERATE_CHANGE_LOG = ast.literal_eval(section["GENERATE_CHANGE_LOG"])
 SETUP_CFG_OR_SETUP_PY = section["SETUP_CFG_OR_SETUP_PY"]
 

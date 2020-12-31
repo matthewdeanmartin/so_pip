@@ -1,7 +1,12 @@
 """
-Authors file, inspired by google's format
+Authors file
+
+This is roughly following Gnu Gnit's conventions.
+
+Also draws inspiration from google's format.
 https://opensource.google/docs/releasing/authors/
 
+Also draws inspiration from libraries that attempt to parse AUTHORS files.
 https://www.npmjs.com/package/stringify-author
 https://www.npmjs.com/package/author-regex
 """
@@ -104,7 +109,7 @@ def write_authors(
         authors.union(get_authors_for_answer(answer))
 
     with open(
-        package_folder + "/AUTHORS", "w", encoding="utf-8", errors="replace"
+        package_folder + "/AUTHORS.txt", "w", encoding="utf-8", errors="replace"
     ) as author_file:
         item = {"name": package_name, "authors": authors}
         author_file.write(render_authors(data=item))

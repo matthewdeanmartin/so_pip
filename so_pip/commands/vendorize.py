@@ -25,6 +25,7 @@ from so_pip.parse_python.python_validator import validate_python
 from so_pip.parse_python.upgrade_to_py3 import upgrade_file
 from so_pip.support_files.authors import write_authors
 from so_pip.support_files.changelog import changelog_for_post
+from so_pip.support_files.code_of_conduct import render_code_of_conduct
 from so_pip.support_files.license import write_license
 from so_pip.support_files.requirements_for_post import requirements_for_file
 
@@ -90,6 +91,8 @@ def handle_question(
         changelog_for_post(question, module_folder)
     if settings.GENERATE_AUTHORS:
         write_authors(module_folder, submodule_name, question)
+    if settings.GENERATE_CODE_OF_CONDUCT:
+        render_code_of_conduct(module_folder)
 
     requirements_txt, count = requirements_for_file(module_folder, submodule)
     if requirements_txt and count>0:
@@ -269,6 +272,8 @@ def handle_answers(
             changelog_for_post(answer, answer_folder)
         if settings.GENERATE_AUTHORS:
             write_authors(answer_folder, answer_module_name, question, answer)
+        if settings.GENERATE_CODE_OF_CONDUCT:
+            render_code_of_conduct(answer_folder)
 
         if wrote_py_file:
             requirements_txt, count = requirements_for_file(answer_folder, submodule)

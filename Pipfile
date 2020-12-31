@@ -53,6 +53,7 @@ so-pip = {editable = true,path = "."}
 pip-upgrader = "*"
 pur = "*"
 pypinfo = "*"
+jupyter = "*"
 
 [requires]
 python_version = "3.8"

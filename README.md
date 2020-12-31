@@ -14,7 +14,7 @@ results in output folder. Vendorize module or `pip -e` install it.
 
 Usage for Beta
 --------------
-PARTIALLY IMPLMENTED
+PARTIALLY IMPLEMENTED
 ```
 # question and all it's answers
 > so_pip vendorize --question=31049648
@@ -74,10 +74,13 @@ With help from a lot of libraries
     - Include html file for diagnostics
     - Format HTML as text without losing too much markup
     - Generate requirements.txt (sometimes)
-    - Add LICENSE file based on one revision license (actually can be many)
+    - Add LICENSE file based on each revision's license
+        - Handle multiple licenses
     - Add AUTHORS file based on revisions
+        - Parsable authors with links
     - Add CHANGELOG
         - Changelog supports two schemas (almost)
+    - Add Code of Conduct
 - Splits source code across files when the are clues it should be many files
 - Turn code file(s) into python package
     - Generate version from answer revision
@@ -93,22 +96,22 @@ With help from a lot of libraries
 
 Things I can't do yet
 ---------------------
-- Generate CODE_OF_CONDUCT, (link to SO's https://stackoverflow.com/conduct)
+- Pin versions, e.g. `so_pip vendorize --answer=31049648 --revision=2`
 - Get code from pastebin, gists or the like:
    - e.g. https://stackoverflow.com/questions/26188763/python-3-x-text-based-adventure-game-save-game-function
 - Generate README.md
     - Table of conents
     - recap authors (date, author, license, contrib type- e.g. question, comment, revision)
-    -
-- Parsable authors with links
-- Handle contributors & multiple licenses (Almost! Got ChangeLog & Authors)
-- Can't cope with IPython/Juputer notebook stuff
-   - e.g. https://stackoverflow.com/questions/25748473/python-text-based-adventure-game-need-assistance
+- IPython/Juputer notebook stuff
+   - Generate code file as .ipynb file
+   - Parse code that was copy/pasted to a code block.
+     e.g. https://stackoverflow.com/questions/25748473/python-text-based-adventure-game-need-assistance
 - Code comment syntax is python even though I can figure out that the main chunk of code is not python
     - root problem is how to detect programming language when it isn't perfect python
 - Enable minimal units of code re-use, such as wrapping in "def" block
 - Caching
 - Exploit shebangs (#!/usr/bin/python) to indicate code block should be a file
+- Guess file name based on the line above the code block.
 - Include comments in the questions/answers text or comments
 
 Maybe will never figure out

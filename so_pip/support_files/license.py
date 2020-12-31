@@ -1,5 +1,7 @@
 """
-Add LICENSE files
+Add LICENSE files.
+
+This is roughly following Gnu Gnit's conventions.
 
 The world actually doesn't know how to handle this. Not only is an SO post under
 a weird CC license, but each part could be under one of 4 different versions of
@@ -10,6 +12,7 @@ declaring-multiple-licences-in-a-github-project
 Since other tools only look at LICENSE, I'll put the "principal" one there.
 
 """
+import os
 import shutil
 from typing import List, Any, Dict
 
@@ -34,39 +37,32 @@ def write_license(
     revision_json = get_json_revisions_by_post_id(post_id)
 
     for revision in revision_json.get("items", []):
-        # if revision["user"]["user_type"] == "does_not_exist":
-        #     continue
-        # display_name = revision["user"]["display_name"]
-        # url = revision["user"]["link"]
-        # link = normalize_user_link(url, revision["user"]["user_id"])
         licenses.append(revision.get("content_license", "N/A"))
 
     comments = get_json_comments_by_post_id(post_id)
     for comment in comments.get("items", []):
-        # if comment["owner"]["user_type"] == "does_not_exist":
-        #     continue
-        # display_name = comment["owner"]["display_name"]
-        # url = comment["owner"]["link"]
-        # link = normalize_user_link(url, comment["user"]["user_id"])
-
+        # N/A licenses happen for fake & expired users, I think
         licenses.append(comment.get("content_license", "N/A"))
 
-        # First Last <email> (url)
-        # First Last <@twitter> (url)
-        # authors.add(f"{display_name} <{link}>")
-
+    # There is no generally accepted convention for dual licenses
+    # Using a LICENSE folder convention because most stackoverflow questions
+    # have 1-4 licenses if considering question, answer, etc.
+    license_folder = f"{package_folder}/LICENSE/"
+    os.makedirs(license_folder, exist_ok=True)
     for license_name in set(licenses):
         if license_name == "N/A":
             # these really happen, not sure why.
             continue
         license_path = find_file(f"../licenses/{license_name}.txt", __file__)
-        # if "2.0" in license_name or "2.5" in license_name:
-        #     # Can't find text versions of 2.5 or 2.0
-        #     # ref https://wiki.creativecommons.org/wiki/License%20Versions
-        #     license_path_txt = find_file(f"../licenses/{license_name}.txt", __file__)
-        #     convert_html_to_text(license_path.replace(".txt", ".html"), license_path_txt)
+        if not os.path.exists(license_path) and (
+            "2.0" in license_name or "2.5" in license_name):
+            # Can't find text versions of 2.5 or 2.0
+            # ref https://wiki.creativecommons.org/wiki/License%20Versions
+            license_path_txt = find_file(f"../licenses/{license_name}.txt", __file__)
+            convert_html_to_text(license_path.replace(".txt", ".html"),
+                                 license_path_txt)
 
-        destination_path = find_file(f"{package_folder}/LICENSE",
+        destination_path = find_file(f"{package_folder}/LICENSE/{license_name}.txt",
                                      settings.TARGET_FOLDER)
 
         shutil.copy(license_path, destination_path)

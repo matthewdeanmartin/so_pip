@@ -41,7 +41,7 @@ def changelog_for_post(
         versions.append(version)
 
     with open(
-        package_folder + "/CHANGELOG", "w", encoding="utf-8", errors="replace"
+        package_folder + "/CHANGELOG.txt", "w", encoding="utf-8", errors="replace"
     ) as log:
 
         log.write(render_change_log(data=versions))
