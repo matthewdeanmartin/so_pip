@@ -78,7 +78,7 @@ def futurize(file_name: str) -> str:
 
 def black(folder_name: str) -> str:
     """Format files to keep pylint happy"""
-    text = f"{settings.SHELL} black {folder_name}"
+    text = f"{settings.SHELL} black {folder_name} --target-version=py38"
     print(text)
     command = shlex.split(text)
     result = execute_get_text(command)
