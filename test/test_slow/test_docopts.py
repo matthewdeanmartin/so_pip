@@ -15,7 +15,7 @@ def test_process_docopts():
      '--tags': 'python',
      '--vendor': None,
      '--version': False,
-     '<name>': ['abc'],
+     '<name>': 'abc',
      '<names>': [],
      'freeze': False,
      'list': False,

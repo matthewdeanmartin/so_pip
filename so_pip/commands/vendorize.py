@@ -23,6 +23,7 @@ from so_pip.parse_python.make_name import make_up_module_name
 from so_pip.parse_python.module_maker import create_package_folder, handle_python_post
 from so_pip.parse_python.python_validator import validate_python
 from so_pip.parse_python.upgrade_to_py3 import upgrade_file
+from so_pip.settings import KEEP_ANSWERS_WITH_NO_CODE
 from so_pip.support_files.authors import write_authors
 from so_pip.support_files.changelog import changelog_for_post
 from so_pip.support_files.code_of_conduct import render_code_of_conduct
@@ -112,7 +113,8 @@ def handle_question(
     return packages_made
 
 
-def import_so_answer(package_prefix: str, answer_id: int) -> List[str]:
+def import_so_answer(package_prefix: str, answer_id: int,
+                     output_folder:str) -> List[str]:
     """main entry point
 
     package_prefix - prefix for question and post modules
@@ -123,10 +125,6 @@ def import_so_answer(package_prefix: str, answer_id: int) -> List[str]:
     answer_data = stackapi_client.get_json_by_answer_id(answer_id)
     answer = answer_data["items"][0]
 
-    # /vendor/prefix_name/main.py
-    # default is relative to so_pip root already.
-    # if user supplied, it is what it is.
-    output_folder = settings.TARGET_FOLDER
     question_id = answer["question_id"]
     question = stackapi_client.get_json_by_question_id(question_id)["items"][0]
     packages_made.extend(
@@ -135,7 +133,8 @@ def import_so_answer(package_prefix: str, answer_id: int) -> List[str]:
     return packages_made
 
 
-def import_so_question(package_prefix: str, question_id: int) -> List[str]:
+def import_so_question(package_prefix: str, question_id: int,
+                       output_folder:str) -> List[str]:
     """main entry point
 
     package_prefix - prefix for question and post modules
@@ -145,10 +144,6 @@ def import_so_question(package_prefix: str, question_id: int) -> List[str]:
     packages_made: List[str] = []
     question = stackapi_client.get_json_by_question_id(question_id)["items"][0]
 
-    # /vendor/prefix_name/main.py
-    # default is relative to so_pip root already.
-    # if user supplied, it is what it is.
-    output_folder = settings.TARGET_FOLDER
 
     (
         supporting_files_folder,
@@ -167,7 +162,7 @@ def import_so_question(package_prefix: str, question_id: int) -> List[str]:
     )
 
     # answers...
-    if question["is_answered"]:
+    if question["answers"]:
         packages_made.extend(
             handle_answers(output_folder, package_prefix, question, question["answers"])
         )
@@ -223,11 +218,19 @@ def handle_answers(
         answer = stackapi_client.get_json_by_answer_id(shallow_answer["answer_id"])[
             "items"
         ][0]
+
+        def answer_has_code(answer: Dict[str, Any]) -> bool:
+            """This will probably get more complicated"""
+            return "<code" in answer["body"] and "</code>" in answer["body"]
+
+        if not answer_has_code(answer) and not KEEP_ANSWERS_WITH_NO_CODE:
+            continue
+
         answer_module_name = make_up_module_name(
             answer["answer_id"], package_prefix, "a"
         )
         packages_made.append(answer_module_name)
-        # TODO: assumes we already know the language & that we are 1 file, 1 language
+
         submodule = handle_python_post(
             answer,
             answer["body"],

@@ -11,6 +11,7 @@ from bs4 import BeautifulSoup
 
 from so_pip.models.code_block_model import CodeBlock
 from so_pip.parse_python.code_transformations import fix_interactive, fix_shell
+from so_pip.parse_python.format_code import deindent
 
 
 def find_code_blocks(html: str, tags: List[str]) -> List[CodeBlock]:
@@ -73,6 +74,8 @@ def find_code_blocks(html: str, tags: List[str]) -> List[CodeBlock]:
         code = fix_interactive(code)
         # bash shell stuff
         code = fix_shell(code)
+        # remove leaing whitepspace
+        code = deindent(code)
 
         block.code_text = code
 

@@ -1,6 +1,7 @@
 """
 Format and save python.
 """
+import textwrap
 from typing import List
 
 import black
@@ -37,3 +38,9 @@ def write_and_format_python_file(file_name: str, to_write: List[str]) -> bool:
                 generated.write(joined)
                 return True
     return False
+
+
+def deindent(code:str)->str:
+    """Remove leading whitespace"""
+    return textwrap.dedent(code)
+

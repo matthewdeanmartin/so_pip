@@ -1,8 +1,10 @@
 from so_pip.commands.vendorize import import_so_question
+from so_pip.utils.files_utils import find_file
 
+OUTPUT_FOLDER = find_file("../output", __file__)
 if __name__ == "__main__":
-
-    import_so_question("detect_tests", 14405063)
+    import_so_question("game_thing",42742423, OUTPUT_FOLDER)
+    # import_so_question("detect_tests", 14405063)
     # https://stackoverflow.com/questions/13137817/
     # how-to-download-image-using-requests
     #import_so_question("requests_help", 13137817)  # requests, excellent example

@@ -60,39 +60,36 @@ def main() -> int:
     #  'uninstall': False,
     #  'vendorize': False}
     # print(arguments)
-    target_folder = arguments["--output"]
-    if target_folder:
-        settings.TARGET_FOLDER = target_folder
-    else:
-        settings.TARGET_FOLDER = "output"
+    output_folder = arguments["--output"]
+
 
     if arguments["vendorize"]:
         prefix = arguments["<name>"]
         question = arguments["--question"]
         answer = arguments["--post"]
         if question:
-            packages_made = vendorize.import_so_question(prefix, question)
+            packages_made = vendorize.import_so_question(prefix, question,output_folder)
         elif answer:
-            packages_made = vendorize.import_so_answer(prefix, answer)
+            packages_made = vendorize.import_so_answer(prefix, answer,output_folder)
         else:
             raise TypeError("Need to specify a question or answer")
-        print(f"Vendorized {','.join(packages_made)} at {target_folder}")
+        print(f"Vendorized {','.join(packages_made)} at {output_folder}")
     elif arguments["uninstall"]:
         packages = arguments["<name>"]
         for package in packages:
-            uninstall.uninstall_package(target_folder, package)
+            uninstall.uninstall_package(output_folder, package)
         print(
             f"Uninstalled {','.join(packages)} from vendorized folder.\n"
             f"If you also installed with pip you will need to uninstall with pip"
         )
     elif arguments["list"]:
-        list_all.list_packages(target_folder)
+        list_all.list_packages(output_folder)
     elif arguments["freeze"]:
-        freeze.freeze_environment(target_folder)
+        freeze.freeze_environment(output_folder)
     elif arguments["show"]:
         packages = arguments["<names>"]
         for package in packages:
-            show.show(target_folder, package)
+            show.show(output_folder, package)
     elif arguments["search"]:
         prefix = arguments["<name>"]
         query = arguments["--query"]
@@ -108,7 +105,7 @@ def main() -> int:
             tags = arguments["--tags"].split(";,")
         else:
             tags = []
-        search.import_so_search(prefix, query, tags, count)
+        search.import_so_search(prefix, query, tags, output_folder, count)
     else:
         print("Don't recognize that command.")
         return -1

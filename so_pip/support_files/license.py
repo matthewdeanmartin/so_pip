@@ -64,9 +64,7 @@ def write_license(post: Dict[str, Any], package_folder: str) -> None:
                 license_path.replace(".txt", ".html"), license_path_txt
             )
 
-        destination_path = find_file(
-            f"{package_folder}/LICENSE/{license_name}.txt", settings.TARGET_FOLDER
-        )
+        destination_path = f"{package_folder}/LICENSE/{license_name}.txt"
 
         shutil.copy(license_path, destination_path)
 

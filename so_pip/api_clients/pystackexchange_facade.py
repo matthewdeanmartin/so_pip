@@ -10,9 +10,9 @@ from typing import List
 import stackexchange
 
 if os.environ.get("key", None):
-    STACK = stackexchange.Site(stackexchange.StackOverflow)
-else:
     STACK = stackexchange.Site(stackexchange.StackOverflow, os.environ["key"])
+else:
+    STACK = stackexchange.Site(stackexchange.StackOverflow)
 
 
 def question_by_id(question_id: int) -> stackexchange.Question:
