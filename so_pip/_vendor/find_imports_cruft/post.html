@@ -14,7 +14,8 @@
     }
 </style>
 <body>
-<p>Well, you could always write a simple script that searches the file for <code>import</code> statements. This one finds all imported modules and files, including those imported in functions or classes:</p>
+<p>Well, you could always write a simple script that searches the file for <code>import</code> statements. This one
+    finds all imported modules and files, including those imported in functions or classes:</p>
 
 <pre><code>def find_imports(toCheck):
     """
@@ -51,20 +52,28 @@ toCheck = raw_input("Which file should be checked: ")
 print find_imports(toCheck)
 </code></pre>
 
-<p>This doesn't do anything for <code>from module import something</code> style imports, though that could easily be added, depending on how you want to deal with those. It also doesn't do any syntax checking, so if you have some funny business like <code>import sys gtk, os</code> it will think you've imported all three modules even though the line is an error. It also doesn't deal with <code>try</code>/<code>except</code> type statements with regards to import - if it could be imported, this function will list it. It also doesn't deal well with multiple imports per line if you use the <code>as</code> keyword. The real issue here is that I'd have to write a full parser to really do this correctly. The given code works in many cases, as long as you understand there are definite corner cases.</p>
+<p>This doesn't do anything for <code>from module import something</code> style imports, though that could easily be
+    added, depending on how you want to deal with those. It also doesn't do any syntax checking, so if you have some
+    funny business like <code>import sys gtk, os</code> it will think you've imported all three modules even though the
+    line is an error. It also doesn't deal with <code>try</code>/<code>except</code> type statements with regards to
+    import - if it could be imported, this function will list it. It also doesn't deal well with multiple imports per
+    line if you use the <code>as</code> keyword. The real issue here is that I'd have to write a full parser to really
+    do this correctly. The given code works in many cases, as long as you understand there are definite corner cases.
+</p>
 
-<p>One issue is that relative imports will fail if this script isn't in the same directory as the given file. You may want to add the directory of the given script to <code>sys.path</code>.</p>
+<p>One issue is that relative imports will fail if this script isn't in the same directory as the given file. You may
+    want to add the directory of the given script to <code>sys.path</code>.</p>
 
 
 <hr/>
 <ul>
-<li>Chelonian,CC BY-SA 3.0</li>
+    <li>Chelonian,CC BY-SA 3.0</li>
 
-<li>dm76,CC BY-SA 3.0</li>
+    <li>dm76,CC BY-SA 3.0</li>
 
-<li>Tony Suffolk 66,CC BY-SA 3.0</li>
+    <li>Tony Suffolk 66,CC BY-SA 3.0</li>
 
-<li>Jan Spurny,CC BY-SA 4.0</li>
+    <li>Jan Spurny,CC BY-SA 4.0</li>
 </ul>
 </body>
 </html>

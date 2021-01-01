@@ -4,12 +4,12 @@
 ## [Unreleased]
 
 {% for version in item %}
-## [{{ version["version"] }}] - {{ version["date"] }}
-### Added
-- {{ ('\n' ~ version["changes"]["comment"]) | wordwrap(140) | replace('\n', '\n# ') }}
-  {{ version["changes"]["content_license"] }} [{{ version["changes"]["user"] }}]({{ version["changes"]["link"] }}).
+    ## [{{ version["version"] }}] - {{ version["date"] }}
+    ### Added
+    - {{ ('\n' ~ version["changes"]["comment"]) | wordwrap(140) | replace('\n', '\n# ') }}
+    {{ version["changes"]["content_license"] }} [{{ version["changes"]["user"] }}]({{ version["changes"]["link"] }}).
 {% endfor %}
 
 {% for version in item %}
-[{{ version["version"] }}]: {{ version["revision_url"] }}
+    [{{ version["version"] }}]: {{ version["revision_url"] }}
 {% endfor %}

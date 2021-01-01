@@ -110,6 +110,7 @@ SHEBANGS = {
     "#!/bin/tcsh": ".tcsh",
 }
 
+
 def language_by_shebang(test: str) -> List[str]:
     """Identify by shebang"""
     possibles = set()

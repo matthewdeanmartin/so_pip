@@ -23,7 +23,10 @@ Options:
 
 
 """
+import sys
+
 import docopt
+
 from so_pip import _version as meta
 from so_pip import settings as settings
 from so_pip.commands import freeze as freeze
@@ -64,7 +67,7 @@ def main() -> int:
         settings.TARGET_FOLDER = "output"
 
     if arguments["vendorize"]:
-        prefix = arguments["<name>"][0]
+        prefix = arguments["<name>"]
         question = arguments["--question"]
         answer = arguments["--post"]
         if question:
@@ -113,4 +116,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    exit(main())
+    sys.exit(main())

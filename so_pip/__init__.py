@@ -7,7 +7,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-
 if not os.environ.get("key", None):
     print(
         "No key could be found, go register one with "

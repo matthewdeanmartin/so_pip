@@ -11,6 +11,7 @@ from so_pip.utils.files_utils import find_file
 
 LOGGER = logging.getLogger(__name__)
 
+
 def pytest_detect(file: str) -> str:
     """How many tests in this file"""
     # so few SO questions have executable unit tests

@@ -2,36 +2,36 @@
 CC BY-SA 2.5 Daniel G
 https://stackoverflow.com/questions/2572582/return-a-list-of-imported-python-modules-used-in-a-script/2572654#2572654
 """
-
 import imp
 from typing import List
-
 
 # Well, you could always write a simple script that searches the file for
 # `import` statements. This one finds all imported modules and files, including
 # those imported in functions or classes:
 
 
-def find_imports(toCheck: str, importable_only: bool = False) -> List[str]:
+def find_imports(to_check: str, importable_only: bool = False) -> List[str]:
     """
     Given a filename, returns a list of modules imported by the program.
     Only modules that can be imported from the current directory
     will be included. This program does not run the code, so import statements
     in if/else or try/except blocks will always be included.
     """
-    importedItems = []
-    with open(toCheck, encoding="utf-8", errors="ignore") as pyFile:
+    imported_items = []
+    with open(to_check, encoding="utf-8", errors="ignore") as pyFile:
         for raw_line in pyFile:
             # ignore comments
             line = raw_line.strip().partition("#")[0].partition(" as ")[0].split(" ")
             if line[0] == "import" or line[0] == "from":
-                process_line(importable_only, importedItems, line)
+                process_line(importable_only, imported_items, line)
 
-    return importedItems
+    return imported_items
 
 
-def process_line(importable_only: bool, importedItems: List[str],
-                 line: List[str]) -> str:
+def process_line(
+    importable_only: bool, imported_items: List[str], line: List[str]
+) -> None:
+    """Process a line of import syntax"""
     for imported in line[1:]:
         if imported == "import":
             break
@@ -42,18 +42,19 @@ def process_line(importable_only: bool, importedItems: List[str],
         try:
             # check to see if the module can be imported
             # (doesn't actually import - just finds it if it exists)
+
             imp.find_module(imported)
             # add to the list of items we imported
-            importedItems.append(imported)
+            imported_items.append(imported)
         except ImportError:
             # ignore items that can't be imported
             # (unless that isn't what you want?)
             if not importable_only:
-                importedItems.append(imported)
+                imported_items.append(imported)
 
 
 if __name__ == "__main__":
-    # toCheck = eval(input("Which file should be checked: "))
+    # to_check = eval(input("Which file should be checked: "))
     print(find_imports("main.py"))
 
 # This doesn't do anything for `from module import something` style imports,

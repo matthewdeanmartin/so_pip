@@ -6,12 +6,12 @@ I don't recommend putting this into PyPi, it has too much junk in it already.
 from setuptools import setup, find_packages
 
 setup(
-    name='{{ item["package_name"] }}',
-    version='{{ item["version"] }}',
-    url='{{ item["url"] }}',
-    author='{{ item["author"] }}',
-    author_email='N/A',
-    description='{{ item["description"] }}',
-    packages=find_packages(),
-    install_requires=[{% for dependency in item["dependencies"] %}'{{ dependency }}',{% endfor %}],
+name='{{ item["package_name"] }}',
+version='{{ item["version"] }}',
+url='{{ item["url"] }}',
+author='{{ item["author"] }}',
+author_email='N/A',
+description='{{ item["description"] }}',
+packages=find_packages(),
+install_requires=[{% for dependency in item["dependencies"] %}'{{ dependency }}',{% endfor %}],
 )

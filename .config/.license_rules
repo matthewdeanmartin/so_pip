@@ -69,6 +69,14 @@ authorized_licenses :
     GNU General Public License v2 or later (GPLv2+)
     Artistic
     GNU General Public License (GPL)
+    MIT -or- Apache License 2.0
+    Apache Software
+    Apache-2.0
+    Apache Software License 2.0
+    LGPL+BSD
+    BSD
+    GNU Library or Lesser General Public License (LGPL)
+
 
 unauthorized_licenses :
     foobar

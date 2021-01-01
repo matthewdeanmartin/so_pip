@@ -10,17 +10,17 @@ license = {{ item["classifiers"] }}
 license_file = LICENSE
 name = {{ item["package_name"] }}
 project_urls =
-    Source Code = {{ item["source_url"] }}
-    Change Log = {{ item["revisions_url"] }}
+Source Code = {{ item["source_url"] }}
+Change Log = {{ item["revisions_url"] }}
 url = {{ item["source_url"] }}
 version = {{ item["version"] }}
 
 [options]
 install_requires =
-    {% for dependency in item["dependencies"] %}{{ dependency }}
-    {% endfor %}
+{% for dependency in item["dependencies"] %}{{ dependency }}
+{% endfor %}
 package_dir =
-    ={{ item["src_folder"] }}
+={{ item["src_folder"] }}
 packages = find:
 python_requires = {{ item["python_version"] }}
 

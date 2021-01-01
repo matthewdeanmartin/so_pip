@@ -4,7 +4,7 @@ Low level access. Makes no effort to parse results.
 
 import os
 from functools import lru_cache
-from typing import Any, Dict, List, cast, Tuple
+from typing import Any, Dict, Tuple, cast
 
 from stackapi import StackAPI
 
@@ -15,7 +15,7 @@ else:
 
 
 @lru_cache(maxsize=1000)
-def get_json_by_search(query: str, tagged: Tuple[str,...]) -> Dict[str, Any]:
+def get_json_by_search(query: str, tagged: Tuple[str, ...]) -> Dict[str, Any]:
     """Low level access, returns unprocessed json"""
     return cast(
         Dict[str, Any],

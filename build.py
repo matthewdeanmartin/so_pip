@@ -1223,10 +1223,10 @@ def do_liccheck() -> str:
     """
     with safe_cd(SRC):
         check_command_exists("liccheck")
-        if not os.path.exists(f"{REPORTS_FOLDER}/requirements.txt"):
+        if not os.path.exists(f".config/requirements.txt"):
             print("No requirements.txt file, assuming we have no external deps")
             return "Skipping, not requirements.txt"
-        command = f"liccheck -r {REPORTS_FOLDER}.txt -s .config/.license_rules -l paranoid"
+        command = f"liccheck -r .config/requirements.txt -s .config/.license_rules -l paranoid"
 
         command = prep_print_simple(command, no_project=True)
         execute(*(command.split(" ")))

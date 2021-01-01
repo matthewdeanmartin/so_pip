@@ -4,13 +4,13 @@ Create ini file for setup.py.
 The setup.cfg file is weird. It can only override values in setup.py
 and is used by some tools as a centralized config.ini file.
 """
-from typing import Dict, Any
+from typing import Any, Dict
 
 from so_pip.make_from_template import load_template
 from so_pip.models.python_package_model import PythonPackage
 
 
-def create_setup_cfg(package_folder:str, python_submodule: PythonPackage) -> None:
+def create_setup_cfg(package_folder: str, python_submodule: PythonPackage) -> None:
     """Put everything into setup.cfg"""
     with open(
         package_folder + "/setup.cfg", "w", encoding="utf-8", errors="replace"
@@ -25,8 +25,7 @@ def create_setup_cfg(package_folder:str, python_submodule: PythonPackage) -> Non
             "dependencies": python_submodule.dependencies,
         }
         data = {
-            "classifiers":
-                """    Programming Language :: Python :: 3 :: Only
+            "classifiers": """    Programming Language :: Python :: 3 :: Only
             Programming Language :: Python :: 3.6
             Programming Language :: Python :: 3.7
             Programming Language :: Python :: 3.8
@@ -39,12 +38,12 @@ def create_setup_cfg(package_folder:str, python_submodule: PythonPackage) -> Non
     with open(
         package_folder + "/setup.py", "w", encoding="utf-8", errors="replace"
     ) as setup_py:
-        template = load_template(template_filename="setup_bare.py.jinja", autoescape=False)
+        template = load_template(
+            template_filename="setup_bare.py.jinja", autoescape=False
+        )
         # Turn off autoescape because this is python not html.
         output_text = template.render(item=data, autoescape=False)  # nosec
         setup_py.write(output_text)
-
-
 
 
 def render_setup_cfg(

@@ -5,6 +5,8 @@ SO Browsers
 -----------
 - [howdoi](https://github.com/gleitz/howdoi) Search several sources including StackOverflow & screen scrape the source code.
 - [socli](https://github.com/gautamkrishnar/socli) One of many command line interfaces to StackOverflow
+- [so](https://github.com/samtay/so) Another SO cli
+
 
 so_pip differs from in the above in that the goal is to generate re-usable code, not just get you to the place where
 you can copy-paste

@@ -36,7 +36,6 @@ class CodeFile:
             if block.code_text:
                 items.append(block.code_text)
             if block.footer_comments:
-
                 items.append(block.footer_comments)
         return items
 

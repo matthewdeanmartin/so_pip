@@ -14,6 +14,7 @@ Docs
 * [Code reuse scanarios you see on StackOverflow](docs/scenarios.md)
 * [Prior Art](docs/prior_art.md) Similar and overlapping tools.
 * [Contributing *answers* to StackOverflow](docs/contributing.md) AKA, fixing answers you found.
+* [Attribution Compliance](docs/comply_with_cc_sa.md)
 * [Contributing to so_pip](CONTRIBUTING.md)
 * [Code of Conduct for so_pip](CODE_OF_CONDUCT.md)
 
@@ -24,12 +25,13 @@ Consider getting a [key](https://stackapps.com/apps/oauth/register) and adding a
 The app will make best efforts if you don't.
 ```
 # Various way to get some code
-> so_pip vendorize --question=31049648
-> so_pip vendorize --answer=31049648
-> so_pip search --answer=31049648
+> so_pip vendorize my_name --question=31049648
+> so_pip vendorize my_name --answer=31049648
+> so_pip search --answer=31049648 --tags=python
 ```
 
 ```
+# Various workflow tasks
 > so_pip uninstall {package_name}
 > so_pip upgrade {package_name}
 > so_pip list
