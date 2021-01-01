@@ -9,6 +9,17 @@ from so_pip.cli_clients.subprocess_utils import execute_get_text
 from so_pip.utils.files_utils import find_file
 
 
+def pytest_detect(file: str) -> str:
+    """How many tests in this file"""
+    # so few SO questions have executable unit tests
+
+    command_text = f"pytest {file} --collect-only".strip().replace("  ", " ")
+    print(command_text)
+    command = shlex.split(command_text)
+    result = execute_get_text(command)
+    return result
+
+
 # https://stackoverflow.com/questions/24764549/
 # upgrade-python-packages-from-requirements-txt-using-pip-command
 def pip_upgrade(file: str) -> str:
@@ -29,7 +40,7 @@ def pur(file: str) -> str:
     """
     Get latest versions & pip
     """
-    # alternative... this one updgrades pinned, too
+    # alternative... this one upgrades pinned, too
     # https://github.com/alanhamlett/pip-update-requirements
 
     command_text = f"pur -f --requirement {file}".strip().replace("  ", " ")
@@ -75,6 +86,7 @@ def futurize(file_name: str) -> str:
     result = execute_get_text(command)
     print(result)
     return result
+
 
 def black(folder_name: str) -> str:
     """Format files to keep pylint happy"""
@@ -147,15 +159,17 @@ def pylint(folder: str) -> str:
     return result
 
 
-def pypinfo(packge:str)->str:
+def pypinfo(package: str) -> str:
     """
     Pypi info
     """
     # https://pypi.org/project/pypinfo/
-    if not os.environ.get('GOOGLE_APPLICATION_CREDENTIALS', None):
-        return "You must set up credentials " \
-               "to run pypinfo https://pypi.org/project/pypinfo/"
-    command = f"{settings.SHELL} pypinfo {packge}"
+    if not os.environ.get("GOOGLE_APPLICATION_CREDENTIALS", None):
+        return (
+            "You must set up credentials "
+            "to run pypinfo https://pypi.org/project/pypinfo/"
+        )
+    command = f"{settings.SHELL} pypinfo {package}"
     print(command)
     parts = shlex.split(command)
     result = execute_get_text(parts, ignore_error=True)

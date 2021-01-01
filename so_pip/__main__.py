@@ -1,3 +1,4 @@
+# noinspection PyPep8
 """so_pip/StackOverflow Pip
 Not associated with PyPA, nor StackOverflow.
 
@@ -59,8 +60,10 @@ def process_docopts() -> None:
         answer = arguments["--post"]
         if question:
             packages_made = vendorize.import_so_question(prefix, question)
-        if answer:
+        elif answer:
             packages_made = vendorize.import_so_answer(prefix, answer)
+        else:
+            raise TypeError("Need to specify a question or answer")
         print(f"Vendorized {','.join(packages_made)} at {target_folder}")
     if arguments["uninstall"]:
         packages = arguments["<package>"]

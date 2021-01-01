@@ -3,8 +3,8 @@ from so_pip.commands.vendorize import import_so_question, import_so_answer
 
 def test_import_so():
     # # https://stackoverflow.com/questions/9008451/python-easy-way-to-read-all-import-statements-from-py-module
-    import_so_question("find_imports_better", 9008451)
-    import_so_question("question_matters", 65373654)
+    # import_so_question("find_imports_better", 9008451)
+    # import_so_question("question_matters", 65373654)
     # # https://stackoverflow.com/questions/2572582/return-a-list-of-imported-python-modules-used-in-a-script
     import_so_question("find_imports", 2572582)
     # # has fiddle, strong evidence of working code

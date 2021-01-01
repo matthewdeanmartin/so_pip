@@ -16,9 +16,6 @@ about = {}
 with open(os.path.join(here, PROJECT_NAME, "_version.py")) as f:
     exec(f.read(), about)
 
-required = [
-
-]
 
 description = "Formalizing copy-paste from StackOverflow"
 setup(
@@ -31,11 +28,10 @@ setup(
     author="Matthew Martin",
     author_email="matthewdeanmartin@gmail.com",
     url="https://github.com/matthewdeanmartin/" + PROJECT_NAME,
-    packages=find_packages(exclude=["test"]),
+    packages=find_packages(exclude=["test","test.*"]),
     entry_points={
         "console_scripts": ["so_pip=so_pip.__main__:process_docopts"]
     },
-    install_requires=required,
     extras_require={},
     include_package_data=True,
     license="MIT",
@@ -46,7 +42,7 @@ setup(
         "Programming Language :: Python :: Implementation :: CPython",
     ],
     cmdclass={},
-    setup_requires=[
+    install_requires=[
         "requests",
         "py-stackexchange",
         "beautifulsoup4",
@@ -54,14 +50,20 @@ setup(
         "pipreqs",
         "pyupgrade",
         "2to3",
-        "guesslang",
+
         "html2text",
         "future",
         "pyflakes",
         "stdlib-list",
         "jinja2",
         "pypistats",
+        # "guesslang",
         # "tensorflow = ">=2.2.1"
         "stackapi",
+        "pip-upgrader",
+        "pur",
+        "pypistats",
+        "pypinfo",
+        "jupyter"
     ],
 )

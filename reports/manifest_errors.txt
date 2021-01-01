@@ -1,6 +1,11 @@
 suggested MANIFEST.in rules:
-  include *.dic
-  include *.sh
+  include *.ipynb
+  include *.md
+  include *.toml
+  include .so_pip.ini
+  recursive-include on_hold *.py
+  recursive-include reports *.txt
+  recursive-include scripts *.sh
   recursive-include test *.html
   recursive-include test *.py
-  recursive-include test *.txt
+  recursive-include vendor *.py

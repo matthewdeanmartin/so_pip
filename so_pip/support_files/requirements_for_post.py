@@ -9,24 +9,25 @@ Does not run safety if no modules are successfully guessed.
 """
 import os
 import subprocess  # nosec
-from typing import Tuple
+from typing import Optional, Tuple
 
 from stdlib_list import stdlib_list
 
 from so_pip import settings as settings
 
-
 # ^\s*(from|import)\s+\w+
 from so_pip.cli_clients.external_commands import generate_requirements
 from so_pip.models.python_package_model import PythonPackage
 from so_pip.pypi_query.main import find_modules
-from so_pip.support_files.setup_py import render_setup_py, create_setup_py
+from so_pip.support_files.setup_py import create_setup_py
 from so_pip_packages.find_imports import main as find_imports
 
 # https://github.com/ohjeah/pip-validate
 
 
-def requirements_for_file(package_folder: str, python_submodule: PythonPackage) -> Tuple[str, int]:
+def requirements_for_file(
+    package_folder: str, python_submodule: PythonPackage
+) -> Tuple[Optional[str], int]:
     """Requirements for running `safety`"""
 
     package_count = 0
@@ -50,7 +51,7 @@ def requirements_for_file(package_folder: str, python_submodule: PythonPackage) 
     python_submodule.dependencies = set(all_imports) - set(libraries)
 
     packages_of_same_name, not_in_pypi = find_modules(
-        list(python_submodule.dependencies), 250
+        list(python_submodule.dependencies)
     )
 
     # https://stackoverflow.com/questions/8370206/how-to-get-a-list-of-built-in-modules-in-python
@@ -62,14 +63,13 @@ def requirements_for_file(package_folder: str, python_submodule: PythonPackage) 
             requirements.write("# module names often don't match package names!\n\n")
             for _import in packages_of_same_name:
                 requirements.write(_import + "\n")
-                package_count+=1
+                package_count += 1
             for bad_import in not_in_pypi:
                 item = f"# {bad_import} # module imported but no package of same name\n"
                 requirements.write(item)
 
     create_setup_py(package_folder, python_submodule)
     return file_to_write, package_count
-
 
 
 def process_requirements_for_a_module(package_folder: str) -> None:

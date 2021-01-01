@@ -10,11 +10,11 @@ Vendorize because I'm not installing it to a venv.
 # install some_random_name
 # install some_random_name==0.2.1
 
-from typing import Iterable, List, Tuple, Dict, Any
+from typing import Any, Dict, Iterable, List, Tuple
 
-import so_pip.api_clients.stackapi_facade as stackapi_client
 from so_pip import settings as settings
-from so_pip.cli_clients.external_commands import isort, pur, pylint, safety, black
+from so_pip.api_clients import stackapi_facade as stackapi_client
+from so_pip.cli_clients.external_commands import black, isort, pur, pylint, safety
 from so_pip.file_writing import write_as_html, write_as_md, write_as_text
 from so_pip.models.python_package_model import PythonPackage
 from so_pip.parse_code.write_anything import write_and_format_any_file
@@ -32,15 +32,19 @@ from so_pip.support_files.requirements_for_post import requirements_for_file
 
 
 def handle_question(
-    module_folder: str, question: Dict[str, Any], submodule: PythonPackage
+    package_name: str,
+    support_files_path: str,
+    python_source_path: str,
+    question: Dict[str, Any],
+    submodule: PythonPackage,
 ) -> List[str]:
     """same as answers, but for 1 question."""
     # unlike answers, if we decide to include the question, we include the question
     # answers, might get filtered out if they're crap/have no code, etc.
-    packages_made: List[str] = []
-    submodule_name = "question"
-    submodule_path = f"{module_folder}/{submodule_name}"
-    packages_made.append(submodule_name)
+    packages_made: List[str] = [package_name]
+
+    # submodule_path = f"{module_folder}/{submodule_name}/{submodule_name}"
+    # support_files_path =f"{module_folder}/{submodule_name}/"
     i = 0
     for code_file in submodule.code_files:
         if not code_file.extension:
@@ -55,7 +59,7 @@ def handle_question(
         code_file.failed_parse, _ = validate_python(code_so_far)
         # Guess the language from code
 
-        code_file.file_name = f"{submodule_path}_{i}_{code_file.extension}"
+        code_file.file_name = f"{python_source_path}question_{i}_{code_file.extension}"
         metadata = [] if settings.METADATA_IN_INIT else submodule.python_metadata
         headers = (
             submodule.brief_header if settings.METADATA_IN_INIT else submodule.header
@@ -64,10 +68,12 @@ def handle_question(
         if code_file.file_name.endswith(".py"):
             code_to_write = headers + metadata + code_file.to_write()
 
-            wrote_file = write_and_format_python_file(code_file.file_name, code_to_write)
+            wrote_file = write_and_format_python_file(
+                code_file.file_name, code_to_write
+            )
 
             if wrote_file and code_file.language == "python" and settings.BUMP_TO_PY3:
-                upgrade_file(submodule_path)
+                upgrade_file(python_source_path)
         else:
             headers = (
                 submodule.brief_header
@@ -81,24 +87,24 @@ def handle_question(
             )
 
     if settings.POSTS_AS_HTML:
-        write_as_html(question, submodule_path)
+        write_as_html(question, support_files_path)
     if settings.POSTS_AS_MD:
-        write_as_md(question, submodule_path)
+        write_as_md(question, support_files_path)
     if settings.POSTS_AS_TXT:
-        write_as_text(question, submodule_path)
+        write_as_text(question, support_files_path)
 
-    write_license(question, module_folder)
+    write_license(question, support_files_path)
     if settings.GENERATE_CHANGE_LOG:
-        changelog_for_post(question, module_folder)
+        changelog_for_post(question, support_files_path)
     if settings.GENERATE_AUTHORS:
-        write_authors(module_folder, submodule_name, question)
+        write_authors(support_files_path, package_name, question)
     if settings.GENERATE_README:
-        create_readme_md(module_folder, submodule, question)
+        create_readme_md(support_files_path, submodule, question)
     if settings.GENERATE_CODE_OF_CONDUCT:
-        render_code_of_conduct(module_folder)
+        render_code_of_conduct(support_files_path)
 
-    requirements_txt, count = requirements_for_file(module_folder, submodule)
-    if requirements_txt and count>0:
+    requirements_txt, count = requirements_for_file(support_files_path, submodule)
+    if requirements_txt and count > 0:
         pur(requirements_txt)
         result = safety(requirements_txt)
         print(result)
@@ -124,7 +130,8 @@ def import_so_answer(package_prefix: str, answer_id: int) -> List[str]:
     question_id = answer["question_id"]
     question = stackapi_client.get_json_by_question_id(question_id)["items"][0]
     packages_made.extend(
-        handle_answers(output_folder, package_prefix, question, [answer]))
+        handle_answers(output_folder, package_prefix, question, [answer])
+    )
     return packages_made
 
 
@@ -143,11 +150,21 @@ def import_so_question(package_prefix: str, question_id: int) -> List[str]:
     # if user supplied, it is what it is.
     output_folder = settings.TARGET_FOLDER
 
-    package_folder, question_package = create_package_for_post(
-        output_folder, package_prefix, question
-    )
+    (
+        supporting_files_folder,
+        python_source_folder,
+        package_info,
+    ) = create_package_for_post(output_folder, package_prefix, question)
 
-    packages_made.extend(handle_question(package_folder, question, question_package))
+    packages_made.extend(
+        handle_question(
+            package_name=package_info.package_name,
+            support_files_path=supporting_files_folder,
+            python_source_path=python_source_folder,
+            question=question,
+            submodule=package_info,
+        )
+    )
 
     # answers...
     if question["is_answered"]:
@@ -161,7 +178,7 @@ def create_package_for_post(
     output_folder: str,
     package_prefix: str,
     post: Dict[str, Any],
-) -> Tuple[str, PythonPackage]:
+) -> Tuple[str, str, PythonPackage]:
     """
     Create package info and folder for a package.
 
@@ -174,8 +191,10 @@ def create_package_for_post(
     package_name = make_up_module_name(post_id, package_prefix, post_type)
     package_info = handle_python_post(
         post,
-        post["body"], name=package_name, description=post["title"],
-        tags=post["tags"]
+        post["body"],
+        name=package_name,
+        description=post["title"],
+        tags=post["tags"],
     )
     if settings.METADATA_IN_INIT:
         metadata_for_init = "\n".join(
@@ -183,15 +202,17 @@ def create_package_for_post(
         )
     else:
         metadata_for_init = ""
-    package_folder = create_package_folder(
-        output_folder, package_name, metadata_for_init
+    supporting_files_folder, python_source_folder = create_package_folder(
+        output_folder, package_name, package_name, metadata_for_init
     )
-    return package_folder, package_info
+    return supporting_files_folder, python_source_folder, package_info
 
 
 def handle_answers(
-    output_folder: str, package_prefix: str, question: [Dict[str, Any]],
-    answers: Iterable[Dict[str, Any]]
+    output_folder: str,
+    package_prefix: str,
+    question: Dict[str, Any],
+    answers: Iterable[Dict[str, Any]],
 ) -> List[str]:
     """Loop through answers"""
     packages_made: List[str] = []
@@ -199,17 +220,20 @@ def handle_answers(
     for shallow_answer in answers:
         if shallow_answer["score"] < settings.MINIMUM_SCORE:
             continue
-        answer = \
-        stackapi_client.get_json_by_answer_id(shallow_answer["answer_id"])["items"][0]
-        answer_module_name = make_up_module_name(answer["answer_id"], package_prefix,
-                                                 "a")
+        answer = stackapi_client.get_json_by_answer_id(shallow_answer["answer_id"])[
+            "items"
+        ][0]
+        answer_module_name = make_up_module_name(
+            answer["answer_id"], package_prefix, "a"
+        )
         packages_made.append(answer_module_name)
         # TODO: assumes we already know the language & that we are 1 file, 1 language
         submodule = handle_python_post(
             answer,
-            answer["body"], answer_module_name,
+            answer["body"],
+            answer_module_name,
             f"StackOverflow post #{answer['answer_id']}",
-            tags=question["tags"]
+            tags=question["tags"],
         )
 
         i = 0
@@ -218,12 +242,14 @@ def handle_answers(
             metadata_for_init = "\n".join(submodule.header + submodule.python_metadata)
         else:
             metadata_for_init = ""
-        answer_folder = create_package_folder(
-            output_folder, answer_module_name, metadata_for_init
+
+        supporting_files_folder, python_source_folder = create_package_folder(
+            output_folder, answer_module_name, answer_module_name, metadata_for_init
         )
         wrote_py_file = False
 
-        submodule_path = f"{output_folder}/{answer_module_name}/main"
+        submodule_path = f"{python_source_folder}/main"
+
         frequencies = submodule.file_frequencies()
         for code_file in submodule.code_files:
             i += 1
@@ -266,31 +292,35 @@ def handle_answers(
                 )
 
         if settings.POSTS_AS_HTML:
-            write_as_html(answer, f"{answer_folder}/post")
+            write_as_html(answer, f"{supporting_files_folder}/post")
 
-        write_as_md(answer, f"{answer_folder}/post")
+        write_as_md(answer, f"{supporting_files_folder}/post")
         if settings.POSTS_AS_TXT:
-            write_as_text(answer, f"{answer_folder}/post")
+            write_as_text(answer, f"{supporting_files_folder}/post")
 
-        write_license(answer, answer_folder)
+        write_license(answer, supporting_files_folder)
         if settings.GENERATE_CHANGE_LOG:
-            changelog_for_post(answer, answer_folder)
+            changelog_for_post(answer, supporting_files_folder)
         if settings.GENERATE_AUTHORS:
-            write_authors(answer_folder, answer_module_name, question, answer)
+            write_authors(supporting_files_folder, answer_module_name, question, answer)
         if settings.GENERATE_README:
-            create_readme_md(answer_folder, submodule, question, answer)
+            create_readme_md(supporting_files_folder, submodule, question, answer)
         if settings.GENERATE_CODE_OF_CONDUCT:
-            render_code_of_conduct(answer_folder)
+            render_code_of_conduct(supporting_files_folder)
 
         if wrote_py_file:
-            requirements_txt, count = requirements_for_file(answer_folder, submodule)
+            requirements_txt, count = requirements_for_file(
+                supporting_files_folder, submodule
+            )
             if requirements_txt and count > 0:
                 pur(requirements_txt)
                 result = safety(requirements_txt)
                 print(result)
             isort(output_folder)
             black(output_folder)
-            lint_file_name = answer_folder + "/lint.txt"
-            with open(lint_file_name, "w", encoding="utf-8", errors="replace") as lint_writer:
-                lint_writer.write(pylint(answer_folder))
+            lint_file_name = supporting_files_folder + "/lint.txt"
+            with open(
+                lint_file_name, "w", encoding="utf-8", errors="replace"
+            ) as lint_writer:
+                lint_writer.write(pylint(python_source_folder))
     return packages_made

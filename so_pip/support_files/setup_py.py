@@ -24,6 +24,7 @@ def create_setup_py(package_folder: str, python_submodule: PythonPackage) -> Non
         source = render_setup_py(data)
         setup.write(source)
 
+
 def render_setup_py(
     data: Dict[str, Union[str, Sequence[str]]],
 ) -> str:
@@ -32,7 +33,7 @@ def render_setup_py(
     """
     template = load_template(template_filename="setup.py.jinja", autoescape=False)
     # Turn off autoescape because this is python not html.
-    output_text = template.render(item=data, autoescape=False) # nosec
+    output_text = template.render(item=data, autoescape=False)  # nosec
     return output_text
 
 

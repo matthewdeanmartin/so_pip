@@ -1,5 +1,5 @@
 """
-Reduce friction of working with subproess
+Reduce friction of working with subprocess
 """
 import subprocess  # nosec
 from typing import Dict, List, Optional

@@ -29,7 +29,7 @@ class CodeBlock:
     extension: str = ""
     language: str = ""
 
-    def analyze(self, tags:List[str]) -> None:
+    def analyze(self, tags: List[str]) -> None:
         """Do expensive checks"""
         self.is_ipython_block = ">>>" in self.code_text
         self.is_valid_python, self.errors = validate_python(self.code_text)

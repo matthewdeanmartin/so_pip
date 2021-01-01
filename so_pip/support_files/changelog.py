@@ -2,16 +2,14 @@
 Generate a CHANGELOG type file based on the edit log in SO
 """
 import time
-from typing import Dict, Sequence, Union, Any
+from typing import Any, Dict
 
 from so_pip.api_clients.stackapi_facade import get_json_revisions_by_post_id
 from so_pip.make_from_template import load_template
 from so_pip.support_files.authors import normalize_user_link
 
 
-def changelog_for_post(
-    post: Dict[str,Any], package_folder: str
-) -> None:
+def changelog_for_post(post: Dict[str, Any], package_folder: str) -> None:
     """Requirements for running `safety`"""
     versions = []
     post_id = post["answer_id"] if "answer_id" in post else post["question_id"]
@@ -28,7 +26,11 @@ def changelog_for_post(
         version = {
             "version": f"0.1.{revision['revision_number']}",
             "date": f"{time.ctime(revision['creation_date'])}",
-            "changes": {"content_license": revision.get("content_license", "")},
+            "changes": {
+                "content_license": revision.get("content_license", ""),
+                "user": "",
+                "comment": "",
+            },
         }
         if revision["user"]["user_type"] != "does_not_exist":
             display_name = revision["user"]["display_name"]
@@ -48,7 +50,7 @@ def changelog_for_post(
 
 
 def render_change_log(
-    data: Dict[str, Union[str, Sequence[str]]],
+    data: Dict[str, Any],
 ) -> str:
     """
     Render minimal setup.py suitable for `pip install -e .`

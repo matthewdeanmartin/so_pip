@@ -11,10 +11,12 @@ https://www.npmjs.com/package/stringify-author
 https://www.npmjs.com/package/author-regex
 """
 
-from typing import Collection, Dict, Optional, Sequence, Set, Union, Any, List
+from typing import Any, Collection, Dict, Optional, Sequence, Set, Union
 
-from so_pip.api_clients.stackapi_facade import get_json_revisions_by_post_id, \
-    get_json_comments_by_post_id
+from so_pip.api_clients.stackapi_facade import (
+    get_json_comments_by_post_id,
+    get_json_revisions_by_post_id,
+)
 from so_pip.make_from_template import load_template
 
 
@@ -23,7 +25,7 @@ def normalize_user_link(url: str, user_id: int) -> str:
     return f"{url.split(str(user_id))[0]}{user_id}"
 
 
-def get_authors_for_question(question: Dict[str,Any]) -> Set[str]:
+def get_authors_for_question(question: Dict[str, Any]) -> Set[str]:
     """get authors for question"""
     authors: Set[str] = set()
 
@@ -46,8 +48,8 @@ def get_authors_for_question(question: Dict[str,Any]) -> Set[str]:
     # question.comments.fetch()
     # for comment in question.comments:
     #     print(comment)
-    comments =get_json_comments_by_post_id(question["question_id"])
-    for comment in comments.get("items",[]):
+    comments = get_json_comments_by_post_id(question["question_id"])
+    for comment in comments.get("items", []):
         if comment["owner"]["user_type"] == "does_not_exist":
             continue
         display_name = comment["owner"]["display_name"]
@@ -61,7 +63,7 @@ def get_authors_for_question(question: Dict[str,Any]) -> Set[str]:
     return authors
 
 
-def get_authors_for_answer(answer: Dict[str,Any]) -> Set[str]:
+def get_authors_for_answer(answer: Dict[str, Any]) -> Set[str]:
     """Get authors for post"""
     authors: Set[str] = set()
 
@@ -83,8 +85,8 @@ def get_authors_for_answer(answer: Dict[str,Any]) -> Set[str]:
         url = normalize_user_link(revision["user"]["link"], revision["user"]["user_id"])
         authors.add(f"{display_name} <{url}>")
 
-    comments =get_json_comments_by_post_id(answer["answer_id"])
-    for comment in comments.get("items",[]):
+    comments = get_json_comments_by_post_id(answer["answer_id"])
+    for comment in comments.get("items", []):
         if comment["owner"]["user_type"] == "does_not_exist":
             continue
         display_name = comment["owner"]["display_name"]
@@ -101,8 +103,8 @@ def get_authors_for_answer(answer: Dict[str,Any]) -> Set[str]:
 def write_authors(
     package_folder: str,
     package_name: str,
-    question: Dict[str,Any],
-    answer: Optional[Dict[str,Any]] = None,
+    question: Dict[str, Any],
+    answer: Optional[Dict[str, Any]] = None,
 ) -> None:
     """write file"""
     authors = get_authors_for_question(question)

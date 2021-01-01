@@ -13,7 +13,7 @@ from so_pip.models.code_block_model import CodeBlock
 from so_pip.parse_python.code_transformations import fix_interactive, fix_shell
 
 
-def find_code_blocks(html: str, tags:List[str]) -> List[CodeBlock]:
+def find_code_blocks(html: str, tags: List[str]) -> List[CodeBlock]:
     """Build up code blocks of potentially many languages."""
     blocks: List[CodeBlock] = []
     regex_expression = '(<pre class="[a-z -]*"><code>|<pre><code>|</code></pre>)'
@@ -35,7 +35,7 @@ def find_code_blocks(html: str, tags:List[str]) -> List[CodeBlock]:
     # code/comment
     # but for longer runs, we assume comment/code/file break
     first = True
-    expected_blocks =sum(1 for part in parts if part.startswith("<pre><code"))
+    expected_blocks = sum(1 for part in parts if part.startswith("<pre><code"))
 
     for part in parts:
         if part.isspace():

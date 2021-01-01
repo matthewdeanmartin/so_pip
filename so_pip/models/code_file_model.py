@@ -52,7 +52,7 @@ class CodeFile:
         """For checking if a word is in the code for an post"""
         return "\n".join(self.all_code())
 
-    def analyze(self, tags:List[str]) -> None:
+    def analyze(self, tags: List[str]) -> None:
         """Do expensive checks"""
         final_code = self.preview_final_code()
 

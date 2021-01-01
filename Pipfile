@@ -49,7 +49,7 @@ tensorflow = ">=2.2.1"
 stackapi = "*"
 markdown-readme-generator = "*"
 namegenerator = "*"
-so-pip = {editable = true,path = "."}
+# so-pip = {editable = true,path = "."}
 pip-upgrader = "*"
 pur = "*"
 pypistats = "*"

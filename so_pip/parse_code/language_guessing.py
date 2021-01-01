@@ -1,7 +1,7 @@
 """
 What programming language is this text
 """
-from typing import Tuple, List, Optional
+from typing import List, Optional, Tuple
 
 from so_pip.parse_python.detect_python import score
 from so_pip.settings import DEFAULT_LANGUAGE
@@ -58,8 +58,9 @@ def is_likely_bash(value: str) -> bool:
     return False
 
 
-def assign_extension(all_code: str, failed_parse: bool, tags: List[str]) -> Tuple[
-    str, str]:
+def assign_extension(
+    all_code: str, failed_parse: bool, tags: List[str]
+) -> Tuple[str, str]:
     """Guess language and extension"""
     if is_likely_bash(all_code):
         return (

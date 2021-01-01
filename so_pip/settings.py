@@ -2,26 +2,35 @@
 Settings, eventually will be docopts
 """
 import ast
-import os
 
 # do we want this question/post at all?
 import configparser
+import os
+from typing import Tuple, cast
 
 from so_pip.utils.files_utils import find_file
 
 config = configparser.ConfigParser()
-config_file = find_file("../.so_pip.ini", __file__)
-result = config.read(config_file)
+if os.path.exists(".so_pip.ini"):
+    # exist where user executes from.
+    CONFIG_PATH = ".so_pip.ini"
+else:
+    # unit tests, etc.
+    CONFIG_PATH = find_file("../.so_pip.ini", __file__)
+print(f"Loading config from {CONFIG_PATH}")
+result = config.read(CONFIG_PATH)
 
 section = config["POST_FILTERS"]
 MINIMUM_SCORE = ast.literal_eval(section["MINIMUM_SCORE"])
 KEEP_ANSWERS_WITH_NO_CODE = ast.literal_eval(section["KEEP_ANSWERS_WITH_NO_CODE"])
-KEEP_ANSWERS_WITH_THESE_LANGUAGES = ast.literal_eval(section["KEEP_ANSWERS_WITH_THESE_LANGUAGES"])
+KEEP_ANSWERS_WITH_THESE_LANGUAGES = ast.literal_eval(
+    section["KEEP_ANSWERS_WITH_THESE_LANGUAGES"]
+)
 
 # this pattern won't work once so_pip is pip installed.
 section = config["VENDORIZING"]
 # TODO
-TARGET_FOLDER = find_file(f"../output", __file__)
+TARGET_FOLDER = find_file("../output", __file__)
 
 # {target_folder}/{package_prefix}_{package_name}/{submodule}.py
 # so_pip_packages/fizzbuzz_question_forest_cake/
@@ -51,7 +60,7 @@ SETUP_CFG_OR_SETUP_PY = section["SETUP_CFG_OR_SETUP_PY"]
 
 
 section = config["LANGUAGE_DETECTION"]
-DEFAULT_LANGUAGE = ast.literal_eval(section["DEFAULT_LANGUAGE"])
+DEFAULT_LANGUAGE = cast(Tuple[str, str], ast.literal_eval(section["DEFAULT_LANGUAGE"]))
 # Language guesser needs hints.
 POSSIBLE_LANGUAGES = ast.literal_eval(section["DEFAULT_LANGUAGE"])
 

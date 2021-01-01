@@ -5,7 +5,7 @@ Generate all the python related files for a module
 - sort imports
 """
 import os
-from typing import List, Dict, Any
+from typing import Any, Dict, List, Tuple
 
 from so_pip import settings as settings
 from so_pip.cli_clients.external_commands import isort
@@ -16,24 +16,29 @@ from so_pip.parse_python.code_transformations import html_to_python_comments
 from so_pip.parse_python.upgrade_to_py3 import upgrade_string
 
 
-def create_package_folder(target_folder: str, module_name: str, metadata: str) -> str:
+def create_package_folder(
+    target_folder: str, package_name: str, module_name: str, metadata: str
+) -> Tuple[str, str]:
     """Create folder and init file"""
-    module_folder = f"{target_folder}/{module_name}"
-    os.makedirs(module_folder, exist_ok=True)
-    with open(f"{module_folder}/__init__.py", "w", encoding="utf-8", errors="replace") as init_file:
+    supporting_files_folder = f"{target_folder}/{package_name}/"
+    python_source_folder = f"{target_folder}/{package_name}/{module_name}"
+    os.makedirs(python_source_folder, exist_ok=True)
+    with open(
+        f"{python_source_folder}/__init__.py", "w", encoding="utf-8", errors="replace"
+    ) as init_file:
         if metadata:
             init_file.write(metadata)
         else:
-            raise TypeError("Where is our meta data?")
             init_file.write("\n")
 
-    return module_folder
+    return supporting_files_folder, python_source_folder
 
 
-def handle_python_post(post:Dict[str,Any], html: str, name: str, description: str, tags:List[str]) -> PythonPackage:
+def handle_python_post(
+    post: Dict[str, Any], html: str, name: str, description: str, tags: List[str]
+) -> PythonPackage:
     """Given html of ap post, fill in a PythonPackage object."""
-    package = PythonPackage(package_name=name,
-                            description=description)
+    package = PythonPackage(package_name=name, description=description)
     package.extract_metadata(post=post)
     package.code_blocks.extend(find_code_blocks(html, tags))
     if not package.code_blocks:

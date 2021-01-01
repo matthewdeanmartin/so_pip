@@ -31,7 +31,7 @@ def find_imports(toCheck: str, importable_only: bool = False) -> List[str]:
     return importedItems
 
 
-def process_line(importable_only, importedItems, line):
+def process_line(importable_only:bool, importedItems:List[str], line:List[str])->str:
     for imported in line[1:]:
         if imported == "import":
             break

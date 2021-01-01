@@ -14,19 +14,19 @@ Since other tools only look at LICENSE, I'll put the "principal" one there.
 """
 import os
 import shutil
-from typing import List, Any, Dict
+from typing import Any, Dict, List
 
 import html2text
 
 from so_pip import settings as settings
-from so_pip.api_clients.stackapi_facade import get_json_revisions_by_post_id, \
-    get_json_comments_by_post_id
+from so_pip.api_clients.stackapi_facade import (
+    get_json_comments_by_post_id,
+    get_json_revisions_by_post_id,
+)
 from so_pip.utils.files_utils import find_file
 
 
-def write_license(
-    post: Dict[str, Any], package_folder: str
-) -> None:
+def write_license(post: Dict[str, Any], package_folder: str) -> None:
     """Include license file
     Each revision could have different license!
     """
@@ -55,15 +55,18 @@ def write_license(
             continue
         license_path = find_file(f"../licenses/{license_name}.txt", __file__)
         if not os.path.exists(license_path) and (
-            "2.0" in license_name or "2.5" in license_name):
+            "2.0" in license_name or "2.5" in license_name
+        ):
             # Can't find text versions of 2.5 or 2.0
             # ref https://wiki.creativecommons.org/wiki/License%20Versions
             license_path_txt = find_file(f"../licenses/{license_name}.txt", __file__)
-            convert_html_to_text(license_path.replace(".txt", ".html"),
-                                 license_path_txt)
+            convert_html_to_text(
+                license_path.replace(".txt", ".html"), license_path_txt
+            )
 
-        destination_path = find_file(f"{package_folder}/LICENSE/{license_name}.txt",
-                                     settings.TARGET_FOLDER)
+        destination_path = find_file(
+            f"{package_folder}/LICENSE/{license_name}.txt", settings.TARGET_FOLDER
+        )
 
         shutil.copy(license_path, destination_path)
 
