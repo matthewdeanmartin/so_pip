@@ -1,16 +1,15 @@
 """
-Author: Daniel G
-Author Link: https://stackoverflow.com/users/207432/daniel-g
-License: CC BY-SA 2.5
-Date: 2010-04-03 16:57:45
-Answer Url: http://stackoverflow.com/questions/2572582/2572654#2572654
+CC BY-SA 2.5 Daniel G
+https://stackoverflow.com/questions/2572582/return-a-list-of-imported-python-modules-used-in-a-script/2572654#2572654
 """
 
 import imp
+from typing import List
+
+
 # Well, you could always write a simple script that searches the file for
 # `import` statements. This one finds all imported modules and files, including
 # those imported in functions or classes:
-from typing import List
 
 
 def find_imports(toCheck: str, importable_only: bool = False) -> List[str]:
@@ -25,13 +24,14 @@ def find_imports(toCheck: str, importable_only: bool = False) -> List[str]:
         for raw_line in pyFile:
             # ignore comments
             line = raw_line.strip().partition("#")[0].partition(" as ")[0].split(" ")
-            if line[0] == "import" or line[0]=="from":
+            if line[0] == "import" or line[0] == "from":
                 process_line(importable_only, importedItems, line)
 
     return importedItems
 
 
-def process_line(importable_only:bool, importedItems:List[str], line:List[str])->str:
+def process_line(importable_only: bool, importedItems: List[str],
+                 line: List[str]) -> str:
     for imported in line[1:]:
         if imported == "import":
             break
@@ -54,7 +54,7 @@ def process_line(importable_only:bool, importedItems:List[str], line:List[str])-
 
 if __name__ == "__main__":
     # toCheck = eval(input("Which file should be checked: "))
-    print(find_imports("question_1_.py"))
+    print(find_imports("main.py"))
 
 # This doesn't do anything for `from module import something` style imports,
 # though that could easily be added, depending on how you want to deal with

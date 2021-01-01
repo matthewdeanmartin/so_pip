@@ -11,6 +11,7 @@ import os
 import subprocess  # nosec
 from typing import Optional, Tuple
 
+from so_pip._vendor.find_imports.main import find_imports
 from so_pip.support_files.setup_cfg import create_setup_cfg
 from stdlib_list import stdlib_list
 
@@ -20,8 +21,7 @@ from so_pip import settings as settings
 from so_pip.cli_clients.external_commands import generate_requirements
 from so_pip.models.python_package_model import PythonPackage
 from so_pip.pypi_query.main import find_modules
-from so_pip.support_files.setup_py import create_setup_py
-from so_pip_packages.find_imports import main as find_imports
+
 
 # https://github.com/ohjeah/pip-validate
 
@@ -43,7 +43,7 @@ def requirements_for_file(
                     raise TypeError("All files must have an extension")
                 if filename.endswith(".py"):
                     py_file = path.path
-                    all_imports += find_imports.find_imports(py_file)
+                    all_imports += find_imports(py_file)
                 else:
                     continue
 

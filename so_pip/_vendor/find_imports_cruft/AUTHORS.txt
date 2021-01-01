@@ -1,0 +1,9 @@
+# This is the list of i_a_distinction_alaska's significant contributors,
+# including the person who asked a question, everyone who edited it,
+# and everyone who wrote or edited this answer/question.
+#
+# This does not necessarily list everyone who has contributed code,
+# some contributors accounts get disabled on StackOverflow,
+# but their content stays.
+Lasse V. Karlsen <https://stackoverflow.com/users/267>
+Jono Bacon <https://stackoverflow.com/users/308456>
