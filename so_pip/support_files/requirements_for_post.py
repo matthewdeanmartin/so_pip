@@ -11,6 +11,7 @@ import os
 import subprocess  # nosec
 from typing import Optional, Tuple
 
+from so_pip.support_files.setup_cfg import create_setup_cfg
 from stdlib_list import stdlib_list
 
 from so_pip import settings as settings
@@ -68,7 +69,8 @@ def requirements_for_file(
                 item = f"# {bad_import} # module imported but no package of same name\n"
                 requirements.write(item)
 
-    create_setup_py(package_folder, python_submodule)
+    if settings.GENERATE_SETUP_CFG:
+        create_setup_cfg(package_folder, python_submodule)
     return file_to_write, package_count
 
 

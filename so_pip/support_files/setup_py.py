@@ -1,5 +1,7 @@
 """
 Create a setup.py file
+
+DEPRECATED. I MAY DELETE THIS ALTOGETHER.
 """
 from typing import Dict, Sequence, Union
 

@@ -1221,14 +1221,12 @@ def do_liccheck() -> str:
     """
     Make an explicit decision about license of referenced packages
     """
-    print("can't run liccheck because safety wants a new tensorflow installed")
-    return
     with safe_cd(SRC):
         check_command_exists("liccheck")
-        if not os.path.exists("reports/requirements.txt"):
+        if not os.path.exists(f"{REPORTS_FOLDER}/requirements.txt"):
             print("No requirements.txt file, assuming we have no external deps")
             return "Skipping, not requirements.txt"
-        command = "liccheck -r requirements.txt -s .config/.license_rules -l paranoid"
+        command = f"liccheck -r {REPORTS_FOLDER}.txt -s .config/.license_rules -l paranoid"
 
         command = prep_print_simple(command, no_project=True)
         execute(*(command.split(" ")))
@@ -1727,7 +1725,7 @@ def pytest() -> None:
     with safe_cd(SRC):
         command = (
             f"{VENV_SHELL} pytest {test_folder} -v "
-            f"--junitxml=sonar-unit-test-results.xml "
+            f"--junitxml={REPORTS_FOLDER}/sonar-unit-test-results.xml "
             "--cov-report xml "
             f"--cov={PROJECT_NAME} "
             f"--cov-fail-under {minimum_coverage}".strip().replace("  ", " ")
@@ -1844,7 +1842,7 @@ def do_safety() -> str:
     """
     Check free database for vulnerabilities in pinned libraries.
     """
-    requirements_file_name = "requirements_for_safety.txt"
+    requirements_file_name = f"{REPORTS_FOLDER}/requirements_for_safety.txt"
     with open(requirements_file_name, "w+") as out:
         subprocess.run(["pip", "freeze"], stdout=out, stderr=out, check=True)
     check_command_exists("safety")
@@ -2033,7 +2031,7 @@ def do_pin_dependencies() -> None:
             "no external dependencies yet"
         )
     else:
-        with open("requirements.txt", "r+") as file:
+        with open(f"{REPORTS_FOLDER}/requirements.txt", "r+") as file:
             lines = file.readlines()
             file.seek(0)
             for line in lines:
@@ -2041,7 +2039,7 @@ def do_pin_dependencies() -> None:
                     file.write(line)
             file.truncate()
 
-    with open("requirements-dev.txt", "r+") as file:
+    with open(f"{REPORTS_FOLDER}/requirements-dev.txt", "r+") as file:
         lines = file.readlines()
         file.seek(0)
         for line in lines:
