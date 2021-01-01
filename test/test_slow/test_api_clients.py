@@ -11,7 +11,7 @@ from so_pip.pypi_query.main import find_modules
 
 def test_pystats():
     found, not_found = find_modules(
-        ["module1", "module2", "motorbike", "bingo", "com.stackoverflow"], 205
+        ["module1", "module2", "motorbike", "bingo", "com.stackoverflow"]
     )
     assert found
     assert not_found
@@ -24,7 +24,7 @@ def test_pystats():
         "jiggle_version",
         "asdfasdf",
         "kaslkjasdkflajslfkjlskdjflksjflkjsaldkfj",
-    ], 250, )
+    ], )
     assert found
     assert not_found
 
