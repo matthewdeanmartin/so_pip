@@ -76,7 +76,10 @@ authorized_licenses :
     LGPL+BSD
     BSD
     GNU Library or Lesser General Public License (LGPL)
-
+    MIT/Apache-2.0
+    http://www.apache.org/licenses/LICENSE-2.0
+    Python Software Foundation
+    PSF
 
 unauthorized_licenses :
     foobar

@@ -31,4 +31,3 @@ pyupgrade
 requests
 stackapi
 stdlib-list
-tensorflow>=2.2.1
