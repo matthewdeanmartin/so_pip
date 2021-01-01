@@ -1,6 +1,7 @@
 """
 Shell out to run a few commands
 """
+import logging
 import os
 import shlex
 
@@ -8,13 +9,14 @@ from so_pip import settings as settings
 from so_pip.cli_clients.subprocess_utils import execute_get_text
 from so_pip.utils.files_utils import find_file
 
+LOGGER = logging.getLogger(__name__)
 
 def pytest_detect(file: str) -> str:
     """How many tests in this file"""
     # so few SO questions have executable unit tests
 
     command_text = f"pytest {file} --collect-only".strip().replace("  ", " ")
-    print(command_text)
+    LOGGER.debug(command_text)
     command = shlex.split(command_text)
     result = execute_get_text(command)
     return result
@@ -30,7 +32,7 @@ def pip_upgrade(file: str) -> str:
     command_text = f"pip-upgrade --default-index-url --file {file}".strip().replace(
         "  ", " "
     )
-    print(command_text)
+    LOGGER.debug(command_text)
     command = shlex.split(command_text)
     result = execute_get_text(command)
     return result
@@ -44,7 +46,7 @@ def pur(file: str) -> str:
     # https://github.com/alanhamlett/pip-update-requirements
 
     command_text = f"pur -f --requirement {file}".strip().replace("  ", " ")
-    print(command_text)
+    LOGGER.debug(command_text)
     command = shlex.split(command_text)
     result = execute_get_text(command)
     return result
@@ -53,7 +55,7 @@ def pur(file: str) -> str:
 def safety(file: str) -> str:
     """Check if dep is malicious/insecure"""
     command = shlex.split(f"safety check --file {file}".strip().replace("  ", " "))
-    print(command)
+    LOGGER.debug(command)
     result = execute_get_text(command)
     return result
 
@@ -63,7 +65,7 @@ def pyflakes(file: str) -> str:
     command = shlex.split(
         f"{settings.SHELL} pyflakes {file}".strip().replace("  ", " ")
     )
-    print(command)
+    LOGGER.debug(command)
     result = execute_get_text(command)
     return result
 
@@ -73,7 +75,7 @@ def generate_requirements(folder: str) -> str:
     command = shlex.split(
         f"{settings.SHELL} pipreqs {folder} --force".strip().replace("  ", " ")
     )
-    print(command)
+    LOGGER.debug(command)
     result = execute_get_text(command)
     return result
 
@@ -81,30 +83,30 @@ def generate_requirements(folder: str) -> str:
 def futurize(file_name: str) -> str:
     """Yet another py2 to 3 converter"""
     text = f"{settings.SHELL} futurize --stage1 -w {file_name}"
-    print(text)
+    LOGGER.debug(text)
     command = shlex.split(text)
     result = execute_get_text(command)
-    print(result)
+    LOGGER.debug(result)
     return result
 
 
 def black(folder_name: str) -> str:
     """Format files to keep pylint happy"""
     text = f"{settings.SHELL} black {folder_name} --target-version=py38"
-    print(text)
+    LOGGER.debug(text)
     command = shlex.split(text)
     result = execute_get_text(command)
-    print(result)
+    LOGGER.debug(result)
     return result
 
 
 def two_to_three(file_name: str) -> str:
     """fix print"""
     text = f"{settings.SHELL} 2to3 -w {file_name}"
-    print(text)
+    LOGGER.debug(text)
     command = shlex.split(text)
     result = execute_get_text(command)
-    print(result)
+    LOGGER.debug(result)
     return result
 
 
@@ -115,11 +117,11 @@ def pyupgrade(file_name: str) -> str:
         f"--py37-plus "
         f"--exit-zero-even-if-changed {file_name}".strip().replace("  ", " ")
     )
-    print(command)
+    LOGGER.debug(command)
     parts = shlex.split(command)
 
     result = execute_get_text(parts, ignore_error=False)
-    print(result)
+    LOGGER.debug(result)
     return result
 
 
@@ -131,10 +133,10 @@ def isort(folder: str) -> str:
     # venv. Maybe someday, but it just isn't worth the effort.
 
     command = f"{settings.SHELL} isort --profile black {folder}"
-    print(command)
+    LOGGER.debug(command)
     parts = shlex.split(command)
     result = execute_get_text(parts)
-    print(result)
+    LOGGER.debug(result)
     return result
 
 
@@ -152,10 +154,10 @@ def pylint(folder: str) -> str:
         f"--exit-zero --rcfile='{rcfile}' {folder}".strip().replace("  ", " ")
     )
     "".strip().replace("  ", " ")
-    print(command)
+    LOGGER.debug(command)
     parts = shlex.split(command)
     result = execute_get_text(parts)
-    print(result)
+    LOGGER.debug(result)
     return result
 
 
@@ -170,8 +172,8 @@ def pypinfo(package: str) -> str:
             "to run pypinfo https://pypi.org/project/pypinfo/"
         )
     command = f"{settings.SHELL} pypinfo {package}"
-    print(command)
+    LOGGER.debug(command)
     parts = shlex.split(command)
     result = execute_get_text(parts, ignore_error=True)
-    print(result)
+    LOGGER.debug(result)
     return result

@@ -1,6 +1,6 @@
 Contributing
 ------------
-You will need to get a stackexchange key. Use your name, not the so_pip name so StackExchange doesn't think
+You will need to get a [stackexchange key](https://stackapps.com/apps/oauth/register). Use your name, not the so_pip name so StackExchange doesn't think
 I personally am registering multiple keys for the same product.
 
 Until I switch to poetry

@@ -12,41 +12,28 @@ The feature set overlaps a bit with cookie cutter, vendorizing libraries and sta
 Docs
 -----
 * [Code reuse scanarios you see on StackOverflow](docs/scenarios.md)
-* [Contributing *answers* to StackOverflow](docs/contributing.md)
+* [Prior Art](docs/prior_art.md) Similar and overlapping tools.
+* [Contributing *answers* to StackOverflow](docs/contributing.md) AKA, fixing answers you found.
 * [Contributing to so_pip](CONTRIBUTING.md)
 * [Code of Conduct for so_pip](CODE_OF_CONDUCT.md)
 
-Usage for Alpha
----------------
-Pipenv install, edit settings.py, script/try_out.py & run. Look at
-results in output folder. Vendorize module or `pip -e` install it.
-
 Usage for Beta
 --------------
-PARTIALLY IMPLEMENTED
+Consider getting a [key](https://stackapps.com/apps/oauth/register) and adding a [.so_pip.ini file](.so_pip.ini)
+
+The app will make best efforts if you don't.
 ```
-# question and all it's answers
+# Various way to get some code
 > so_pip vendorize --question=31049648
-See output/ for results.
-Vendorized {package_name}, {package_name}, ... to so_pip_packages/
-
-# Just the one good answer
 > so_pip vendorize --answer=31049648
-Vendorized {package_name} to so_pip_packages/
+> so_pip search --answer=31049648
+```
 
+```
 > so_pip uninstall {package_name}
-Removed {package_name} from so_pip_packages/
-
 > so_pip upgrade {package_name}
-Removed {package_name} from so_pip_packages/
-
 > so_pip list
-{package_name}
-{package_name}
-
 > so_pip freeze
-{package_name}
-{package_name}
 ```
 
 Security Considerations

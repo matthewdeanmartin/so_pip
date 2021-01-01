@@ -3,6 +3,7 @@ TODO
 
 Things I can't do yet
 ---------------------
+- no code for handling overwriting previously generated code
 - Pin versions, e.g. `so_pip vendorize --answer=31049648 --revision=2`
 - Get code from pastebin, gists or the like:
    - e.g. https://stackoverflow.com/questions/26188763/python-3-x-text-based-adventure-game-save-game-function

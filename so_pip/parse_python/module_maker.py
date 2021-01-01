@@ -52,6 +52,7 @@ def handle_python_post(
         code_file.code_blocks.append(block)
         code = block.code_text
         if settings.ASSUME_ONE_LINER_IS_NOT_CODE and "\n" not in block.code_text:
+            print("Skipping this because it is just one line:")
             print(code)
         if block.extension == ".py":
             block.code_text = upgrade_string(block.code_text)
