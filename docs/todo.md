@@ -1,6 +1,17 @@
 TODO
 ----
 
+RELEASE 1.0 Goals
+-----------------
+- check in example with bash script for each command
+- `pip install so_pip` works for each example.
+- Dockerfile
+- tox for fast tests on 3.8, 3.9
+- version pinning
+- BUG- setup.cfg mess
+- BUG- not all licenses found?
+- BUG- Authors don't distinguish role
+
 Things I can't do yet
 ---------------------
 High priority
