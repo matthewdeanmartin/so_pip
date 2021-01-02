@@ -2005,8 +2005,14 @@ def do_pin_dependencies() -> None:
     check_command_exists("pipenv_to_requirements")
 
     with safe_cd(SRC):
-        execute(*(f"{VENV_SHELL} pipenv_to_requirements".strip().split(" ")))
-    if not os.path.exists("requirements.txt"):
+        execute(
+            *(
+                f"{VENV_SHELL} pipenv_to_requirements --dev-output .config/requirements-dev.txt --output .config/requirements.txt".strip().split(
+                    " "
+                )
+            )
+        )
+    if not os.path.exists(".config/requirements.txt"):
         print(
             "Warning: no requirments.txt found, assuming it is because there are"
             "no external dependencies yet"
