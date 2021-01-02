@@ -35,6 +35,7 @@ Consider getting a [key](https://stackapps.com/apps/oauth/register) and adding a
 Docs
 -----
 * [Examples](examples)
+* [CLI](docs/cli.md)
 * [Code reuse scanarios you see on StackOverflow](docs/scenarios.md)
 * [Features](docs/features.md)
 * [Security Considerations](docs/security.md)
