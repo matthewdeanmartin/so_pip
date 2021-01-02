@@ -4,7 +4,7 @@ This is about how to contribute to an answer you found in StackOverflow to make 
 
 You need 2000 reputation points to edit & even more to edit without peer review.
 
-See CONTRIBUTING.md for how to contribute to so_pip the tool.
+See [CONTRIBUTING.md](../CONTRIBUTING.md) for how to contribute to so_pip the tool.
 
 First: Do no harm
 -----------------
@@ -14,7 +14,7 @@ make it more importable.
 I think it is always safe to
 - fix indentation and syntax errors
 - change blockquote to code block if it is source code
-- add language hint, e.g. lang-py
+- add language hint, e.g. `<!-- language: python -->` or add python to "fenceposts"
 - add a [python] tag if there are enough space to add another tag
 - add `imports` (if it is just a few)
 - clean up people's Markdown and English.

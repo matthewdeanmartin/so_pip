@@ -8,14 +8,14 @@ encourages doing so as long as you make reasonable efforts to comply with the At
 
 I take the stand that with the high cost of enforcement and low stakes, CC BY SA should be interpreted as social
 conventions. We comply as much as we can because it is the good citizen thing to do. But it isn't cost effective
-to try to the world to re-license everything under more compatible licenses or to fix terms of the license
+to try to re-license everything under more compatible licenses or to fix terms of the license
 that are inconvenient to comply with. The real world is messy.
 
 Attribution
 -----------
 Generated libraries need to comply with Creative Commons SA licenses, up to 4 of them at the same time!
 
-In short, to comply 100%, code from StackOverflow must:
+In short, code from StackOverflow must:
 
 >- Visually indicate that the content is from Stack Overflow or the Stack Exchange network in some way. It doesn’t have to be obnoxious; a discreet text blurb is fine.
 >- Hyperlink directly to the original question on the source site (e.g., http://stackoverflow.com/questions/12345)

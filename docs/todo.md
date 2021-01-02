@@ -12,6 +12,12 @@ RELEASE 1.0 Goals
 - BUG- not all licenses found?
 - BUG- Authors don't distinguish role
 
+RELEASE 2.0 Goals
+-----------------
+- Jupyter notebooks
+- Content-only folders
+- Merged Question+One Answer Pattern
+
 Things I can't do yet
 ---------------------
 High priority
