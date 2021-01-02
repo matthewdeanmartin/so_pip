@@ -7,4 +7,4 @@ RUN python -m pip install --no-cache-dir --upgrade pip --quiet \
     && pip install pipenv  --no-cache-dir --quiet
 COPY dist/* /app/
 RUN pipenv install so_pip-*.whl --skip-lock
-ENTRYPOINT ["so_pip"]
+ENTRYPOINT ["pipenv", "run", "so_pip"]

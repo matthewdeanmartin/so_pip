@@ -1,6 +1,4 @@
-
 include *.py
-include *.txt
 include LICENSE
 include Pipfile
 include *.md
