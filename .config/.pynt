@@ -6,7 +6,7 @@ REPORTS_FOLDER = reports
 VENV_SHELL = pipenv run
 PIPENV = pipenv run
 
-MINIMUM_TEST_COVERAGE = 85
+MINIMUM_TEST_COVERAGE = 20
 
 # if 1, disables bandit. Bandit disallows all shell commands.
 IS_SHELL_SCRIPT_LIKE = 0

@@ -1,11 +1,11 @@
-include *.lock
+
 include *.py
 include *.txt
 include LICENSE
 include Pipfile
 include *.md
 include *.toml
-recursive-include so_pip *.bak
+
 recursive-include so_pip *.html
 recursive-include so_pip *.ini
 recursive-include so_pip *.jinja

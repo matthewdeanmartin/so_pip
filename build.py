@@ -11,16 +11,16 @@ import multiprocessing
 import os
 import platform
 import re
-import setuptools
 import shlex
 import shutil
 import socket
 import subprocess
 import sys
 import time
-from contextlib import redirect_stdout, redirect_stderr
-from typing import List, Dict, Any
-from typing import Optional, Callable, Tuple, cast, TypeVar
+from contextlib import redirect_stderr, redirect_stdout
+from typing import Any, Callable, Dict, List, Optional, Tuple, TypeVar, cast
+
+import setuptools
 
 # on some shells print doesn't flush!
 # pylint: disable=redefined-builtin,invalid-name
@@ -45,13 +45,12 @@ except ModuleNotFoundError:
     sys.exit(-1)
 
 try:
-    import psutil
-    from checksumdir import dirhash
-    from git import Repo
-
     import dodgy.run as dodgy_runner
+    import psutil
     import requests
+    from checksumdir import dirhash
     from dotenv import load_dotenv
+    from git import Repo
     from pebble import ProcessPool
 
 except ModuleNotFoundError:
@@ -81,18 +80,7 @@ def check_public_ip(ipify: str = "https://api6.ipify.org/") -> str:
         return ""
 
 
-import ifaddr
-def is_loc(prefix: str = "140.147") -> bool:
-    """Are we on LoC Network"""
-    adapters = ifaddr.get_adapters()
-    for adapter in adapters:
-        for ip in adapter.ips:
-            if str(ip.ip).startswith(prefix):
-                return True
-    return False
-
 PUBLIC_IP = check_public_ip()
-IS_LOC = is_loc()
 
 
 def load_config() -> configparser.SectionProxy:
@@ -287,7 +275,9 @@ def check_command_exists(
                 if exit_on_missing:
                     sys.exit(-1)
                 return False
-            with open(".config/.build_state/exists_" + command + ".txt", "w+") as handle:
+            with open(
+                ".config/.build_state/exists_" + command + ".txt", "w+"
+            ) as handle:
                 handle.write("OK")
     except OSError as os_error:
         print(os_error)
@@ -1352,7 +1342,7 @@ def do_mccabe() -> str:
     """
     Complexity Checker
     """
-    return # this runs all flake8 not just mccabe
+    return  # this runs all flake8 not just mccabe
     with safe_cd(SRC):
         check_command_exists("flake8")  # yes, flake8, this is a plug in.
         # mccabe doesn't have a direct way to run it
@@ -1557,7 +1547,7 @@ def do_lint(folder_name: str) -> str:
             env = config_pythonpath()
             subprocess.call(command, stdout=outfile, env=env)
 
-        with open(lint_output_file_name, "r") as file_handle:
+        with open(lint_output_file_name) as file_handle:
             full_text = file_handle.read()
         lint_did_indeed_run = "Your code has been rated at" in full_text
 
@@ -1714,12 +1704,9 @@ def pytest() -> None:
     check_command_exists("pytest")
 
     #  Somedays VPN just isn't there.
-    if  IS_LOC or PUBLIC_IP.startswith("140."):
-        test_folder = "test"
-        minimum_coverage = MINIMUM_TEST_COVERAGE
-    else:
-        test_folder = "test/test_fast"
-        minimum_coverage = 48
+
+    test_folder = "test"
+    minimum_coverage = MINIMUM_TEST_COVERAGE
 
     my_env = config_pythonpath()
     with safe_cd(SRC):
@@ -1763,10 +1750,7 @@ def coverage_report() -> None:
         # This is consuming too much time to figure out why it
         # collects no tests & then fails on code 5
 
-        if  IS_LOC or PUBLIC_IP.startswith("140."):
-            test_folder = "test"
-        else:
-            test_folder = "test/test_fast"
+        test_folder = "test"
 
         command = (
             f"{VENV_SHELL} pytest {test_folder} -v "
@@ -1878,10 +1862,7 @@ def do_sonar() -> str:
     )
     print(command)
     execute(*command)
-    url = (
-        f"https://?"
-        f"componentKeys=public_record_{PROJECT_NAME}&resolved=false"
-    )
+    url = f"https://?" f"componentKeys=public_record_{PROJECT_NAME}&resolved=false"
 
     session = requests.Session()
     session.auth = (sonar_key, "")
@@ -2162,7 +2143,6 @@ def jiggle_version() -> None:
     """
     Increase build number of version, but only if this is the master branch.
     """
-    return
     # rorepo is a Repo instance pointing to the git-python repository.
     # For all you know, the first argument to Repo is a path to the repository
     # you want to work with
@@ -2170,13 +2150,13 @@ def jiggle_version() -> None:
         # never update version on build server
         return
     repo = Repo(".")
-    if str(repo.active_branch) == "master":
+    if str(repo.active_branch) == "main":
         check_command_exists("jiggle_version")
         command = f"jiggle_version here --module={PROJECT_NAME}"
         parts = shlex.split(command)
         execute(*parts)
     else:
-        print("Not master branch, not incrementing version")
+        print("Not main branch, not incrementing version")
 
 
 @task(
