@@ -13,8 +13,12 @@ Installation
 ```
 git clone https://github.com/matthewdeanmartin/so_pip.git
 pip install -e .
+# some tools can't co-exist in the same virtual environment
+pipx install black
+pipx install pylint
+pipx install isort
 ```
-I'll publish to pypi soonish.
+I'll publish to pypi and make a Dockerfile soonish.
 
 Usage
 --------------

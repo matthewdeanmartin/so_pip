@@ -2,6 +2,8 @@ Contributing Answers
 --------------------
 This is about how to contribute to an answer you found in StackOverflow to make the code more re-usable.
 
+You need 2000 reputation points to edit & even more to edit without peer review.
+
 See CONTRIBUTING.md for how to contribute to so_pip the tool.
 
 First: Do no harm
@@ -25,6 +27,14 @@ I think it is a grey area to
 - renaming all the variables to follow modern conventions
 
 Use judgement when you are in the grey area.
+
+I think it isn't a good idea to
+- Change answer style from IPython/Jupyter style to a single code block.
+- Turn one-liners into 100 liners, turn 100 liners into 1000 liners.
+- Add features unrelated to the question
+- Handle too many scenarios if the question wasn't about covering all scenarios
+
+Use judgement if you think you have an exception to the guideline.
 
 Comparison to Github
 --------------------

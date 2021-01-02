@@ -21,12 +21,13 @@ from so_pip.models.python_package_model import PythonPackage
 from so_pip.parse_code.write_anything import write_and_format_any_file
 from so_pip.parse_python.format_code import write_and_format_python_file
 from so_pip.parse_python.make_name import make_up_module_name
+from so_pip.parse_python.make_reusable import is_reusable
 from so_pip.parse_python.module_maker import (
     create_package_folder,
     map_post_to_python_package_model,
 )
 from so_pip.parse_python.upgrade_to_py3 import upgrade_file
-from so_pip.settings import KEEP_ANSWERS_WITH_NO_CODE
+from so_pip.settings import KEEP_ANSWERS_WITH_NO_CODE, KEEP_ANSWERS_WITH_NO_DEF_OR_CLASS
 from so_pip.support_files.authors import write_authors
 from so_pip.support_files.changelog import changelog_for_post
 from so_pip.support_files.code_of_conduct import render_code_of_conduct
@@ -54,12 +55,21 @@ def handle_post(
     for post_type, shallow_post in posts:
         if post_type == "answer" and shallow_post["score"] < settings.MINIMUM_SCORE:
             continue
+
         if post_type == "answer":
             post = stackapi_client.get_json_by_answer_id(shallow_post["answer_id"])[
                 "items"
             ][0]
         else:
             post = question
+
+        if (
+            post_type == "answer"
+            and not KEEP_ANSWERS_WITH_NO_DEF_OR_CLASS
+            and not is_reusable(post["body"])
+        ):
+            # TODO: make this more strict
+            continue
 
         def post_has_code(answer: Dict[str, Any]) -> bool:
             """This will probably get more complicated"""

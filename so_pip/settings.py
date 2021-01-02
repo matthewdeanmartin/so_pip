@@ -33,7 +33,10 @@ else:
 section = config["POST_FILTERS"]
 MINIMUM_SCORE = ast.literal_eval(section.get("MINIMUM_SCORE", "0"))
 KEEP_ANSWERS_WITH_NO_CODE = ast.literal_eval(
-    section.get("KEEP_ANSWERS_WITH_NO_CODE", "True")
+    section.get("KEEP_ANSWERS_WITH_NO_CODE", "False")
+)
+KEEP_ANSWERS_WITH_NO_DEF_OR_CLASS = ast.literal_eval(
+    section.get("KEEP_ANSWERS_WITH_NO_CODE", "False")
 )
 KEEP_ANSWERS_WITH_THESE_LANGUAGES = ast.literal_eval(
     section.get("KEEP_ANSWERS_WITH_THESE_LANGUAGES", '["*"]')

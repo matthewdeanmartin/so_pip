@@ -3,6 +3,17 @@ Wrap in run or class
 """
 
 
+def is_reusable(code: str) -> str:
+    """Try to find def or class"""
+    tokens = code.split(" ")
+    # TODO: when possible, actually parse the AST.
+    if "def" in tokens:
+        return True
+    if "class" in tokens:
+        return True
+    return False
+
+
 def wrap_in_run(code: str) -> str:
     """Probably a miracle if this works for everything"""
     code = code.strip("\n ")

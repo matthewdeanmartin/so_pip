@@ -3,26 +3,28 @@
 Not associated with PyPA, nor StackOverflow.
 
 Usage:
-  so_pip vendorize <name> (--question=<question_id>|--post=<answer_id>|--package=<package>) [--output=<output>]
-  so_pip search <name> --query=<query> --tags=<tags> [--output=<output>] [--count=<count>]
-  so_pip uninstall <names>...   [--output=<output>]
-  so_pip list   [--output=<output>]
-  so_pip freeze   [--output=<output>]
-  so_pip show <names>...   [--vendor=<output>]
+  so_pip vendorize <name> (--question=<question_id>|--post=<answer_id>|--package=<package>) [--output=<output>] [--logs]
+  so_pip search <name> --query=<query> --tags=<tags> [--output=<output>] [--count=<count>] [--logs]
+  so_pip uninstall <names>...   [--output=<output>] [--logs]
+  so_pip list   [--output=<output>] [--logs]
+  so_pip freeze   [--output=<output>] [--logs]
+  so_pip show <names>...   [--vendor=<output>] [--logs]
   so_pip (-h | --help)
   so_pip --version
 
 Options:
-  -h --help     Show this screen.
-  --version     Show version.
-  --count=<count>  How many posts to get [default: 2].
-  --output=<output>      Folder for packages. Defaults to /output
-  --question=<question_id>    Stackoverflow question id
-  --post=<answer_id>      Stackoverflow post id
-  --package=<package>     Generated package name
-
+  -h --help                 Show this screen.
+  --version                 Show version.
+  --count=<count>           How many posts to get [default: 2].
+  --output=<output>         Folder for packages. Defaults to /output
+  --question=<question_id>  Stackoverflow question id
+  --post=<answer_id>        Stackoverflow post id
+  --package=<package>       Generated package name
+  --logs                    Show logging
 
 """
+import logging
+
 import sys
 
 import docopt
@@ -39,28 +41,20 @@ from so_pip.commands import vendorize as vendorize
 def main() -> int:
     """Get the args object from command parameters"""
     arguments = docopt.docopt(__doc__, version=f"so_pip {meta.__version__}")
-    # example
-    # {'--count': '2',
-    #  '--help': False,
-    #  '--output': None,
-    #  '--package': None,
-    #  '--post': None,
-    #  '--query': 'how to write code',
-    #  '--question': None,
-    #  '--tags': 'python',
-    #  '--vendor': None,
-    #  '--version': False,
-    #  '<name>': ['abc'],
-    #  '<names>': [],
-    #  'freeze': False,
-    #  'list': False,
-    #  'search': True,
-    #  'show': False,
-    #  'uninstall': False,
-    #  'vendorize': False}
     # print(arguments)
     output_folder = arguments["--output"]
 
+    if arguments["--logs"]:
+        # root logger, all modules
+        for root in ("so_pip", "__main__", "url_lib3"):
+            logger = logging.getLogger(root)
+            logger.setLevel(logging.DEBUG)
+            ch = logging.StreamHandler()
+            ch.setLevel(logging.DEBUG)
+            log_format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+            formatter = logging.Formatter(log_format)
+            ch.setFormatter(formatter)
+            logger.addHandler(ch)
     if arguments["vendorize"]:
         prefix = arguments["<name>"]
         question = arguments["--question"]

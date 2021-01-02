@@ -1,0 +1,19 @@
+=======
+History
+=======
+
+    0.1.3 (Fri Jun 23 10:16:39 2017)
+    -----------------------
+    * martineau <https://stackoverflow.com/users/355230>,CC BY-SA 3.0,
+
+# Edited question title and removed language tag.
+
+    0.1.2 (Fri Oct 23 11:12:40 2015)
+    -----------------------
+    * BuZZ-dEE <https://stackoverflow.com/users/183704>,CC BY-SA 3.0,
+
+# fixed typos etc.
+
+    0.1.1 (Thu Jul 29 08:50:55 2010)
+    -----------------------
+    * Richard <https://stackoverflow.com/users/323332>,CC BY-SA 2.5,

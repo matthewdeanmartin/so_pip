@@ -1,0 +1,9 @@
+StackOverflow is governed by the code of conduct here:
+https://stackoverflow.com/conduct
+
+The so_pip tool which generated this package is governed by
+https://github.com/matthewdeanmartin/so_pip/blob/main/CODE_OF_CONDUCT.md
+
+so_pip is intended to help vendorize source code from StackOverflow, so
+there may be another code of conduct that governs the app that uses such
+vendorized code.

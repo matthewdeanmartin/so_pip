@@ -29,7 +29,7 @@ ifaddr = "*"
 vendorize = "*"
 
 [packages]
-# black = "*"
+black = "*"
 requests = "*"
 py-stackexchange = "*"
 beautifulsoup4 = "*"
@@ -48,12 +48,12 @@ jinja2 = "*"
 stackapi = "*"
 markdown-readme-generator = "*"
 namegenerator = "*"
-# so-pip = {editable = true,path = "."}
 pip-upgrader = "*"
 pur = "*"
 pypistats = "*"
 pypinfo = "*"
 nbformat = "*"
+
 
 [requires]
 python_version = "3.8"

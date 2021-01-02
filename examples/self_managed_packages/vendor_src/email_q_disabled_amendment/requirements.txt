@@ -1,0 +1,3 @@
+# module names often don't match package names!
+
+setuptools==51.1.1

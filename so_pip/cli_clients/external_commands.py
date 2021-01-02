@@ -96,7 +96,7 @@ def black(folder_name: str) -> str:
     text = f"{settings.SHELL} black {folder_name} --target-version=py38"
     LOGGER.debug(text)
     command = shlex.split(text)
-    result = execute_get_text(command)
+    result = execute_get_text(command, ignore_error=True)
     LOGGER.debug(result)
     return result
 

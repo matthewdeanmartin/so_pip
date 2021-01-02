@@ -1,1 +1,1 @@
-pip install dist/fast*.whl --target=vendor
+pip install vendor_src/email_a_tuition_classification/dist/email*.whl --target=vendor
