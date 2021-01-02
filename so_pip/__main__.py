@@ -3,24 +3,23 @@
 Not associated with PyPA, nor StackOverflow.
 
 Usage:
-  so_pip vendorize <name> (--question=<question_id>|--post=<answer_id>|--package=<package>) [--output=<output>] [--logs]
-  so_pip search <name> --query=<query> --tags=<tags> [--output=<output>] [--count=<count>] [--logs]
-  so_pip uninstall <names>...   [--output=<output>] [--logs]
-  so_pip list   [--output=<output>] [--logs]
-  so_pip freeze   [--output=<output>] [--logs]
-  so_pip show <names>...   [--vendor=<output>] [--logs]
+  so_pip vendorize <name> (--question=<question_id>|--answer=<answer_id>|--package=<package>) [--revision] [options]
+  so_pip search <name> --query=<query> --tags=<tags> [--count=<count>] [options]
+  so_pip uninstall <names>... [options]
+  so_pip list [options]
+  so_pip freeze [options]
+  so_pip show <names>... [options]
   so_pip (-h | --help)
   so_pip --version
 
 Options:
-  -h --help                 Show this screen.
-  --version                 Show version.
-  --count=<count>           How many posts to get [default: 2].
-  --output=<output>         Folder for packages. Defaults to /output
-  --question=<question_id>  Stackoverflow question id
-  --post=<answer_id>        Stackoverflow post id
-  --package=<package>       Generated package name
-  --logs                    Show logging
+  -h --help                    Show this screen.
+  -v --version                 Show version.
+  -c --count=<count>           How many posts to get [default: 2].
+  -o --output=<output>         Folder for packages. Defaults to /output
+  -q --question=<question_id>  Stackoverflow question id
+  -a --answer=<answer_id>      Stackoverflow answer id
+  --logs                       Show logging
 
 """
 import logging
@@ -58,7 +57,7 @@ def main() -> int:
     if arguments["vendorize"]:
         prefix = arguments["<name>"]
         question = arguments["--question"]
-        answer = arguments["--post"]
+        answer = arguments["--answer"]
         if question:
             packages_made = vendorize.import_so_question(
                 prefix, question, output_folder
