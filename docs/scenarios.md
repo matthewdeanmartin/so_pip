@@ -165,5 +165,3 @@ Some people use a convention of putting a file name right above the block
 ```
 print("hello world")
 ```
-
-

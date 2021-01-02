@@ -98,4 +98,3 @@ With help from a lot of libraries
 - CLI
     - Primative versions of Freeze, List, Show
     - `vendorize` to distinguish from real `pip install`
-

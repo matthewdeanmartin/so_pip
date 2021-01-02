@@ -2,8 +2,8 @@ Well, you could always write a simple script that searches the file for
 `import` statements. This one finds all imported modules and files, including
 those imported in functions or classes:
 
-    
-    
+
+
     def find_imports(toCheck):
         """
         Given a filename, returns a list of modules imported by the program.
@@ -32,12 +32,12 @@ those imported in functions or classes:
                             # ignore items that can't be imported
                             # (unless that isn't what you want?)
                             pass
-    
+
         return importedItems
-    
+
     toCheck = raw_input("Which file should be checked: ")
     print find_imports(toCheck)
-    
+
 
 This doesn't do anything for `from module import something` style imports,
 though that could easily be added, depending on how you want to deal with
@@ -53,4 +53,3 @@ in many cases, as long as you understand there are definite corner cases.
 One issue is that relative imports will fail if this script isn't in the same
 directory as the given file. You may want to add the directory of the given
 script to `sys.path`.
-

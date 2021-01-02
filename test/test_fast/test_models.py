@@ -1,6 +1,6 @@
 from so_pip.models.code_block_model import CodeBlock
-from so_pip.models.python_package_model import PythonPackage
 from so_pip.models.code_file_model import CodeFile
+from so_pip.models.python_package_model import PythonPackage
 
 
 def test_code_block():
@@ -10,8 +10,9 @@ def test_code_block():
     block.raw_text = "print hello, but html style"
     block.code_text = "print('hello world')"
     block.footer_comments = "I wrote that."
-    tags=["python"]
+    tags = ["python"]
     block.analyze(tags=tags)
+
 
 def test_code_file_single_block():
     # Maybe many chunks of code.
@@ -24,6 +25,7 @@ def test_code_file_single_block():
     file.code_blocks.append(block)
     file.to_write()
     file.all_code()
+
 
 def test_code_file_two_blocks():
     # Maybe many chunks of code.
@@ -45,6 +47,7 @@ def test_code_file_two_blocks():
     assert file.non_comment_lines()
     assert file.all_code()
     assert file.to_write()
+
 
 def test_python_submodule():
     psm = PythonPackage("name", "desc")

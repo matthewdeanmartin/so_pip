@@ -53,7 +53,7 @@ pip-upgrader = "*"
 pur = "*"
 pypistats = "*"
 pypinfo = "*"
-jupyter = "*"
+nbformat = "*"
 
 [requires]
 python_version = "3.8"

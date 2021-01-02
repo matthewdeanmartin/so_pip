@@ -42,8 +42,7 @@ KEEP_ANSWERS_WITH_THESE_LANGUAGES = ast.literal_eval(
 # this pattern won't work once so_pip is pip installed.
 section = config["VENDORIZING"]
 
-
-# {target_folder}/{package_prefix}_{package_name}/{submodule}.py
+# {target_folder}/{package_prefix}_{package_name}/{package_info}.py
 # so_pip_packages/fizzbuzz_question_forest_cake/
 
 # how to make the module look

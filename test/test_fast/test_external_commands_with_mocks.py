@@ -1,35 +1,39 @@
-
 from unittest.mock import patch
 
 import so_pip.cli_clients.external_commands as commands
 
 
-@patch('subprocess.run')
+@patch("subprocess.run")
 def test_pyupgrade(mock):
     print(commands.pyupgrade("foo.py"))
-    assert mock.called and mock.call_count ==1
+    assert mock.called and mock.call_count == 1
 
-@patch('subprocess.run')
+
+@patch("subprocess.run")
 def test_futurize(mock):
     print(commands.futurize("foo.py"))
-    assert mock.called and mock.call_count ==1
+    assert mock.called and mock.call_count == 1
 
-@patch('subprocess.run')
+
+@patch("subprocess.run")
 def test_two_to_three(mock):
     print(commands.two_to_three("foo.py"))
-    assert mock.called and mock.call_count ==1
+    assert mock.called and mock.call_count == 1
 
-@patch('subprocess.run')
+
+@patch("subprocess.run")
 def test_execute_get_text(mock):
     print(commands.execute_get_text(["foo.py"]))
-    assert mock.called and mock.call_count ==1
+    assert mock.called and mock.call_count == 1
 
-@patch('subprocess.run')
+
+@patch("subprocess.run")
 def test_generate_requirements(mock):
     print(commands.generate_requirements("foo.py"))
-    assert mock.called and mock.call_count ==1
+    assert mock.called and mock.call_count == 1
 
-@patch('subprocess.run')
+
+@patch("subprocess.run")
 def test_isort(mock):
     print(commands.isort("foo.py"))
-    assert mock.called and mock.call_count ==1
+    assert mock.called and mock.call_count == 1

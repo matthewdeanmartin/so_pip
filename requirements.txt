@@ -16,9 +16,9 @@ future
 fuzzywuzzy
 html2text
 jinja2
-jupyter
 markdown-readme-generator
 namegenerator
+nbformat
 pip-upgrader
 pipreqs
 pur

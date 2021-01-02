@@ -74,7 +74,7 @@ def find_code_blocks(html: str, tags: List[str]) -> List[CodeBlock]:
         code = fix_interactive(code)
         # bash shell stuff
         code = fix_shell(code)
-        # remove leaing whitepspace
+        # remove leading whitespace
         code = deindent(code)
 
         block.code_text = code

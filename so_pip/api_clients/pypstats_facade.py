@@ -40,6 +40,3 @@ def get_download_count(module: str) -> Optional[int]:
             if "without_mirrors" in category.values():
                 downloads = category["downloads"]
     return downloads
-
-
-print(get_download_count("pymarc"))

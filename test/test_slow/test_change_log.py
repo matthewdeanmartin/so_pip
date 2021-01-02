@@ -1,8 +1,9 @@
+import tempfile
 from unittest.mock import mock_open, patch
 
-from so_pip.support_files.changelog import changelog_for_post
 import so_pip.api_clients.stackapi_facade as stackapi_client
-import tempfile
+from so_pip.support_files.changelog import changelog_for_post
+
 
 def test_changelog_for_post():
     answer_data = stackapi_client.get_json_by_answer_id(2572654)

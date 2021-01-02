@@ -21,4 +21,3 @@ Credits and License
 -------------------
 Lasse V. Karlsen <https://stackoverflow.com/users/267>
 Jono Bacon <https://stackoverflow.com/users/308456>
-

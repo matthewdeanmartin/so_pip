@@ -33,7 +33,7 @@ def wrap_in_run(code: str) -> str:
             if len(lines) > 0 and not lines[-1] == run_comment:
                 lines.append(line)
         else:
-            # non whitepspace
+            # non whitespace
             if dropped_def_run:
                 lines.append("     " + line)
                 continue

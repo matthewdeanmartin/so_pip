@@ -28,7 +28,7 @@ Well, you could always write a simple script that searches the file for `import`
                             # ignore items that can't be imported
                             # (unless that isn't what you want?)
                             pass
-                    
+
         return importedItems
 
     toCheck = raw_input("Which file should be checked: ")

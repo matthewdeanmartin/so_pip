@@ -36,5 +36,3 @@ Right to be forgotten
 [It looks like CC BY SA licenses says you need to remove attribution when requested](https://wiki.creativecommons.org/wiki/License_Versions#Detailed_attribution_comparison_chart)
 
 Periodically regenerating a package, or updating it should comply.
-
-

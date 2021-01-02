@@ -34,7 +34,7 @@ def create_package_folder(
     return supporting_files_folder, python_source_folder
 
 
-def handle_python_post(
+def map_post_to_python_package_model(
     post: Dict[str, Any], html: str, name: str, description: str, tags: List[str]
 ) -> PythonPackage:
     """Given html of ap post, fill in a PythonPackage object."""
@@ -64,24 +64,6 @@ def handle_python_post(
             code_file.analyze(tags)
         if not code_file.extension:
             raise TypeError("Expected Extension by now")
-
-        # if block.is_valid_python:
-        #     code_file.to_write.append(code)
-        #     code_file.all_code.append(code)
-        # else:
-        #     submodule.failed_parse = True
-        #     if COMMENT_OUT_BAD_PYTHON and block.extension == ".py":
-        #         commented_out_code = html_to_python_comments(code)
-        #         for error in block.errors:
-        #
-        #             error_message = f"# Syntax error: {error}"
-        #             code_file.to_write.append("# " + error_message)
-        #         code_file.to_write.append(commented_out_code)
-        #
-        # if block.footer_comments:
-        #     code_file.to_write.append(block.footer_comments)
-        #
-        # code_file.strip_trailing_blank()
     return package
 
 

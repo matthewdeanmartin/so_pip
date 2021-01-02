@@ -14,6 +14,8 @@ from typing import Optional, Tuple
 from stdlib_list import stdlib_list
 
 from so_pip import settings as settings
+
+# noinspection PyProtectedMember
 from so_pip._vendor.find_imports.main import find_imports
 
 # ^\s*(from|import)\s+\w+

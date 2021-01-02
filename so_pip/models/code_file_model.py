@@ -1,5 +1,5 @@
 """
-Abstract model of the submodule I'm extracting from an post.
+Abstract model of the package_info I'm extracting from an post.
 """
 from dataclasses import dataclass, field
 from typing import List

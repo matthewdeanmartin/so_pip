@@ -9,15 +9,15 @@ import importlib as implib
 # the members :
 #! /usr/bin/env python
 #
-# test.py  
+# test.py
 #
 # Find Modules
 #
 import inspect
 
 if __name__ == "__main__":
-    mod = implib.import_module( "example" )
-    for i in inspect.getmembers(mod, inspect.ismodule ):
+    mod = implib.import_module("example")
+    for i in inspect.getmembers(mod, inspect.ismodule):
         print(i[0])
 
 #! /usr/bin/env python
@@ -30,8 +30,8 @@ from os import path
 if __name__ == "__main__":
     print("Hello World !!!!")
 
-# 
+#
 # Output :
-tony@laptop .../~:$ ./test.py
-path
-sys
+# tony@laptop .../~:$ ./test.py
+# path
+# sys
