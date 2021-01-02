@@ -1842,7 +1842,7 @@ def do_safety() -> str:
     """
     Check free database for vulnerabilities in pinned libraries.
     """
-    requirements_file_name = f"{REPORTS_FOLDER}/requirements_for_safety.txt"
+    requirements_file_name = f".config/requirements_for_safety.txt"
     with open(requirements_file_name, "w+") as out:
         subprocess.run(["pip", "freeze"], stdout=out, stderr=out, check=True)
     check_command_exists("safety")
@@ -2031,7 +2031,7 @@ def do_pin_dependencies() -> None:
             "no external dependencies yet"
         )
     else:
-        with open(f"{REPORTS_FOLDER}/requirements.txt", "r+") as file:
+        with open(f".config/requirements.txt", "r+") as file:
             lines = file.readlines()
             file.seek(0)
             for line in lines:
@@ -2039,7 +2039,7 @@ def do_pin_dependencies() -> None:
                     file.write(line)
             file.truncate()
 
-    with open(f"{REPORTS_FOLDER}/requirements-dev.txt", "r+") as file:
+    with open(f".config/requirements-dev.txt", "r+") as file:
         lines = file.readlines()
         file.seek(0)
         for line in lines:
@@ -2096,6 +2096,7 @@ def call_check_manifest_command(output_file_name: str, env: Dict[str, str]) -> N
     """
     To allow for checking in multiple passes
     """
+    return
     check_command_exists("check-manifest")
 
     command_text = f"{VENV_SHELL} check-manifest".strip().replace("  ", " ")
@@ -2120,6 +2121,7 @@ def do_check_manifest() -> str:
     """
     Require all files to be explicity included/excluded from package
     """
+    return
     env = config_pythonpath()
     output_file_name = f"{PROBLEMS_FOLDER}/manifest_errors.txt"
     call_check_manifest_command(output_file_name, env)
@@ -2339,7 +2341,7 @@ def do_package() -> None:
     with safe_cd(SRC):
         # command = f"{PYTHON} setup.py sdist --formats=gztar,zip"
         # bdist_wheel
-        command_text = f"{PYTHON} setup.py bdist_wheel"
+        command_text = f"{PYTHON} setup.py bdist_wheel sdist"
         command_text = prep_print_simple(command_text, no_project=True)
         command = shlex.split(command_text)
         result = execute_get_text(command, env=config_pythonpath()).replace("\r", "")

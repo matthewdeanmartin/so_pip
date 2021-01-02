@@ -44,9 +44,9 @@ class PackageInfo:
 
     def __init__(self) -> None:
         """Fire up initial state"""
-        self.html_file = find_file("pypi.html", __file__)
+        self.html_file = find_file("../_cache/pypi.html", __file__)
         self.packages: List[str] = []
-        if not os.path.exists("pypi.html"):
+        if not os.path.exists(self.html_file):
             client = requests.get("https://pypi.python.org/simple/")
             client.raise_for_status()
             with open(self.html_file, "w") as file:
@@ -63,7 +63,8 @@ class PackageInfo:
             self.packages.append(package)
 
     def search(self, package: str) -> bool:
-        return package in self.packages
+        """Check if package exists"""
+        return package.strip() in self.packages
 
 
 if __name__ == "__main__":

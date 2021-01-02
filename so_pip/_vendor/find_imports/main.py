@@ -18,8 +18,8 @@ def find_imports(to_check: str, importable_only: bool = False) -> List[str]:
     in if/else or try/except blocks will always be included.
     """
     imported_items = []
-    with open(to_check, encoding="utf-8", errors="ignore") as pyFile:
-        for raw_line in pyFile:
+    with open(to_check, encoding="utf-8", errors="ignore") as py_file:
+        for raw_line in py_file:
             # ignore comments
             line = raw_line.strip().partition("#")[0].partition(" as ")[0].split(" ")
             if line[0] == "import" or line[0] == "from":

@@ -34,6 +34,5 @@ class CodeBlock:
         self.is_ipython_block = ">>>" in self.code_text
         self.is_valid_python, self.errors = validate_python(self.code_text)
 
-        self.extension, self.language = assign_extension(
-            self.code_text, self.is_valid_python, tags
-        )
+        value = assign_extension(self.code_text, self.is_valid_python, tags)
+        self.extension, self.language = value

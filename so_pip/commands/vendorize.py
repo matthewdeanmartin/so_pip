@@ -113,8 +113,9 @@ def handle_question(
     return packages_made
 
 
-def import_so_answer(package_prefix: str, answer_id: int,
-                     output_folder:str) -> List[str]:
+def import_so_answer(
+    package_prefix: str, answer_id: int, output_folder: str
+) -> List[str]:
     """main entry point
 
     package_prefix - prefix for question and post modules
@@ -133,8 +134,9 @@ def import_so_answer(package_prefix: str, answer_id: int,
     return packages_made
 
 
-def import_so_question(package_prefix: str, question_id: int,
-                       output_folder:str) -> List[str]:
+def import_so_question(
+    package_prefix: str, question_id: int, output_folder: str
+) -> List[str]:
     """main entry point
 
     package_prefix - prefix for question and post modules
@@ -143,7 +145,6 @@ def import_so_question(package_prefix: str, question_id: int,
     """
     packages_made: List[str] = []
     question = stackapi_client.get_json_by_question_id(question_id)["items"][0]
-
 
     (
         supporting_files_folder,

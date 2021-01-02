@@ -22,7 +22,7 @@ def wrap_in_run(code: str) -> str:
             imports.append(line)
             continue
         if not dropped_def_run:
-            if len(imports+lines) > 0 and not (imports+lines)[-1].isspace():
+            if len(imports + lines) > 0 and not (imports + lines)[-1].isspace():
                 lines.append("")
             lines.append("def run() -> None:")
             lines.append(run_comment)
@@ -32,9 +32,6 @@ def wrap_in_run(code: str) -> str:
         if line.isspace() or not line:
             if len(lines) > 0 and not lines[-1] == run_comment:
                 lines.append(line)
-                continue
-            else:
-                continue
         else:
             # non whitepspace
             if dropped_def_run:
@@ -42,20 +39,8 @@ def wrap_in_run(code: str) -> str:
                 continue
             lines.append(line)
 
-    if len(imports+lines) > 0 and not (imports+lines)[-1].isspace():
+    if len(imports + lines) > 0 and not (imports + lines)[-1].isspace():
         lines.append("")
     lines.append("if __name__ == '__main__':")
     lines.append("     run()")
     return "\n".join(imports + lines)
-
-
-if __name__ == '__main__':
-    result = wrap_in_run("""import foo
-import bar
-
-from baz import blerg
-
-print("hello world")
-
-""")
-    print(result)

@@ -18,7 +18,6 @@ from typing import Any, Dict, List
 
 import html2text
 
-from so_pip import settings as settings
 from so_pip.api_clients.stackapi_facade import (
     get_json_comments_by_post_id,
     get_json_revisions_by_post_id,

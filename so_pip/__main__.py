@@ -28,7 +28,6 @@ import sys
 import docopt
 
 from so_pip import _version as meta
-from so_pip import settings as settings
 from so_pip.commands import freeze as freeze
 from so_pip.commands import list_all as list_all
 from so_pip.commands import search as search
@@ -62,15 +61,16 @@ def main() -> int:
     # print(arguments)
     output_folder = arguments["--output"]
 
-
     if arguments["vendorize"]:
         prefix = arguments["<name>"]
         question = arguments["--question"]
         answer = arguments["--post"]
         if question:
-            packages_made = vendorize.import_so_question(prefix, question,output_folder)
+            packages_made = vendorize.import_so_question(
+                prefix, question, output_folder
+            )
         elif answer:
-            packages_made = vendorize.import_so_answer(prefix, answer,output_folder)
+            packages_made = vendorize.import_so_answer(prefix, answer, output_folder)
         else:
             raise TypeError("Need to specify a question or answer")
         print(f"Vendorized {','.join(packages_made)} at {output_folder}")

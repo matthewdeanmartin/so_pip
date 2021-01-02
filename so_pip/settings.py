@@ -80,7 +80,8 @@ GENERATE_SETUP_CFG = ast.literal_eval(section.get("GENERATE_SETUP_CFG", "True"))
 
 section = config["LANGUAGE_DETECTION"]
 DEFAULT_LANGUAGE = cast(
-    Tuple[str, str], ast.literal_eval(section.get("DEFAULT_LANGUAGE", "'.py'"))
+    Tuple[str, str],
+    ast.literal_eval(section.get("DEFAULT_LANGUAGE", "('.py', 'python')")),
 )
 
 # Language guesser needs hints.

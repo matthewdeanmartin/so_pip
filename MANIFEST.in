@@ -11,13 +11,11 @@ recursive-include so_pip *.ini
 recursive-include so_pip *.jinja
 recursive-include so_pip *.txt
 recursive-include so_pip *.csv
-
-
-recursive-include so_pip_packages *
-recursive-include so_pip_packages *.*
-recursive-include so_pip_packages *.bak
-recursive-include so_pip_packages *.html
-recursive-include so_pip_packages *.txt
+recursive-include so_pip *.md
+recursive-include so_pip *.py
+recursive-include so_pip *.html
+recursive-include so_pip *.txt
+prune so_pip/_cache
 
 prune .editorconfig
 prune .pynt
@@ -34,10 +32,4 @@ prune on_hold
 prune reports
 prune scripts
 prune .so_pip.ini
-
-
 prune .env_example
-recursive-include so_pip *.md
-recursive-include so_pip *.py
-recursive-include so_pip *.html
-recursive-include so_pip *.txt

@@ -40,7 +40,6 @@ def write_and_format_python_file(file_name: str, to_write: List[str]) -> bool:
     return False
 
 
-def deindent(code:str)->str:
+def deindent(code: str) -> str:
     """Remove leading whitespace"""
     return textwrap.dedent(code)
-
