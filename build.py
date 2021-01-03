@@ -1268,7 +1268,7 @@ def do_flake8() -> str:
     # too strict if I include SO post source!
     return
     with safe_cd(SRC):
-        command = "flake8"
+        command = "flake8 --config .config/.flake8"
         check_command_exists(command)
         command = prep_print_simple(command)
         execute(*(command.split(" ")))
@@ -2326,8 +2326,9 @@ def do_package() -> None:
 
     with safe_cd(SRC):
         # command = f"{PYTHON} setup.py sdist --formats=gztar,zip"
-        # bdist_wheel
-        command_text = f"{PYTHON} setup.py bdist_wheel sdist"
+        # bdist_wheel, setuptools, MANIFEST.in
+        # and data_files is one clusterf*k of brokeness.
+        command_text = f"{PYTHON} poetry build"
         command_text = prep_print_simple(command_text, no_project=True)
         command = shlex.split(command_text)
         result = execute_get_text(command, env=config_pythonpath()).replace("\r", "")

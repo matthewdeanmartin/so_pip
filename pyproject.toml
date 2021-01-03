@@ -1,33 +1,93 @@
 [tool.poetry]
 name = "so_pip"
-version = "0.1.0"
+version = "0.1.9"
 description = "Generate packages from Stackoverflow answers"
 authors = ["Matthew Martin <matthewdeanmartin@gmail.com>"]
+keywords = ["packaging", "stackoverflow"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.7",
+]
+include = [
+    "so_pip/**/*.py",
+    "so_pip/**/*.md",
+    "so_pip/**/*.txt",
+    "so_pip/**/*.html",
+    "so_pip/**/*.jinja",
+]
+exclude = [
+    "so_pip/_cache/*.html",
+]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/matthewdeanmartin/so_pip"
+homepage = "https://github.com/matthewdeanmartin/so_pip"
+documentation ="https://github.com/matthewdeanmartin/so_pip"
+
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/matthewdeanmartin/so_pip/issues"
+"Change Log" = "https://github.com/matthewdeanmartin/so_pip/blob/main/CHANGES.md"
+
+[tool.poetry.scripts]
+so_pip = 'so_pip.__main__:main'
 
 [tool.poetry.dependencies]
 python = "^3.8"
-docopts = "*"
+black = "*"
+requests = "*"
+py-stackexchange = "*"
+beautifulsoup4 = "*"
+python-dotenv = "*"
+pipreqs = "*"
+pyupgrade = "*"
+2to3 = "*"
+# this has perf problems and is tricky to install.
+# guesslang = "*"
+html2text = "*"
+future = "*"
+fuzzywuzzy = "*"
+pyflakes = "*"
+stdlib-list = "*"
+jinja2 = "*"
+stackapi = "*"
+markdown-readme-generator = "*"
+namegenerator = "*"
+pip-upgrader = "*"
+pur = "*"
+pypistats = "*"
+pypinfo = "*"
+nbformat = "*"
 
 [tool.poetry.dev-dependencies]
-pytest = "==5.3.5"
-pytest-xdist = "*"
-pytest-cov = "==2.8.1"
-pydocstyle = "==5.0.2"
-pycycle = "==0.0.8"
+pytest = "==6.0.1"
+pytest-cov = ">=2.10.1"
+pytest-timeout = "*"
+pytest-xdist = ">=2.1.0"
+pip-check = "==2.6"
 pynt = "==0.8.2"
 pynt-contrib = "==0.2.0"
 checksumdir = "==1.1.7"
 requests = "==2.22.0"
 dodgy = "==0.2.1"
 gitchangelog = "==3.0.4"
+liccheck = "==0.4.3"
 psutil = "==5.6.7"
 pebble = "==4.5.0"
 python-dotenv = "==0.11.0"
 gitpython = "*"
-rope = "*"
-"stopwatch.py" = "*"
-pytest-timeout = "*"
-
+sshtunnel = "*"
+ifaddr = "*"
+vendorize = "*"
+# dotenv-linter = "==0.1.5"
+# colorama = "==0.4.1"
+# click = "==6.7"
+# hypothesis = "*"
 
 [tool.black]
 line-length = 88
@@ -55,3 +115,25 @@ exclude = '''
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+testpaths = [
+    "tests",
+]
+junit_family = "xunit1"
+norecursedirs = ["vendor", "scripts"]
+# don't know how to do this in toml
+#addopts = "--strict-markers"
+#markers =
+#	slow: marks tests as slow (deselect with '-m "not slow"')
+#	fast: marks tests as fast (deselect with '-m "not fast"')
+
+[tool.isort]
+default_section = "THIRDPARTY"
+force_grid_wrap = 0
+include_trailing_comma = true
+known_first_party = ["so_pip"]
+line_length = 88
+multi_line_output = 3
+use_parentheses = true

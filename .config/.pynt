@@ -3,8 +3,7 @@ PROJECT_NAME = so_pip
 SRC  = .
 PROBLEMS_FOLDER = reports
 REPORTS_FOLDER = reports
-VENV_SHELL = pipenv run
-PIPENV = pipenv run
+VENV_SHELL = poetry run
 
 MINIMUM_TEST_COVERAGE = 20
 

@@ -6,7 +6,7 @@ This will vendorize the source code of question or answer into a folder and
 generate the accessory files to make it look like a python package.
 
 The feature-set overlaps a bit with [cookie cutter, vendorizing libraries and
-stackoverflow search cli's](docs/prior_art.md).
+stackoverflow search cli's](https://github.com/matthewdeanmartin/so_pip/blob/main/docs/prior_art.md).
 
 Installation
 ------------
@@ -19,9 +19,12 @@ pipx install isort
 ```
 I'll publish to pypi and make a Dockerfile soonish.
 
+```
+docker build -t so_pip:latest .
+```
 Usage
 --------------
-Consider getting a [key](https://stackapps.com/apps/oauth/register) and adding a [.so_pip.ini file](.so_pip.ini) The app will make best efforts if you don't.
+Consider getting a [key](https://stackapps.com/apps/oauth/register) and adding a [.so_pip.ini file](https://github.com/matthewdeanmartin/so_pip/blob/main/.so_pip.ini) The app will make best efforts if you don't.
 ```
 # Turn posts into nicely formated packages
 > so_pip vendorize my_name --question=31049648 | --answer=31049648
@@ -34,13 +37,13 @@ Consider getting a [key](https://stackapps.com/apps/oauth/register) and adding a
 
 Docs
 -----
-* [Examples](examples)
-* [CLI](docs/cli.md)
-* [Code reuse scanarios you see on StackOverflow](docs/scenarios.md)
-* [Features](docs/features.md)
-* [Security Considerations](docs/security.md)
-* [Prior Art](docs/prior_art.md) Similar and overlapping tools.
-* [Contributing *answers* to StackOverflow](docs/contributing.md) AKA, fixing answers you found.
-* [Attribution Compliance](docs/comply_with_cc_sa.md)
-* [Contributing to so_pip](CONTRIBUTING.md)
-* [Code of Conduct for so_pip](CODE_OF_CONDUCT.md)
+* [Examples](https://github.com/matthewdeanmartin/so_pip/tree/main/examples)
+* [CLI](https://github.com/matthewdeanmartin/so_pip/blob/main/docs/cli.md)
+* [Code reuse scanarios you see on StackOverflow](https://github.com/matthewdeanmartin/so_pip/blob/main/docs/scenarios.md)
+* [Features](https://github.com/matthewdeanmartin/so_pip/blob/main/docs/features.md)
+* [Security Considerations](https://github.com/matthewdeanmartin/so_pip/blob/main/docs/security.md)
+* [Prior Art](https://github.com/matthewdeanmartin/so_pip/blob/main/docs/prior_art.md) Similar and overlapping tools.
+* [Contributing *answers* to StackOverflow](https://github.com/matthewdeanmartin/so_pip/blob/main/docs/contributing.md) AKA, fixing answers you found.
+* [Attribution Compliance](https://github.com/matthewdeanmartin/so_pip/blob/main/docs/comply_with_cc_sa.md)
+* [Contributing to so_pip](https://github.com/matthewdeanmartin/so_pip/blob/main/CONTRIBUTING.md)
+* [Code of Conduct for so_pip](https://github.com/matthewdeanmartin/so_pip/blob/main/CODE_OF_CONDUCT.md)
