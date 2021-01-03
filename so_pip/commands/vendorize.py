@@ -8,6 +8,7 @@ from typing import List
 
 from so_pip.api_clients import stackapi_facade as stackapi_client
 from so_pip.parse_python.post_to_code import handle_post
+import so_pip.utils.guards as guards
 
 
 def import_so_answer(
@@ -19,6 +20,10 @@ def import_so_answer(
 
     All modules will be at same tree level
     """
+    guards.must_be_truthy(output_folder, "output_folder required")
+    guards.must_be_truthy(answer_id, "answer_id required")
+    if not package_prefix:
+        package_prefix = ""
     packages_made: List[str] = []
     answer_data = stackapi_client.get_json_by_answer_id(answer_id)
     answer = answer_data["items"][0]

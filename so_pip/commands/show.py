@@ -6,10 +6,13 @@ List meta data for one.
 
 # TODO: probably just extract metadata from __init__.py
 import os
+import so_pip.utils.guards as guards
 
 
 def show(target_folder: str, package_name: str) -> None:
     """Show pip style metadata"""
+    guards.must_be_truthy(target_folder, "target_folder required")
+    guards.must_be_truthy(package_name, "package_name required")
     package_path = os.path.join(target_folder, package_name)
     init_path = os.path.join(target_folder, package_name, "__init__.py")
     with open(init_path) as meta:

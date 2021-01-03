@@ -35,6 +35,10 @@ from so_pip.commands import search as search
 from so_pip.commands import show as show
 from so_pip.commands import uninstall as uninstall
 from so_pip.commands import vendorize as vendorize
+import so_pip.utils.guards as guards
+
+# Do these need to stick around?
+LOGGERS = []
 
 
 def main() -> int:
@@ -54,10 +58,17 @@ def main() -> int:
             formatter = logging.Formatter(log_format)
             ch.setFormatter(formatter)
             logger.addHandler(ch)
+            LOGGERS.append(logger)
     if arguments["vendorize"]:
-        prefix = arguments["<name>"]
+        prefix = arguments["<name>"] or ""
         question = arguments["--question"]
         answer = arguments["--answer"]
+        if not question and not answer:
+            print("Must specify --question or --answer identifier")
+            return -1
+        if not output_folder:
+            print("No --output folder specified")
+            return -1
         if question:
             packages_made = vendorize.import_so_question(
                 prefix, question, output_folder
@@ -69,6 +80,9 @@ def main() -> int:
         print(f"Vendorized {','.join(packages_made)} at {output_folder}")
     elif arguments["uninstall"]:
         packages = arguments["<name>"]
+        if not packages:
+            print("No packages specified to uninstall")
+            return -1
         for package in packages:
             uninstall.uninstall_package(output_folder, package)
         print(
@@ -76,16 +90,30 @@ def main() -> int:
             f"If you also installed with pip you will need to uninstall with pip"
         )
     elif arguments["list"]:
+        if not output_folder:
+            print("Missing --output folder")
+            return -1
         list_all.list_packages(output_folder)
     elif arguments["freeze"]:
+        if not output_folder:
+            print("Missing --output folder")
+            return -1
         freeze.freeze_environment(output_folder)
     elif arguments["show"]:
         packages = arguments["<names>"]
+        if not packages:
+            print("No packages specified to show")
+            return -1
         for package in packages:
             show.show(output_folder, package)
     elif arguments["search"]:
         prefix = arguments["<name>"]
+        if not prefix:
+            prefix = ""
         query = arguments["--query"]
+        if not query:
+            print("--query required for search")
+            return -1
         try:
             count_str = arguments["--count"]
             count = int(count_str)

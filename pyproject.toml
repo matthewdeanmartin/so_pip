@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "so_pip"
-version = "0.1.9"
+version = "0.1.12"
 description = "Generate packages from Stackoverflow answers"
 authors = ["Matthew Martin <matthewdeanmartin@gmail.com>"]
 keywords = ["packaging", "stackoverflow"]

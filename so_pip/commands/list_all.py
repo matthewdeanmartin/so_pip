@@ -3,11 +3,13 @@ List packages
 """
 import os
 from typing import List
+import so_pip.utils.guards as guards
 
 
 def list_dirs(path: str) -> List[str]:
     """Get list of directories"""
     # https://stackoverflow.com/a/31049707/33264
+    guards.must_be_truthy(path, "path required")
     return [
         directory
         for directory in os.listdir(path)
@@ -17,6 +19,7 @@ def list_dirs(path: str) -> List[str]:
 
 def list_packages(target_folder: str, quiet: bool = False) -> None:
     """List packages"""
+    guards.must_be_truthy(target_folder, "target_folder required")
     if not quiet:
         print(f"Using {target_folder} as vendorized folder")
     path = os.path.join(target_folder)
