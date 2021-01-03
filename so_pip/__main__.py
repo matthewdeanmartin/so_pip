@@ -20,22 +20,22 @@ Options:
   -q --question=<question_id>  Stackoverflow question id
   -a --answer=<answer_id>      Stackoverflow answer id
   --logs                       Show logging
+  --quiet                      No informational logging
 
 """
 import logging
-
 import sys
 
 import docopt
 
 from so_pip import _version as meta
+from so_pip import settings as settings
 from so_pip.commands import freeze as freeze
 from so_pip.commands import list_all as list_all
 from so_pip.commands import search as search
 from so_pip.commands import show as show
 from so_pip.commands import uninstall as uninstall
 from so_pip.commands import vendorize as vendorize
-import so_pip.utils.guards as guards
 
 # Do these need to stick around?
 LOGGERS = []
@@ -46,6 +46,8 @@ def main() -> int:
     arguments = docopt.docopt(__doc__, version=f"so_pip {meta.__version__}")
     # print(arguments)
     output_folder = arguments["--output"]
+    if arguments["--quiet"]:
+        settings.QUIET = True
 
     if arguments["--logs"]:
         # root logger, all modules
@@ -114,11 +116,12 @@ def main() -> int:
         if not query:
             print("--query required for search")
             return -1
+
         try:
             count_str = arguments["--count"]
             count = int(count_str)
         except ValueError:
-            print(f"Can't convert {count_str} to a number")
+            print(f"Can't convert {arguments.get('--count','')} to a number")
             return -1
 
         # TODO: better way to do this with docopts

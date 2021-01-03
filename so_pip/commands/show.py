@@ -6,7 +6,9 @@ List meta data for one.
 
 # TODO: probably just extract metadata from __init__.py
 import os
-import so_pip.utils.guards as guards
+
+from so_pip.utils import guards as guards
+from so_pip.utils.user_trace import inform
 
 
 def show(target_folder: str, package_name: str) -> None:
@@ -37,13 +39,13 @@ def show(target_folder: str, package_name: str) -> None:
             for line in requirements_file:
                 requirements.append(line)
 
-    print(f"Name: {package_name}")
-    print(f"Version: {version}")
-    print(f"Summary: {title}")
-    print(f"Home-page: {homepage}")
-    print(f"Author: {author}")
-    print(f"Author-email: {contact}")
-    print(f"License: {the_license}")
-    print(f"Location: {package_path}")
-    print(f"Requires: {','.join(requirements)}")
-    print("Required-by: N/A")
+    inform(f"Name: {package_name}")
+    inform(f"Version: {version}")
+    inform(f"Summary: {title}")
+    inform(f"Home-page: {homepage}")
+    inform(f"Author: {author}")
+    inform(f"Author-email: {contact}")
+    inform(f"License: {the_license}")
+    inform(f"Location: {package_path}")
+    inform(f"Requires: {','.join(requirements)}")
+    inform("Required-by: N/A")

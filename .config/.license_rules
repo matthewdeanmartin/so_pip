@@ -80,6 +80,8 @@ authorized_licenses :
     http://www.apache.org/licenses/LICENSE-2.0
     Python Software Foundation
     PSF
+    MPL 2.0
+    Mozilla Public License 2.0 (MPL 2.0)
 
 unauthorized_licenses :
     foobar

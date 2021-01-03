@@ -1,8 +1,11 @@
 """
 Reduce friction of working with subprocess
 """
+import logging
 import subprocess  # nosec
 from typing import Dict, List, Optional
+
+LOGGER = logging.getLogger(__name__)
 
 
 def execute_get_text(
@@ -28,7 +31,7 @@ def execute_get_text(
     except subprocess.CalledProcessError as cpe:
         if ignore_error and completed:
             return completed.stdout.decode("utf-8") + completed.stderr.decode("utf-8")
-        print(cpe)
+        LOGGER.debug(cpe)
         raise
     else:
         return completed.stdout.decode("utf-8") + completed.stderr.decode("utf-8")

@@ -7,7 +7,6 @@ from so_pip.parse_python.code_transformations import (
 
 def test_fix_shell():
     assert fix_shell("$ dir") == "# $ dir"
-    assert fix_shell("pip install requests") == "# pip install requests"
 
 
 def test_fix_interactive():

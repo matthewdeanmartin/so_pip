@@ -22,7 +22,8 @@ if os.path.exists(CONFIG_PATH):
     result = config.read(CONFIG_PATH)
 else:
     print("Did not fine a .so_pip.ini file anywhere, using default behaviors.")
-    config = configparser.RawConfigParser()
+    # duck typing
+    config = cast(configparser.ConfigParser, configparser.RawConfigParser())
     config.add_section("POST_FILTERS")
     config.add_section("VENDORIZING")
     config.add_section("CODE_CLEANUP")
@@ -93,3 +94,4 @@ POSSIBLE_LANGUAGES = ast.literal_eval(section.get("POSSIBLE_LANGUAGES", "['*']")
 section = config["SHELL_CONFIG"]
 RUNNING_IN_VENV = "VIRTUAL_ENV" in os.environ
 SHELL = section.get("SHELL", "") if not RUNNING_IN_VENV else ""
+QUIET = False

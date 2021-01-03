@@ -10,7 +10,7 @@ def test_process_docopts():
         "--help": False,
         "--output": find_file("../../output/unit_tests/", __file__),
         "--package": None,
-        "--post": "2572654",
+        "--answer": "2572654",
         "--query": "how to write code",
         "--question": None,
         "--tags": "python",
@@ -24,6 +24,8 @@ def test_process_docopts():
         "show": False,
         "uninstall": False,
         "vendorize": True,
+        "--quiet": False,
+        "--logs": False,
     }
     with patch("docopt.docopt", return_value=anything) as mock:
         main()
@@ -35,7 +37,7 @@ def test_process_docopts_other():
         "--help": False,
         "--output": find_file("../../output/unit_tests/", __file__),
         "--package": None,
-        "--post": "2572654",
+        "--answer": "2572654",
         "--query": "how to write code",
         "--question": None,
         "--tags": "python",
@@ -49,6 +51,8 @@ def test_process_docopts_other():
         "show": False,
         "uninstall": False,
         "vendorize": True,
+        "--quiet": False,
+        "--logs": False,
     }
     with patch("docopt.docopt", return_value=anything) as mock:
         assert main() == 0

@@ -37,17 +37,3 @@ def render_setup_py(
     # Turn off autoescape because this is python not html.
     output_text = template.render(item=data, autoescape=False)  # nosec
     return output_text
-
-
-if __name__ == "__main__":
-    model = {
-        "package_name": "pn",
-        "version": "v",
-        "url": "url",
-        "author": "au",
-        "author_email": "twitter",
-        "description": "desc",
-        "dependencies": ["a", "b"],
-    }
-
-    print(render_setup_py(model))

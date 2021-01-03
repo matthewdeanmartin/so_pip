@@ -9,9 +9,9 @@ from typing import Any, Dict, List, Tuple
 
 from so_pip import settings as settings
 from so_pip.cli_clients.external_commands import isort
+from so_pip.models.code_block_from_text import find_code_blocks
 from so_pip.models.code_file_model import CodeFile
 from so_pip.models.python_package_model import PythonPackage
-from so_pip.parse_code.arbitrary_code_block import find_code_blocks
 from so_pip.parse_python.code_transformations import html_to_python_comments
 from so_pip.parse_python.upgrade_to_py3 import upgrade_string
 
@@ -55,7 +55,8 @@ def map_post_to_python_package_model(
             print("Skipping this because it is just one line:")
             print(code)
         if block.extension == ".py":
-            block.code_text = upgrade_string(block.code_text)
+            if settings.BUMP_TO_PY3:
+                block.code_text = upgrade_string(block.code_text)
             # comment out bad py code here.
             block.header_comments = html_to_python_comments(block.header_comments)
             block.footer_comments = html_to_python_comments(block.footer_comments)

@@ -29,6 +29,7 @@ def get_download_count(module: str) -> Optional[int]:
         if error.response.status_code == 404:
             return None
         if error.response.status_code == 429:
+            # too many requests
             # BUG: This is wrong
             return None
         raise

@@ -4,8 +4,6 @@ Clean up the code
 import html2text
 from bs4 import BeautifulSoup
 
-from so_pip.parse_code.language_guessing import is_likely_bash
-
 
 def fix_shell(code: str) -> str:
     """Strip out >>>  and output (lines without >>>)"""
@@ -13,9 +11,6 @@ def fix_shell(code: str) -> str:
     good_lines = []
     for line in lines:
         if line.strip().startswith("$ "):
-            good_lines.append("# " + line)
-            continue
-        if is_likely_bash(line):
             good_lines.append("# " + line)
             continue
         good_lines.append(line)

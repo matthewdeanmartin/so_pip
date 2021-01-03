@@ -27,6 +27,7 @@ sshtunnel = "*"
 # click = "==6.7"
 ifaddr = "*"
 vendorize = "*"
+pyrankvote = "*"
 
 [packages]
 black = "*"
@@ -53,7 +54,6 @@ pur = "*"
 pypistats = "*"
 pypinfo = "*"
 nbformat = "*"
-
 
 [requires]
 python_version = "3.8"

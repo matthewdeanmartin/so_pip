@@ -7,8 +7,8 @@ import shlex
 
 from so_pip import settings as settings
 from so_pip.cli_clients.subprocess_utils import execute_get_text
+from so_pip.utils import guards as guards
 from so_pip.utils.files_utils import find_file
-import so_pip.utils.guards as guards
 
 LOGGER = logging.getLogger(__name__)
 

@@ -8,7 +8,8 @@ from typing import List
 
 from so_pip.api_clients import stackapi_facade as stackapi_client
 from so_pip.parse_python.post_to_code import handle_post
-import so_pip.utils.guards as guards
+from so_pip.utils import guards as guards
+from so_pip.utils.user_trace import inform
 
 
 def import_so_answer(
@@ -22,6 +23,7 @@ def import_so_answer(
     """
     guards.must_be_truthy(output_folder, "output_folder required")
     guards.must_be_truthy(answer_id, "answer_id required")
+    inform(f"Importing answer #'{answer_id}'...")
     if not package_prefix:
         package_prefix = ""
     packages_made: List[str] = []
@@ -43,6 +45,7 @@ def import_so_question(
 
     All modules will be at same tree level
     """
+    inform(f"Importing question #'{question_id}'...")
     packages_made: List[str] = []
     question = stackapi_client.get_json_by_question_id(question_id)["items"][0]
 

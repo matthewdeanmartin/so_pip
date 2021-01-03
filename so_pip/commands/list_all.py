@@ -3,7 +3,8 @@ List packages
 """
 import os
 from typing import List
-import so_pip.utils.guards as guards
+
+from so_pip.utils import guards as guards
 
 
 def list_dirs(path: str) -> List[str]:

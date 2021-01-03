@@ -1,6 +1,6 @@
 import random
 
-from so_pip.parse_python.make_name import make_up_module_name, number_from_name
+from so_pip.random_names.make_name import make_up_module_name, number_from_name
 
 
 def test_make_up_module_name() -> None:

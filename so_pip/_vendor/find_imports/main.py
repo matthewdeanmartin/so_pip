@@ -17,7 +17,7 @@ def find_imports(to_check: str, importable_only: bool = False) -> List[str]:
     will be included. This program does not run the code, so import statements
     in if/else or try/except blocks will always be included.
     """
-    imported_items = []
+    imported_items: List[str] = []
     with open(to_check, encoding="utf-8", errors="ignore") as py_file:
         for raw_line in py_file:
             # ignore comments

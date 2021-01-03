@@ -1,4 +1,4 @@
-from so_pip.parse_code.arbitrary_code_block import find_code_blocks
+from so_pip.models.code_block_from_text import find_code_blocks
 
 
 def test_find_code_blocks_question_text_only():

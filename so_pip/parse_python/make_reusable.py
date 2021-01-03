@@ -1,9 +1,10 @@
 """
 Wrap in run or class
 """
+from typing import List
 
 
-def is_reusable(code: str) -> str:
+def is_reusable(code: str) -> bool:
     """Try to find def or class"""
     tokens = code.split(" ")
     # TODO: when possible, actually parse the AST.
@@ -17,8 +18,8 @@ def is_reusable(code: str) -> str:
 def wrap_in_run(code: str) -> str:
     """Probably a miracle if this works for everything"""
     code = code.strip("\n ")
-    imports = []
-    lines = []
+    imports: List[str] = []
+    lines: List[str] = []
     dropped_def_run = False
     # first pass
 

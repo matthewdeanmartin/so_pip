@@ -2,7 +2,7 @@
 List in requirements format.
 """
 from so_pip.commands.list_all import list_packages
-import so_pip.utils.guards as guards
+from so_pip.utils import guards as guards
 
 
 def freeze_environment(target_folder: str) -> None:

@@ -2,7 +2,7 @@
 Generate a CHANGELOG type file based on the edit log in SO
 """
 import time
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 from so_pip.api_clients.stackapi_facade import get_json_revisions_by_post_id
 from so_pip.make_from_template import load_template
@@ -50,7 +50,7 @@ def changelog_for_post(post: Dict[str, Any], package_folder: str) -> None:
 
 
 def render_change_log(
-    data: Dict[str, Any],
+    data: List[Dict[str, Any]],
 ) -> str:
     """
     Render minimal setup.py suitable for `pip install -e .`
