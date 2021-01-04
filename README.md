@@ -10,6 +10,7 @@ stackoverflow search cli's](https://github.com/matthewdeanmartin/so_pip/blob/mai
 
 Installation
 ------------
+Requires Python 3.7+, tested with 3.7, 3.8, 3.9
 ```
 git clone https://github.com/matthewdeanmartin/so_pip.git
 pip install -e .
@@ -17,7 +18,7 @@ pip install -e .
 pipx install pylint
 pipx install isort
 ```
-I'll publish to pypi and make a Dockerfile soonish.
+Docker support 1/2 implemented.
 
 ```
 docker build -t so_pip:latest .

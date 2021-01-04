@@ -13,12 +13,8 @@
 2to3
 beautifulsoup4
 black
-future
-fuzzywuzzy
 html2text
 jinja2
-markdown-readme-generator
-namegenerator
 nbformat
 pip-upgrader
 pipreqs
@@ -27,6 +23,7 @@ py-stackexchange
 pyflakes
 pypinfo
 pypistats
+pyrankvote
 python-dotenv
 pyupgrade
 requests

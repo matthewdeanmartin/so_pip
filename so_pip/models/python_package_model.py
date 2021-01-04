@@ -2,12 +2,15 @@
 Abstract model of the package_info I'm extracting from an post.
 """
 import collections
+import logging
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Set, Union
 
 from so_pip.api_clients.stackapi_facade import get_json_revisions_by_post_id
 from so_pip.models.code_block_model import CodeBlock
 from so_pip.models.code_file_model import CodeFile
+
+LOGGER = logging.getLogger(__name__)
 
 
 @dataclass()
@@ -101,7 +104,9 @@ class PythonPackage:
         title = post["title"].replace("'", "\\'")
         # version & author described in pep 8
         if self.python_metadata and "__title__" in "".join(self.python_metadata):
-            print("Erasing old self.python_metadata, TODO: code shouldn't get here.")
+            LOGGER.warning(
+                "Erasing old self.python_metadata, TODO: code shouldn't get here."
+            )
 
         self.python_metadata = [
             f"__title__ = '{title}'",

@@ -3,7 +3,7 @@
 Not associated with PyPA, nor StackOverflow.
 
 Usage:
-  so_pip vendorize <name> (--question=<question_id>|--answer=<answer_id>|--package=<package>) [--revision] [options]
+  so_pip vendorize <name> (--question=<question_id>|--answer=<answer_id>|--package=<package>) [--revision=<revision>] [options]
   so_pip search <name> --query=<query> --tags=<tags> [--count=<count>] [options]
   so_pip uninstall <names>... [options]
   so_pip list [options]
@@ -19,15 +19,16 @@ Options:
   -o --output=<output>         Folder for packages. Defaults to /output
   -q --question=<question_id>  Stackoverflow question id
   -a --answer=<answer_id>      Stackoverflow answer id
+  -r --revision=<revision>     Revision id for answer.
   --logs                       Show logging
   --quiet                      No informational logging
 
 """
 import logging
+
 import sys
 
 import docopt
-
 from so_pip import _version as meta
 from so_pip import settings as settings
 from so_pip.commands import freeze as freeze
@@ -65,6 +66,7 @@ def main() -> int:
         prefix = arguments["<name>"] or ""
         question = arguments["--question"]
         answer = arguments["--answer"]
+        revision = arguments["<revision>"]
         if not question and not answer:
             print("Must specify --question or --answer identifier")
             return -1
@@ -76,7 +78,9 @@ def main() -> int:
                 prefix, question, output_folder
             )
         elif answer:
-            packages_made = vendorize.import_so_answer(prefix, answer, output_folder)
+            packages_made = vendorize.import_so_answer(
+                prefix, answer, output_folder, revision
+            )
         else:
             raise TypeError("Need to specify a question or answer")
         print(f"Vendorized {','.join(packages_made)} at {output_folder}")
@@ -121,7 +125,7 @@ def main() -> int:
             count_str = arguments["--count"]
             count = int(count_str)
         except ValueError:
-            print(f"Can't convert {arguments.get('--count','')} to a number")
+            print(f"Can't convert {arguments.get('--count', '')} to a number")
             return -1
 
         # TODO: better way to do this with docopts

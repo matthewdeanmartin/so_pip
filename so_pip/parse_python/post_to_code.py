@@ -10,7 +10,7 @@ Vendorize because I'm not installing it to a venv.
 # install some_random_name
 # install some_random_name==0.2.1
 import collections
-from typing import Any, Dict, Iterable, List, Tuple
+from typing import Any, Dict, Iterable, List, Tuple, Optional
 
 from so_pip import settings as settings
 from so_pip.api_clients import stackapi_facade as stackapi_client
@@ -41,9 +41,16 @@ def handle_post(
     output_folder: str,
     package_prefix: str,
     question: Dict[str, Any],
-    answers: Iterable[Dict[str, Any]],
+    answers: List[Dict[str, Any]],
+    answer_revision: Optional[Dict[str, Any]] = None,
 ) -> List[str]:
     """Loop through answers"""
+    # HACK: still thinking this out
+    if answer_revision and len(answers) == 1:
+        answers[0]["body"] = answer_revision["body"]
+        # BUG: pretty sure body_md is used too?!
+        print()
+
     packages_made: List[str] = []
 
     posts: List[Tuple[str, Dict[str, Any]]] = []

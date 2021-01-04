@@ -10,10 +10,10 @@ To build and install this package:
 
 ```
 # Read code to see if it all looks legit
-$ python setup.py build bdist_wheel
+$ python setup.py build sdist
 # copy vendor_packages folder to your code base
 # Add vendor folder to PYTHONPATH
-$ pip install vendor_packages/*.whl -t vendor
+$ pip install vendor_packages/*.* -t vendor
 ```
 Don't push to pypi unless you put substantial effort into it, pypi is already full of junk.
 

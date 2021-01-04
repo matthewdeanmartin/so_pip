@@ -26,6 +26,7 @@ def test_process_docopts():
         "vendorize": True,
         "--quiet": False,
         "--logs": False,
+        "<revision>": None,
     }
     with patch("docopt.docopt", return_value=anything) as mock:
         main()
@@ -53,6 +54,7 @@ def test_process_docopts_other():
         "vendorize": True,
         "--quiet": False,
         "--logs": False,
+        "<revision>": None,
     }
     with patch("docopt.docopt", return_value=anything) as mock:
         assert main() == 0

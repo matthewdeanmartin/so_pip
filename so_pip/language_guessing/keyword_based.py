@@ -2445,7 +2445,7 @@ def guess_by_keywords(code: str) -> List[str]:
                     guesses[language] += 1
                 else:
                     guesses[language] = 1
-    print(guesses)
+
     results = [
         language
         for language, score in sorted(guesses.items(), key=lambda item: -item[1])

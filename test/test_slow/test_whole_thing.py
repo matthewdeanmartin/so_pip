@@ -17,12 +17,12 @@ def test_import_so():
 
 
 def test_import_so_answer():
-    import_so_answer("test", 2572654, OUTPUT_FOLDER)
+    import_so_answer("test", 2572654, OUTPUT_FOLDER, None)
 
 
 def test_handle_answer_escape_in_source():
-    import_so_answer("escape", 64476551, OUTPUT_FOLDER)
+    import_so_answer("escape", 64476551, OUTPUT_FOLDER, None)
 
 
 def test_answer_missing_last_code_block():
-    import_so_answer("missing_cb", 22489076, OUTPUT_FOLDER)
+    import_so_answer("missing_cb", 22489076, OUTPUT_FOLDER, None)

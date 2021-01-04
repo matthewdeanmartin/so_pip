@@ -89,7 +89,10 @@ def get_json_by_user_id(user_id: int) -> Dict[str, Any]:
 # /2.2/posts/26344315/revisions?site=stackoverflow
 @lru_cache(maxsize=1000)
 def get_json_revisions_by_post_id(post_id: int) -> Dict[str, Any]:
-    """Low level access, returns unprocessed json"""
+    """
+    Low level access, returns unprocessed json
+    A post id is a question OR an answer id!
+    """
     return cast(
         Dict[str, Any],
         SITE.fetch(
@@ -97,6 +100,7 @@ def get_json_revisions_by_post_id(post_id: int) -> Dict[str, Any]:
             ids=[
                 post_id,
             ],
+            filter="!9_bDDm2Bc",
         ),
     )
 

@@ -2,11 +2,12 @@
 File writing stuff
 """
 import html
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 import html2text
 
 from so_pip.make_from_template import load_template
+from so_pip.utils.user_trace import inform
 
 WINDOWS_LINE_ENDING = "\r\n"
 UNIX_LINE_ENDING = "\n"
@@ -44,6 +45,9 @@ def write_as_text(post: Dict[str, Any], submodule_name: str) -> None:
 
 def write_as_md(post: Dict[str, Any], submodule_name: str) -> None:
     """Dump post in readable form."""
+    if "body_markdown" not in post:
+        return
+
     markdown = post["body_markdown"]
 
     with open(submodule_name + ".md", "w", encoding="utf-8") as diagnostics:
