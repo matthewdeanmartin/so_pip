@@ -2451,7 +2451,3 @@ def guess_by_keywords(code: str) -> List[str]:
         for language, score in sorted(guesses.items(), key=lambda item: -item[1])
     ]
     return results
-
-
-if __name__ == "__main__":
-    print(guess_by_keywords("def class pip"))

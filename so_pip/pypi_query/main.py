@@ -65,9 +65,3 @@ class PackageInfo:
     def search(self, package: str) -> bool:
         """Check if package exists"""
         return package.strip() in self.packages
-
-
-if __name__ == "__main__":
-    p = PackageInfo()
-    print(p.search("str"))
-    print(p.search("bool"))

@@ -10,7 +10,7 @@ Also draws inspiration from libraries that attempt to parse AUTHORS files.
 https://www.npmjs.com/package/stringify-author
 https://www.npmjs.com/package/author-regex
 """
-
+import logging
 from typing import Any, Collection, Dict, Optional, Sequence, Set, Union
 
 from so_pip.api_clients.stackapi_facade import (
@@ -18,6 +18,8 @@ from so_pip.api_clients.stackapi_facade import (
     get_json_revisions_by_post_id,
 )
 from so_pip.make_from_template import load_template
+
+LOGGER = logging.getLogger(__name__)
 
 
 def normalize_user_link(url: str, user_id: int) -> str:
@@ -75,7 +77,7 @@ def get_authors_for_answer(answer: Dict[str, Any]) -> Set[str]:
             authors.add(f"{owner['display_name']} <{owner['link']}>")
     else:
         if answer["user"]["user_type"] != "does_not_exist":
-            print("What sort of user is this?")
+            LOGGER.debug("What sort of user is this?")
 
     revision_json = get_json_revisions_by_post_id(answer["answer_id"])
     for revision in revision_json.get("items", []):

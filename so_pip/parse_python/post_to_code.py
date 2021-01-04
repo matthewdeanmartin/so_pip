@@ -49,7 +49,6 @@ def handle_post(
     if answer_revision and len(answers) == 1:
         answers[0]["body"] = answer_revision["body"]
         # BUG: pretty sure body_md is used too?!
-        print()
 
     packages_made: List[str] = []
 
@@ -167,7 +166,7 @@ def handle_post(
             if requirements_txt and count > 0:
                 pur(requirements_txt)
                 result = safety(requirements_txt)
-                print(result)
+                inform(result)
             # Upgrade, but this is one of the slower things to do.
             # Also, eval(input()) makes things worse.
             if settings.BUMP_TO_PY3:

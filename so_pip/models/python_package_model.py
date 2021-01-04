@@ -104,7 +104,7 @@ class PythonPackage:
         title = post["title"].replace("'", "\\'")
         # version & author described in pep 8
         if self.python_metadata and "__title__" in "".join(self.python_metadata):
-            LOGGER.warning(
+            LOGGER.debug(
                 "Erasing old self.python_metadata, TODO: code shouldn't get here."
             )
 

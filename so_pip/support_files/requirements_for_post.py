@@ -7,6 +7,7 @@ Assumes module names match package names. This is not true.
 
 Does not run safety if no modules are successfully guessed.
 """
+import logging
 import os
 import subprocess  # nosec
 from typing import Optional, Tuple
@@ -25,6 +26,8 @@ from so_pip.pypi_query.main import find_modules
 from so_pip.support_files.setup_cfg import create_setup_cfg
 
 # https://github.com/ohjeah/pip-validate
+
+LOGGER = logging.getLogger(__name__)
 
 
 def requirements_for_file(
@@ -83,4 +86,4 @@ def process_requirements_for_a_module(package_folder: str) -> None:
         try:
             generate_requirements(package_folder)
         except subprocess.CalledProcessError as cpe:
-            print(f"generate requirements failed : {package_folder}", str(cpe))
+            LOGGER.debug(f"generate requirements failed : {package_folder}", str(cpe))

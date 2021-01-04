@@ -11,6 +11,8 @@ from so_pip.utils.files_utils import find_file
 
 NAMES: List[str] = []
 
+FILE = "clean_ten_k.txt"
+
 
 def initialize() -> None:
     """Read name file lazily"""
@@ -19,19 +21,13 @@ def initialize() -> None:
 
     # words_path = find_file("most-common-nouns-english.csv",__file__)
     # source: https://www.mit.edu/~ecprice/wordlist.10000
-    words_path = find_file("wordlist.10000.txt", __file__)
+    # See ETL for what it took to get a clean file.
+    words_path = find_file(FILE, __file__)
     with open(words_path) as name_file:
-        raw_names = [name.strip() for name in name_file.readlines()]
+        NAMES.extend(list({name.strip() for name in name_file.readlines()}))
 
-    for name in raw_names:
-        if "Word" in name:
-            continue
-        if "," in name:
-            NAMES.append(name.split(",")[0])
-        else:
-            NAMES.append(name)
     if len(NAMES) != 10000:
-        raise TypeError("Init failed, didn't find 10,000 words.")
+        raise TypeError(f"Init failed, didn't find 10,000 words, got {len(NAMES)}")
 
 
 # TODO: replace with a SO sourced post.
@@ -79,18 +75,3 @@ def make_up_module_name(value: int, prefix: str, post_type: str) -> str:
         index = int("".join(list(reversed(chunk))))
         parts.append(NAMES[index])
     return "_".join([prefix, post_type] + parts)
-
-
-if __name__ == "__main__":
-
-    def run() -> None:
-        """exercise code"""
-        for _ in range(0, 200):
-            value = random.randint(1, 100000000)  # nosec
-            print(
-                value,
-                make_up_module_name(value, "foo", "a"),
-                number_from_name(make_up_module_name(value, "foo", "a")),
-            )
-
-    run()

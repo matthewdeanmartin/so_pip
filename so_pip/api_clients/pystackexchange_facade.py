@@ -45,7 +45,6 @@ def user_by_id(user_id: int) -> stackexchange.Question:
 def python_questions(search: str) -> List[stackexchange.Question]:
     """Get some questions and answers by keyword"""
     suitable = []
-    print(f"TODO: search {search}")
     for question in STACK.questions(tagged=["python"], pagesize=10):
         suitable.append(question)
     return suitable

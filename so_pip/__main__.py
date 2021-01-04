@@ -20,7 +20,7 @@ Options:
   -q --question=<question_id>  Stackoverflow question id
   -a --answer=<answer_id>      Stackoverflow answer id
   -r --revision=<revision>     Revision id for answer.
-  --logs                       Show logging
+  --verbose                    Show logging
   --quiet                      No informational logging
 
 """
@@ -41,16 +41,19 @@ from so_pip.commands import vendorize as vendorize
 # Do these need to stick around?
 LOGGERS = []
 
+LOGGER = logging.getLogger(__name__)
+
 
 def main() -> int:
     """Get the args object from command parameters"""
     arguments = docopt.docopt(__doc__, version=f"so_pip {meta.__version__}")
     # print(arguments)
+    # LOGGER.debug(arguments)
     output_folder = arguments["--output"]
     if arguments["--quiet"]:
         settings.QUIET = True
 
-    if arguments["--logs"]:
+    if arguments["--verbose"]:
         # root logger, all modules
         for root in ("so_pip", "__main__", "url_lib3"):
             logger = logging.getLogger(root)

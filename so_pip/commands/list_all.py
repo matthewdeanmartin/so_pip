@@ -5,6 +5,7 @@ import os
 from typing import List
 
 from so_pip.utils import guards as guards
+from so_pip.utils.user_trace import inform
 
 
 def list_dirs(path: str) -> List[str]:
@@ -21,8 +22,7 @@ def list_dirs(path: str) -> List[str]:
 def list_packages(target_folder: str, quiet: bool = False) -> None:
     """List packages"""
     guards.must_be_truthy(target_folder, "target_folder required")
-    if not quiet:
-        print(f"Using {target_folder} as vendorized folder")
+    inform(f"Using {target_folder} as vendorized folder")
     path = os.path.join(target_folder)
     for folder in list_dirs(path):
         # TODO: Add version

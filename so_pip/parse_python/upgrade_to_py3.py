@@ -1,10 +1,14 @@
 """
 So much python 2 on stackoverflow
 """
+import logging
 import subprocess  # nosec
 import tempfile
 
 from so_pip.cli_clients.external_commands import pyupgrade, two_to_three
+from so_pip.utils.user_trace import inform
+
+LOGGER = logging.getLogger(__name__)
 
 
 def upgrade_string(code: str) -> str:
@@ -19,7 +23,7 @@ def upgrade_string(code: str) -> str:
             two_to_three(temp_file_name)
             at_least_one_worked = True
         except subprocess.CalledProcessError as cpe:
-            print("Can't covert to py3", str(cpe))
+            LOGGER.debug("Can't covert to py3: " + str(cpe))
         # redundant... seems to do same things as 2to3
         # try:
         #     futurize(temp_file_name)
@@ -29,7 +33,7 @@ def upgrade_string(code: str) -> str:
             pyupgrade(temp_file_name)
             at_least_one_worked = True
         except subprocess.CalledProcessError as cpe:
-            print("Can't pyupgrade", str(cpe))
+            LOGGER.debug("Can't pyupgrade", str(cpe))
 
         if at_least_one_worked:
             with open(temp_file_name, encoding="utf-8") as temp:
@@ -43,8 +47,8 @@ def upgrade_file(submodule_name: str) -> None:
     try:
         two_to_three(submodule_name)
     except subprocess.CalledProcessError as cpe:
-        print(f"2to3 failed: {submodule_name}", str(cpe))
+        LOGGER.debug(f"2to3 failed: {submodule_name}", str(cpe))
     try:
         pyupgrade(submodule_name)
     except subprocess.CalledProcessError as cpe:
-        print(f"pyupgrade failed : {submodule_name}", str(cpe))
+        LOGGER.debug(f"pyupgrade failed : {submodule_name}", str(cpe))

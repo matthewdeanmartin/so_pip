@@ -33,7 +33,3 @@ def language_by_regex_features(
         for language, score in sorted(guesses.items(), key=lambda item: -item[1])
     ]
     return results
-
-
-if __name__ == "__main__":
-    print(language_by_regex_features("def foo():\n   print('yo')"))

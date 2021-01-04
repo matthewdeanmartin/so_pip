@@ -13,13 +13,15 @@ Installation
 Requires Python 3.7+, tested with 3.7, 3.8, 3.9
 ```
 git clone https://github.com/matthewdeanmartin/so_pip.git
-pip install -e .
+python -m venv venv
+. venv/Scripts/activate
+pip install -r .config/requirements.txt
 # some tools can't co-exist in the same virtual environment
 pipx install pylint
 pipx install isort
+python -m so_pip --version
 ```
 Docker support 1/2 implemented.
-
 ```
 docker build -t so_pip:latest .
 ```

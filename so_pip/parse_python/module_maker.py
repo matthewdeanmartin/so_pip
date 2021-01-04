@@ -4,6 +4,7 @@ Generate all the python related files for a module
 - each post
 - sort imports
 """
+import logging
 import os
 from typing import Any, Dict, List, Tuple
 
@@ -14,6 +15,8 @@ from so_pip.models.code_file_model import CodeFile
 from so_pip.models.python_package_model import PythonPackage
 from so_pip.parse_python.code_transformations import html_to_python_comments
 from so_pip.parse_python.upgrade_to_py3 import upgrade_string
+
+LOGGER = logging.getLogger(__name__)
 
 
 def create_package_folder(
@@ -52,8 +55,8 @@ def map_post_to_python_package_model(
         code_file.code_blocks.append(block)
         code = block.code_text
         if settings.ASSUME_ONE_LINER_IS_NOT_CODE and "\n" not in block.code_text:
-            print("Skipping this because it is just one line:")
-            print(code)
+            LOGGER.debug("Skipping this because it is just one line:")
+            LOGGER.debug(code)
         if block.extension == ".py":
             if settings.BUMP_TO_PY3:
                 block.code_text = upgrade_string(block.code_text)

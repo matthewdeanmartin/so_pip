@@ -25,7 +25,7 @@ def test_process_docopts():
         "uninstall": False,
         "vendorize": True,
         "--quiet": False,
-        "--logs": False,
+        "--verbose": False,
         "<revision>": None,
     }
     with patch("docopt.docopt", return_value=anything) as mock:
@@ -53,7 +53,7 @@ def test_process_docopts_other():
         "uninstall": False,
         "vendorize": True,
         "--quiet": False,
-        "--logs": False,
+        "--verbose": False,
         "<revision>": None,
     }
     with patch("docopt.docopt", return_value=anything) as mock:
