@@ -3,23 +3,36 @@ TODO
 
 RELEASE 1.0 Goals
 -----------------
-- check in example with bash script for each command, 1/2 done
-- `pip install so_pip` works for each example, but only for sdist
+- BUG: setup.cfg is a mess.
+- Feature: No pyproject.toml file generated
+- BUG: not all licenses found?
+- BUG: Authors don't distinguish role
+    - started Authors/Contributions models
+    - need comments & attribution
+- UX:
+    - just 1 question
+    - pinned question
+    - version pinning, 1/2 done, answers-only by revision
+- Test needed: code files other than python poorly tested.
+- Test needed: check in example with bash script for each command, 1/2 done
+- Test needed: `pip install so_pip` works for each example, but only for sdist
     - integration test & run sdist package for each.
 - Dockerfile, 1/2 done
     - mount volume
-- tox for fast tests on 3.8, 3.9
-- version pinning, 1/2 done, answers-only by revision
-- BUG- setup.cfg mess
-- BUG- not all licenses found?
-- BUG- Authors don't distinguish role
-    - started Authors/Contributions models
-- Caching API calls between invocations for X minutes
+- Performance: Caching API calls between invocations for X minutes
     - Investigating disk caching. @lru caching already in place, but limited value.
-- no code for handling overwriting previously generated code (clean, ask, merge)
+- FEATURE: update_any module
+    - no code for handling overwriting previously generated code (clean, ask, merge)
+- Carve out "subprojects"
+    - guess_language
+    - bad_words
+    - random_names
+    - pypi_query
+
 
 RELEASE 2.0 Goals
 -----------------
+- UX: colored console flash, emojis, animations
 - IPython/Jupyter notebook stuff
    - Generate code file as .ipynb file
    - Parse code that was copy/pasted to a code block.
