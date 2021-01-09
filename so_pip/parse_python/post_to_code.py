@@ -10,7 +10,7 @@ Vendorize because I'm not installing it to a venv.
 # install some_random_name
 # install some_random_name==0.2.1
 import collections
-from typing import Any, Dict, Iterable, List, Tuple, Optional
+from typing import Any, Dict, Iterable, List, Optional, Tuple
 
 from so_pip import settings as settings
 from so_pip.api_clients import stackapi_facade as stackapi_client

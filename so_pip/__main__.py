@@ -25,10 +25,10 @@ Options:
 
 """
 import logging
-
 import sys
 
 import docopt
+
 from so_pip import _version as meta
 from so_pip import settings as settings
 from so_pip.commands import freeze as freeze

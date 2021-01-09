@@ -2,7 +2,7 @@
 Separate model for authors, licenses, maybe changelog
 """
 
-from dataclasses import field, dataclass
+from dataclasses import dataclass, field
 from typing import List
 
 
