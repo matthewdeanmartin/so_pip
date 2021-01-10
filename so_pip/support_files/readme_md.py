@@ -5,10 +5,6 @@ from typing import Any, Dict, Optional
 
 from so_pip.make_from_template import load_template
 from so_pip.models.python_package_model import PythonPackage
-from so_pip.support_files.authors import (
-    get_authors_for_answer,
-    get_authors_for_question,
-)
 
 
 def create_readme_md(
@@ -18,9 +14,6 @@ def create_readme_md(
     answer: Optional[Dict[str, Any]] = None,
 ) -> None:
     """write file"""
-    authors = get_authors_for_question(question)
-    if answer:
-        authors.union(get_authors_for_answer(answer))
 
     with open(
         package_folder + "/README.md", "w", encoding="utf-8", errors="replace"
@@ -34,7 +27,6 @@ def create_readme_md(
             "author_email": python_submodule.author_email,
             "description": python_submodule.description,
             "dependencies": python_submodule.dependencies,
-            "authors": authors,
         }
         source = render_readme_md(data)
         readme.write(source)

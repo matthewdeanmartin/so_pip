@@ -33,14 +33,14 @@ Zeyang Lin <https://stackoverflow.com/users/1803742>, <http://www.linkedin.com/i
 
 # Question Reviser
 --------------
-jfs <https://stackoverflow.com/users/4279>
-Keithel <https://stackoverflow.com/users/2701456>, <https://plus.google.com/+KeithKyzivat>
-Zeyang Lin <https://stackoverflow.com/users/1803742>, <http://www.linkedin.com/in/zeyanglin>
+Charles R <https://stackoverflow.com/users/1273455>
+ivanleoncz <https://stackoverflow.com/users/5780109>, <https://doadm-notes.blogspot.com/>
+Jeril <https://stackoverflow.com/users/2825570>
+Ringil <https://stackoverflow.com/users/4882032>
+zero323 <https://stackoverflow.com/users/1560062>, <https://zero323.net>
 
 # Question Commenter
 --------------
+amiabl <https://stackoverflow.com/users/7939550>, <https://fpaupier.dev/>
 Charles R <https://stackoverflow.com/users/1273455>
-IAmKale <https://stackoverflow.com/users/2133271>, <https://iammiller.com/>
-Illegal Operator <https://stackoverflow.com/users/1647394>
-jstudios <https://stackoverflow.com/users/3298753>
-MydKnight <https://stackoverflow.com/users/1802121>, <http://contextsm.blogspot.com>
+Nick Bastin <https://stackoverflow.com/users/1502059>

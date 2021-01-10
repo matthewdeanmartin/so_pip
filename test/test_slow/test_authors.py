@@ -1,3 +1,5 @@
+import tempfile
+
 import so_pip.api_clients.stackapi_facade as stackapi_client
 
 # from so_pip.support_files.authors import (
@@ -12,7 +14,9 @@ def test_write_authors():
     q = data["items"][0]
     answer_data = stackapi_client.get_json_by_answer_id(26344315)
     a = answer_data["items"][0]
-    write_authors(".", "foobar", q, a)
+    with tempfile.TemporaryDirectory(prefix="test_authors") as directory:
+        folder_path = directory.replace("\\", "/")
+        write_authors(folder_path, "foobar", q, a)
 
 
 # def test_authors_with_comments():

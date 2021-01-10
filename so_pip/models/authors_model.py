@@ -107,7 +107,8 @@ def add_authors_from_post(post: Dict[str, Any], authors: Authors, is_answer: boo
         if post["user"]["user_type"] != "does_not_exist":
             LOGGER.debug("What sort of user is this?")
 
-    revision_json = get_json_revisions_by_post_id(post["answer_id"])
+    post_id_name = "answer_id" if is_answer else "question_id"
+    revision_json = get_json_revisions_by_post_id(post[post_id_name])
     for revision in revision_json.get("items", []):
         if revision["user"]["user_type"] == "does_not_exist":
             continue
@@ -132,7 +133,7 @@ def add_authors_from_post(post: Dict[str, Any], authors: Authors, is_answer: boo
             reviser.urls.append(url)
 
         authors.everyone.append(reviser)
-    comments = get_json_comments_by_post_id(post["answer_id"])
+    comments = get_json_comments_by_post_id(post[post_id_name])
     for comment in comments.get("items", []):
         if comment["owner"]["user_type"] == "does_not_exist":
             continue

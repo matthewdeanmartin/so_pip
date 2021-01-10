@@ -1,0 +1,11 @@
+# Changelog
+
+{% for version in item %}## [{{ version["version"] }}] - {{ version["date"] }}
+======================
+### {{ version["changes"]["what"] }}
+- {{ version["changes"]["comment"] | wordwrap(140) }}
+
+{% endfor %}
+
+{% for version in item %}[{{ version["version"] }}]: {{ version["revision_url"] }}
+{% endfor %}
