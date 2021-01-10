@@ -192,3 +192,17 @@ def pypinfo(package: str) -> str:
     result = execute_get_text(parts, ignore_error=True)
     LOGGER.debug(result)
     return result
+
+
+def vermin(package: str) -> str:
+    """
+    vermin info
+    """
+    guards.must_be_truthy(package, "package required")
+
+    command = f"{settings.SHELL} vermin {package}"
+    LOGGER.debug(command)
+    parts = shlex.split(command)
+    result = execute_get_text(parts, ignore_error=True)
+    LOGGER.debug(result)
+    return result

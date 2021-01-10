@@ -19,7 +19,8 @@ class PythonPackage:
 
     package_name: str
     description: str
-    # name: str
+
+    minimum_python: str = ""
     brief_header: List[str] = field(default_factory=list)
 
     code_files: List[CodeFile] = field(default_factory=list)

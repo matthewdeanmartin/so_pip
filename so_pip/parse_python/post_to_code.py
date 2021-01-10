@@ -25,6 +25,7 @@ from so_pip.parse_python.module_maker import (
     create_package_folder,
     map_post_to_python_package_model,
 )
+from so_pip.parse_python.python_validator import validate_with_vermin
 from so_pip.parse_python.upgrade_to_py3 import upgrade_file
 from so_pip.random_names.make_name import make_up_module_name
 from so_pip.settings import KEEP_ANSWERS_WITH_NO_CODE, KEEP_ANSWERS_WITH_NO_DEF_OR_CLASS
@@ -32,6 +33,7 @@ from so_pip.support_files.authors import write_authors
 from so_pip.support_files.changelog import changelog_for_post
 from so_pip.support_files.code_of_conduct import render_code_of_conduct
 from so_pip.support_files.license import write_license
+from so_pip.support_files.pyproject_toml import create_pytroject_toml
 from so_pip.support_files.readme_md import create_readme_md
 from so_pip.support_files.requirements_for_post import requirements_for_file
 from so_pip.utils.user_trace import inform
@@ -159,10 +161,15 @@ def handle_post(
             render_code_of_conduct(supporting_files_folder)
 
         if wrote_py_file:
+            python_versions = validate_with_vermin(python_source_folder)
+            package_info.minimum_python = python_versions
+            print(package_info.minimum_python)
+
             # extract requirements, pin, check for security issues
             requirements_txt, count = requirements_for_file(
                 supporting_files_folder, package_info
             )
+            create_pytroject_toml(supporting_files_folder, package_info, question, post)
             if requirements_txt and count > 0:
                 pur(requirements_txt)
                 result = safety(requirements_txt)

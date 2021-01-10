@@ -3,20 +3,22 @@ from so_pip.utils.files_utils import find_file
 
 OUTPUT_FOLDER = find_file("../output", __file__)
 if __name__ == "__main__":
-    import_so_answer("popular", 237028, OUTPUT_FOLDER, 2)  # questoin 231767
+    # import_so_answer("popular", 237028, OUTPUT_FOLDER, 2)  # questoin 231767
     # import_so_question("game_thing", 42742423, OUTPUT_FOLDER)
-    # import_so_answer("find_imports", 18812776)
-    # import_so_answer("import_vendor", 2572654)
+    # import_so_answer("find_imports", 18812776, OUTPUT_FOLDER, -1)
+    # import_so_answer("import_vendor", 2572654, OUTPUT_FOLDER,-1)
 
-    # import_so_question("detect_tests", 14405063)
+    import_so_question("detect_tests", 14405063, OUTPUT_FOLDER)
     # https://stackoverflow.com/questions/13137817/
     # how-to-download-image-using-requests
-    # import_so_question("requests_help", 13137817)  # requests, excellent example
+    import_so_question(
+        "requests_help", 13137817, OUTPUT_FOLDER
+    )  # requests, excellent example
 
     # #
     # # import_so_question("django", 15029666)
     # # https://stackoverflow.com/questions/40476966/python-text-adventure-items-interacting-with-the-game-world
-    # import_so_question("game", 40476966)
+    import_so_question("game", 40476966, OUTPUT_FOLDER)
     #
     # # https://stackoverflow.com/questions/54290362/
     # #how-to-write-a-simple-blockchain-in-python

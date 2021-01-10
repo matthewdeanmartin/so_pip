@@ -26,7 +26,7 @@ sshtunnel = "*"
 ifaddr = "*"
 vendorize = "*"
 tox = "*"
-vermin = "*"
+
 
 [packages]
 pyrankvote = "*"
@@ -51,6 +51,7 @@ pur = "*"
 pypistats = "*"
 pypinfo = "*"
 nbformat = "*"
+vermin = "*"
 
 [requires]
 python_version = "3.8"

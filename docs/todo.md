@@ -4,11 +4,8 @@ TODO
 RELEASE 1.0 Goals
 -----------------
 - BUG: setup.cfg is a mess.
-- Feature: No pyproject.toml file generated
 - BUG: not all licenses found?
-- BUG: Authors don't distinguish role
-    - started Authors/Contributions models
-    - need comments & attribution
+- Feature: No pyproject.toml file generated
 - UX:
     - just 1 question
     - pinned question

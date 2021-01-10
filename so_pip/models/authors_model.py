@@ -156,6 +156,3 @@ def add_authors_from_post(post: Dict[str, Any], authors: Authors, is_answer: boo
             link = normalize_user_link(url, comment["owner"]["user_id"])
             commenter.urls.append(link)
         authors.everyone.append(commenter)
-
-
-print(email_from_bio("my email addresses are foo@gmail.com and bar@yahoo.com"))
