@@ -1,9 +1,15 @@
-# This is the list of {{ item["name"] }}'s significant contributors,
-# including the person who asked a question, everyone who edited it,
-# and everyone who wrote or edited this answer/question.
+# Authors
 #
-# This does not necessarily list everyone who has contributed code,
-# some contributors accounts get disabled on StackOverflow,
-# but their content stays.
-{% for author in item["authors"] %}{{ author }}
-{% endfor %}
+# Note:
+# - Authors listed alphabetically
+# - Some users leave StackOverflow or are removed, but their content stays
+# - Some users post content they copied verbatim from other sites on the web
+# - Some answers are "forks" of other answers, I don't attempt to detect this.
+# - Email addresses are from unobfuscated addresses in the profile
+# - License can vary by contribution
+
+{% for section, authors in item["authors"].items() %}
+# {{ section }}
+--------------
+{% for author in authors %}{{ author.display_name }} {% for url in author.urls %}<{{ url }}>{%- if not loop.last -%}, {% endif %}{% endfor %} {% for email in author.emails %}<{{ url }}>{%- if not loop.last -%}, {% endif %}{% endfor %}
+{% endfor %}{%- endfor -%}

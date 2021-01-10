@@ -1,0 +1,46 @@
+# Authors
+#
+# Note:
+# - Authors listed alphabetically
+# - Some users leave StackOverflow or are removed, but their content stays
+# - Some users post content they copied verbatim from other sites on the web
+# - Some answers are "forks" of other answers, I don't attempt to detect this.
+# - Email addresses are from unobfuscated addresses in the profile
+# - License can vary by contribution
+
+
+# Answer Owner
+--------------
+Zeyang Lin <https://stackoverflow.com/users/1803742>, <http://www.linkedin.com/in/zeyanglin>
+
+# Answer Reviser
+--------------
+jfs <https://stackoverflow.com/users/4279>
+Keithel <https://stackoverflow.com/users/2701456>, <https://plus.google.com/+KeithKyzivat>
+Zeyang Lin <https://stackoverflow.com/users/1803742>, <http://www.linkedin.com/in/zeyanglin>
+
+# Answer Commenter
+--------------
+Charles R <https://stackoverflow.com/users/1273455>
+IAmKale <https://stackoverflow.com/users/2133271>, <https://iammiller.com/>
+Illegal Operator <https://stackoverflow.com/users/1647394>
+jstudios <https://stackoverflow.com/users/3298753>
+MydKnight <https://stackoverflow.com/users/1802121>, <http://contextsm.blogspot.com>
+
+# Question Owner
+--------------
+Zeyang Lin <https://stackoverflow.com/users/1803742>, <http://www.linkedin.com/in/zeyanglin>
+
+# Question Reviser
+--------------
+jfs <https://stackoverflow.com/users/4279>
+Keithel <https://stackoverflow.com/users/2701456>, <https://plus.google.com/+KeithKyzivat>
+Zeyang Lin <https://stackoverflow.com/users/1803742>, <http://www.linkedin.com/in/zeyanglin>
+
+# Question Commenter
+--------------
+Charles R <https://stackoverflow.com/users/1273455>
+IAmKale <https://stackoverflow.com/users/2133271>, <https://iammiller.com/>
+Illegal Operator <https://stackoverflow.com/users/1647394>
+jstudios <https://stackoverflow.com/users/3298753>
+MydKnight <https://stackoverflow.com/users/1802121>, <http://contextsm.blogspot.com>

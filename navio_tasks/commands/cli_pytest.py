@@ -20,6 +20,7 @@ from navio_tasks.settings import (
     PROJECT_NAME,
     REPORTS_FOLDER,
     VENV_SHELL,
+    RUN_ALL_TESTS_REGARDLESS_TO_NETWORK,
 )
 from navio_tasks.utils import inform
 
@@ -31,12 +32,16 @@ def do_pytest() -> None:
     check_command_exists("pytest")
 
     #  Somedays VPN just isn't there.
-    if IS_INTERNAL_NETWORK:
-        test_folder = "test"
-        minimum_coverage = MINIMUM_TEST_COVERAGE
+    if IS_INTERNAL_NETWORK or RUN_ALL_TESTS_REGARDLESS_TO_NETWORK:
+        fast_only = False
     else:
+        fast_only = True
+    if fast_only:
         test_folder = "test/test_fast"
         minimum_coverage = 48
+    else:
+        test_folder = "test"
+        minimum_coverage = MINIMUM_TEST_COVERAGE
 
     my_env = config_pythonpath()
 

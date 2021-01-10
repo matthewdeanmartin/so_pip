@@ -126,6 +126,7 @@ from navio_tasks.settings import (
     IS_INTERACTIVE,
     PACKAGE_WITH,
     IS_SHELL_SCRIPT_LIKE,
+    RUN_ALL_TESTS_REGARDLESS_TO_NETWORK,
 )
 
 print = functools.partial(print, flush=True)  # noqa
@@ -501,7 +502,10 @@ def coverage_report() -> None:
     # Integration vs non integration
     # slow vs fast
     # on network vs not on network
-    fast_only = False if IS_INTERNAL_NETWORK else True
+    if IS_INTERNAL_NETWORK or RUN_ALL_TESTS_REGARDLESS_TO_NETWORK:
+        fast_only = False
+    else:
+        fast_only = True
     do_pytest_coverage(fast_only=fast_only)
 
 

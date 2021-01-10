@@ -82,6 +82,8 @@ def get_json_by_user_id(user_id: int) -> Dict[str, Any]:
             ids=[
                 user_id,
             ],
+            # just stuff we care about + about_me
+            filter="!)si8a_4RZpJGdK21mxCq",
         ),
     )
 
