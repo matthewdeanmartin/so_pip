@@ -3,9 +3,12 @@ TODO
 
 RELEASE 1.0 Goals
 -----------------
+- Feature: Infer minimum python version & fill in pyproject.toml & Readme.md.
+- Feature: Change most support files to .md
 - BUG: setup.cfg is a mess.
 - BUG: not all licenses found?
-- Feature: No pyproject.toml file generated
+- BUG: Pyproject.toml
+    - classifiers don't take into account min/max python version
 - UX:
     - just 1 question
     - pinned question

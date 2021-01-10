@@ -26,12 +26,15 @@ def validate_with_vermin(folder: str) -> str:
         return "*"
     try:
         parts = result.split(":")
-        minimum = parts[1].strip().split(" ")[0]
+        minimum = parts[1].strip().split(" ")[0].strip("\n")
+        if "\n" in minimum:
+            minimum = minimum.split("\n")[0]
         if "," in minimum:
             minimum = minimum.split(",")
         if "Incompatible" in result:
             parts = result.split("Incompatible versions:")
-            maximum = f"!{parts[1]}"
+            maximum = parts[1].strip("\n").strip(" ")
+            maximum = f"!{maximum}"
         else:
             maximum = ""
     except:

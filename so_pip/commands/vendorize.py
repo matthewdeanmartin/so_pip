@@ -32,7 +32,7 @@ def import_so_answer(
         raise TypeError("Answer not found, maybe this is a question id?")
     answer = answer_data["items"][0]
 
-    if revision_id > 0:
+    if revision_id and revision_id > 0:
         revisions = stackapi_client.get_json_revisions_by_post_id(answer_id)
         for item in revisions["items"]:
             # some revisions are not "real" revisions and have no number

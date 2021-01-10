@@ -25,6 +25,10 @@ def create_pytroject_toml(
     # maybe already done?
     # post_id = answer["answer_id"] if answer else question["question_id"]
     # revisions_json = get_json_revisions_by_post_id(post_id).get("items", [])
+    if answer:
+        url = answer["link"]
+    else:
+        url = question["link"]
 
     data = {
         "dependencies": python_submodule.dependencies,
@@ -33,6 +37,7 @@ def create_pytroject_toml(
         "minimum_python": python_submodule.minimum_python,
         "name": python_submodule.package_name,
         "tags": question["tags"],
+        "url": url,
     }
 
     output_text = render_pyproject_toml(data)
@@ -44,7 +49,10 @@ def create_pytroject_toml(
     ) as project_file:
         project_file.write(output_text)
         # see if it is valid toml
-        toml.loads(output_text)
+        try:
+            toml.loads(output_text)
+        except:
+            raise
 
 
 def render_pyproject_toml(

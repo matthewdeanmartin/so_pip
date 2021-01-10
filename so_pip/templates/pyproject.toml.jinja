@@ -8,7 +8,7 @@ classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
     "Operating System :: OS Independent",
-    "Programming Language :: Python",
+    "Programming Language :: Python"
 ]
 include = [
     "so_pip/**/*.py",
@@ -24,6 +24,8 @@ repository = "{{ data["url"] }}"
 
 [tool.poetry.dependencies]
 python = "{{ data["minimum_python"] }}"
+{% for dependency in data["dependencies"] %}
+"{{ dependency }}" = "*"{% endfor %}
 
 [tool.poetry.dev-dependencies]
 
