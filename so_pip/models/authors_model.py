@@ -4,12 +4,12 @@ Separate model for authors, licenses, maybe changelog
 import logging
 import re
 from dataclasses import dataclass, field
-from typing import List, Dict, Any, Optional
+from typing import Any, Dict, List, Optional
 
 from so_pip.api_clients.stackapi_facade import (
+    get_json_by_user_id,
     get_json_comments_by_post_id,
     get_json_revisions_by_post_id,
-    get_json_by_user_id,
 )
 from so_pip.api_clients.stackoverflow_scraper import scrape_urls
 
@@ -31,6 +31,9 @@ class Author:
     emails: List[str] = field(default_factory=list)
     # twitter, github, SO, homepage
     urls: List[str] = field(default_factory=list)
+    homepage: str = ""
+    twitter: str = ""
+    github: str = ""
     display_name: str = ""
     # e.g. original question, answer, question edit, answer edit, comment
     roles: List[str] = field(default_factory=list)
@@ -46,7 +49,7 @@ class Authors:
     everyone: List[Author] = field(default_factory=list)
 
 
-def email_from_bio(bio: str) -> Optional[List[str]]:
+def email_from_bio(bio: str) -> List[str]:
     """Rationale-- if it is not obfuscated, then they don't mind it being public"""
     # https://meta.stackexchange.com/users/98786/robert-cartaino
     matches = re.findall(r"([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)", bio)
@@ -89,12 +92,16 @@ def add_authors_from_post(post: Dict[str, Any], authors: Authors, is_answer: boo
             owner.roles.append("Question Owner")
         if "user_id" in post["owner"]:
             owner.twitter, owner.github = scrape_urls(post["owner"]["user_id"])
+            owner.urls.append(owner.twitter)
+            owner.urls.append(owner.github)
 
         full_user = get_json_by_user_id(post["owner"]["user_id"])["items"][0]
         if "website_url" in full_user and full_user["website_url"]:
             owner.urls.append(full_user["website_url"])
         if "about_me" in full_user and full_user["about_me"]:
-            owner.emails.extend(email_from_bio(full_user["about_me"]))
+            emails = email_from_bio(full_user["about_me"])
+            if emails:
+                owner.emails.extend(emails)
         if "display_name" in post["owner"] and post["owner"]["display_name"]:
             owner.display_name = post["owner"]["display_name"]
         else:

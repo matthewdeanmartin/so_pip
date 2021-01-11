@@ -12,13 +12,13 @@ https://www.npmjs.com/package/author-regex
 """
 import logging
 from collections import defaultdict
-from typing import Any, Collection, Dict, Optional, Sequence, Union, List
+from typing import Any, Collection, DefaultDict, Dict, List, Optional, Sequence, Union
 
 from so_pip.make_from_template import load_template
 from so_pip.models.authors_model import (
+    Author,
     bind_answer_to_authors,
     bind_question_to_authors,
-    Author,
 )
 
 LOGGER = logging.getLogger(__name__)
@@ -36,7 +36,7 @@ def write_authors(
     else:
         authors = bind_question_to_authors(question)
 
-    sections: defaultdict[str, List[Author]] = defaultdict(list)
+    sections: DefaultDict[str, List[Author]] = defaultdict(list)
     for author in authors.everyone:
         for role in author.roles:
             if author not in sections[role]:

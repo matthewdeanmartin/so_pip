@@ -7,8 +7,8 @@ how-can-i-get-user-links-in-the-api-call-like-twitter-github-and-so-on
 from functools import lru_cache
 from typing import Tuple
 
-from bs4 import BeautifulSoup
 import requests
+from bs4 import BeautifulSoup
 
 
 @lru_cache(maxsize=1000)

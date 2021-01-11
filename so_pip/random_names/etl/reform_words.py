@@ -3,7 +3,8 @@ Generate a list of 10,000 good words.
 """
 
 
-def run():
+def run() -> None:
+    """Combine lots of words, remove lots of bad words"""
     # Typo: In word 'acer'
     with open("bad_words.txt") as bad:
         bad_words = [

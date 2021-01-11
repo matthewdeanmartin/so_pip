@@ -1,9 +1,12 @@
+"""
+SO questions and answers look a lot alike jupyter notebooks.
+"""
 import json
 
 import nbformat
 
 
-def proof_of_concept():
+def proof_of_concept() -> None:
     """This is not ready for prime time."""
     thing = nbformat.v4.new_notebook()
 

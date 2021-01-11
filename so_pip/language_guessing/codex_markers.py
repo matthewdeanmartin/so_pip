@@ -15,13 +15,13 @@ import re
 from typing import Dict, List
 
 
-def _compiled_regex(pattern: str, dotall: bool = True) -> re.Pattern:
+def _compiled_regex(pattern: str, dotall: bool = True) -> re.Pattern[str]:
     """precompile some regex"""
     flags = (re.MULTILINE | re.DOTALL) if dotall else re.MULTILINE
     return re.compile(pattern, flags)
 
 
-MARKERS: Dict[str, List[re.Pattern]] = {
+MARKERS: Dict[str, List[re.Pattern[str]]] = {
     # Markers applicable to several languages
     # Code, not, say, English
     "code": [

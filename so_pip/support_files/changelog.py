@@ -5,9 +5,8 @@ Design strategy, follow this format: https://keepachangelog.com/en/1.0.0/
 
 Focus on changes to the question/answers *only*, not who did it.
 """
-from datetime import datetime
-
 import time
+from datetime import datetime
 from typing import Any, Dict, List
 
 from so_pip.api_clients.stackapi_facade import get_json_revisions_by_post_id
@@ -71,7 +70,7 @@ def render_change_log(
     data: List[Dict[str, Any]],
 ) -> str:
     """
-    Render minimal setup.py suitable for `pip install -e .`
+    Databind to jinja file
     """
     template = load_template(template_filename="HISTORY.md.jinja", autoescape=False)
     output_text = template.render(item=data)
