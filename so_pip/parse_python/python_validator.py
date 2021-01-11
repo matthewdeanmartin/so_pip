@@ -13,17 +13,20 @@ from so_pip.cli_clients.external_commands import pyflakes, vermin
 
 
 def validate_with_vermin(folder: str) -> str:
+    """Infer python versions"""
     result = vermin(folder)
-    "Minimum required versions: 2.0  Incompatible versions:     3"
+    # "Minimum required versions: 2.0  Incompatible versions:     3"
     # ~2       No known reason it won't work with py2.
     # !2       It is known that it won't work with py2.
     # 2.5, !3  Works with 2.5+ but it is known it won't work with py3.
     # ~2, 3.4  No known reason it won't work with py2, works with 3.4+"
-    print(result)
+    # print(result)
     if "~2, ~3" in result:
         return "*"
     if "2.0, 3.0" in result:
         return "*"
+    # pylint: disable=broad-except
+    # noinspection PyBroadException
     try:
         parts = result.split(":")
         minimum = parts[1].strip().split(" ")[0].strip("\n")
@@ -37,14 +40,13 @@ def validate_with_vermin(folder: str) -> str:
             maximum = f"!{maximum}"
         else:
             maximum = ""
-    except:
+    except BaseException:
         print("unexpected compat string")
         print(result)
         raise
     if maximum:
         return f">={minimum}, {maximum}"
-    else:
-        return f">={minimum}"
+    return f">={minimum}"
 
 
 def validate_python(code: str) -> Tuple[bool, List[str]]:

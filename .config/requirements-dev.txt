@@ -28,4 +28,3 @@ pytest==6.0.1
 sshtunnel
 tox
 vendorize
-vermin

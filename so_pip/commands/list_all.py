@@ -22,7 +22,8 @@ def list_dirs(path: str) -> List[str]:
 def list_packages(target_folder: str, quiet: bool = False) -> None:
     """List packages"""
     guards.must_be_truthy(target_folder, "target_folder required")
-    inform(f"Using {target_folder} as vendorized folder")
+    if not quiet:
+        inform(f"Using {target_folder} as vendorized folder")
     path = os.path.join(target_folder)
     for folder in list_dirs(path):
         # TODO: Add version

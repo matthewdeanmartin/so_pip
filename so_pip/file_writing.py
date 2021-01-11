@@ -2,12 +2,11 @@
 File writing stuff
 """
 import html
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 import html2text
 
 from so_pip.make_from_template import load_template
-from so_pip.utils.user_trace import inform
 
 WINDOWS_LINE_ENDING = "\r\n"
 UNIX_LINE_ENDING = "\n"

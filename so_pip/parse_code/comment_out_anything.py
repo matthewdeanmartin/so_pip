@@ -42,7 +42,7 @@ def comment_lines(code: str, language: str) -> str:
     if language != "." and "." in language:
         extension = language.lower().split(".")[1]
         # TODO: this a waste of cpu but still probably quick
-        for key, value in EXTENSION_TO_SYMBOL.items():
+        for _, value in EXTENSION_TO_SYMBOL.items():
             if extension == value[0]:
                 symbol = value[1]
     else:

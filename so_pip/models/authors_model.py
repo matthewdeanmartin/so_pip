@@ -18,6 +18,8 @@ LOGGER = logging.getLogger(__name__)
 
 @dataclass()
 class Contribution:
+    """Represents what a user did"""
+
     contribution_type: str = ""
     contribution_date: str = ""
     # ignore dual licenses
@@ -26,7 +28,9 @@ class Contribution:
 
 @dataclass()
 class Author:
-    id: int = 0
+    """Represents someone who wrote a Q, A, comment or revision"""
+
+    author_id: int = 0
     # only if in bio!
     emails: List[str] = field(default_factory=list)
     # twitter, github, SO, homepage
@@ -84,6 +88,7 @@ def bind_answer_to_authors(
 
 
 def add_authors_from_post(post: Dict[str, Any], authors: Authors, is_answer: bool):
+    """Add authors from post to Object"""
     if post["owner"]:
         owner = Author()
         if is_answer:

@@ -5,7 +5,6 @@ Design strategy, follow this format: https://keepachangelog.com/en/1.0.0/
 
 Focus on changes to the question/answers *only*, not who did it.
 """
-import time
 from datetime import datetime
 from typing import Any, Dict, List
 

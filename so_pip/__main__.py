@@ -58,12 +58,12 @@ def main() -> int:
         for root in ("so_pip", "__main__", "url_lib3"):
             logger = logging.getLogger(root)
             logger.setLevel(logging.DEBUG)
-            ch = logging.StreamHandler()
-            ch.setLevel(logging.DEBUG)
+            handler = logging.StreamHandler()
+            handler.setLevel(logging.DEBUG)
             log_format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
             formatter = logging.Formatter(log_format)
-            ch.setFormatter(formatter)
-            logger.addHandler(ch)
+            handler.setFormatter(formatter)
+            logger.addHandler(handler)
             LOGGERS.append(logger)
     if arguments["vendorize"]:
         prefix = arguments["<name>"] or ""

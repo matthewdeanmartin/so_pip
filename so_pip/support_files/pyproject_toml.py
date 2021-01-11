@@ -6,13 +6,15 @@ Supports:
 - list of inferred dependencies
 - list of tags
 """
+import logging
 from typing import Any, Dict, Optional
 
 import toml
 
-from so_pip.api_clients.stackapi_facade import get_json_revisions_by_post_id
 from so_pip.make_from_template import load_template
 from so_pip.models.python_package_model import PythonPackage
+
+LOGGER = logging.getLogger(__name__)
 
 
 def create_pytroject_toml(
@@ -49,9 +51,12 @@ def create_pytroject_toml(
     ) as project_file:
         project_file.write(output_text)
         # see if it is valid toml
+        # pylint: disable=broad-except
+        # noinspection PyBroadException
         try:
             toml.loads(output_text)
-        except:
+        except BaseException as exception:
+            LOGGER.error("parse failed " + str(exception))
             raise
 
 

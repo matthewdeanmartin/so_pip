@@ -6,7 +6,6 @@ import subprocess  # nosec
 import tempfile
 
 from so_pip.cli_clients.external_commands import pyupgrade, two_to_three
-from so_pip.utils.user_trace import inform
 
 LOGGER = logging.getLogger(__name__)
 
@@ -33,7 +32,7 @@ def upgrade_string(code: str) -> str:
             pyupgrade(temp_file_name)
             at_least_one_worked = True
         except subprocess.CalledProcessError as cpe:
-            LOGGER.debug("Can't pyupgrade", str(cpe))
+            LOGGER.debug("Can't pyupgrade " + str(cpe))
 
         if at_least_one_worked:
             with open(temp_file_name, encoding="utf-8") as temp:
@@ -47,8 +46,8 @@ def upgrade_file(submodule_name: str) -> None:
     try:
         two_to_three(submodule_name)
     except subprocess.CalledProcessError as cpe:
-        LOGGER.debug(f"2to3 failed: {submodule_name}", str(cpe))
+        LOGGER.debug(f"2to3 failed: {submodule_name} " + str(cpe))
     try:
         pyupgrade(submodule_name)
     except subprocess.CalledProcessError as cpe:
-        LOGGER.debug(f"pyupgrade failed : {submodule_name}", str(cpe))
+        LOGGER.debug(f"pyupgrade failed : {submodule_name} " + str(cpe))

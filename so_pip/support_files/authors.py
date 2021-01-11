@@ -41,7 +41,7 @@ def write_authors(
         for role in author.roles:
             if author not in sections[role]:
                 sections[role].append(author)
-    for key, value in sections.items():
+    for _, value in sections.items():
         value.sort(key=lambda _: _.display_name.lower())
     for author in authors.everyone:
         author.urls.sort(key=lambda _: "" if "stackoverflow.com" in _ else _.lower())

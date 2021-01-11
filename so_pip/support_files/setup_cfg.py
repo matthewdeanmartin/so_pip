@@ -15,22 +15,21 @@ def create_setup_cfg(package_folder: str, python_submodule: PythonPackage) -> No
     with open(
         package_folder + "/setup.cfg", "w", encoding="utf-8", errors="replace"
     ) as setup_cfg:
-        # data = {
-        #     "package_name": python_submodule.package_name,
-        #     "version": python_submodule.version,
-        #     "url": python_submodule.url,
-        #     "author": python_submodule.author,
-        #     "author_email": python_submodule.author_email,
-        #     "description": python_submodule.description,
-        #     "dependencies": python_submodule.dependencies,
-        # }
+        post_id = 0
         data = {
+            "package_name": python_submodule.package_name,
+            "version": python_submodule.version,
+            "url": python_submodule.url,
+            "author": python_submodule.author,
+            "author_email": python_submodule.author_email,
+            "description": python_submodule.description,
+            "dependencies": python_submodule.dependencies,
             "classifiers": """    Programming Language :: Python :: 3 :: Only
             Programming Language :: Python :: 3.6
             Programming Language :: Python :: 3.7
             Programming Language :: Python :: 3.8
             Programming Language :: Python :: 3.9""",
-            "revisions_url": "https://stackoverflow.com/posts/26718306/revisions",
+            "revisions_url": f"https://stackoverflow.com/posts/{post_id}/revisions",
         }
         source = render_setup_cfg(data)
         setup_cfg.write(source)

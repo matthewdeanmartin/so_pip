@@ -29,3 +29,4 @@ pyupgrade
 requests
 stackapi
 stdlib-list
+vermin

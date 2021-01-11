@@ -5,7 +5,6 @@ Basic object fetching works fine, but attributes can be missing, or errors throw
 when attributes aren't as expected.
 """
 import os
-from typing import List
 
 import stackexchange
 
@@ -42,9 +41,9 @@ def user_by_id(user_id: int) -> stackexchange.Question:
     return user
 
 
-def python_questions(search: str) -> List[stackexchange.Question]:
-    """Get some questions and answers by keyword"""
-    suitable = []
-    for question in STACK.questions(tagged=["python"], pagesize=10):
-        suitable.append(question)
-    return suitable
+# def python_questions(search: str) -> List[stackexchange.Question]:
+#     """Get some questions and answers by keyword"""
+#     suitable = []
+#     for question in STACK.questions(tagged=["python"], pagesize=10):
+#         suitable.append(question)
+#     return suitable

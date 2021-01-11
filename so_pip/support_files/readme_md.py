@@ -15,6 +15,8 @@ def create_readme_md(
 ) -> None:
     """write file"""
 
+    # TODO: this isn't done yet.
+    print(answer)
     with open(
         package_folder + "/README.md", "w", encoding="utf-8", errors="replace"
     ) as readme:

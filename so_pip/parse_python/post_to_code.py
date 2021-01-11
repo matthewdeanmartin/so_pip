@@ -4,13 +4,8 @@ Install one question or post.
 Vendorize because I'm not installing it to a venv.
 """
 
-# TODO:
-# install question 142
-# install post 142
-# install some_random_name
-# install some_random_name==0.2.1
 import collections
-from typing import Any, Dict, Iterable, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 from so_pip import settings as settings
 from so_pip.api_clients import stackapi_facade as stackapi_client
@@ -79,7 +74,7 @@ def handle_post(
             and not is_reusable(post["body"])
         ):
             # TODO: make this more strict
-            inform(f"Answer lacks def/class, not re-usable...skipping")
+            inform("Answer lacks def/class, not re-usable...skipping")
             continue
 
         def post_has_code(answer: Dict[str, Any]) -> bool:
@@ -91,7 +86,7 @@ def handle_post(
             and not KEEP_ANSWERS_WITH_NO_CODE
             and post_type == "answer"
         ):
-            inform(f"Answer lacks code blocks,...skipping")
+            inform("Answer lacks code blocks,...skipping")
             continue
 
         if post_type == "answer":
