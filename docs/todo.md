@@ -22,7 +22,7 @@ RELEASE 1.0 Goals
 - FEATURE: update_any module
     - no code for handling overwriting previously generated code (clean, ask, merge)
 - Carve out "subprojects"
-    - guess_language
+    - guess_language - DONE
     - bad_words
     - random_names
     - pypi_query

@@ -15,6 +15,7 @@ beautifulsoup4
 black
 html2text
 jinja2
+markdown
 nbformat
 pip-upgrader
 pipreqs
@@ -29,4 +30,6 @@ pyupgrade
 requests
 stackapi
 stdlib-list
+toml
 vermin
+whats-that-code>=0.1.4

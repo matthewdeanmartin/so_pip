@@ -13,7 +13,6 @@ import toml
 
 from so_pip.make_from_template import load_template
 from so_pip.models.python_package_model import PythonPackage
-import toml
 
 LOGGER = logging.getLogger(__name__)
 

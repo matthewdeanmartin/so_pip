@@ -84,7 +84,7 @@ def run() -> None:
         ]
         people = people[:1000]
     dedupe = {
-        word.strip(", ").lower()
+        word.strip(", .").lower()
         for word in set(ten_k + three_k + most_common_simpler + people)
     }
     new_set = [word for word in dedupe if word not in bad_words]

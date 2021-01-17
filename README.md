@@ -12,19 +12,11 @@ Installation
 ------------
 Requires Python 3.7+, tested with 3.7, 3.8, 3.9
 ```
-git clone https://github.com/matthewdeanmartin/so_pip.git
-python -m venv venv
-. venv/Scripts/activate
-pip install -r .config/requirements.txt
-# some tools can't co-exist in the same virtual environment
-pipx install pylint
-pipx install isort
-python -m so_pip --version
+pip install so_pip
+so_pip vendorize my_name --question=31049648 --output=output
 ```
-Docker support 1/2 implemented.
-```
-docker build -t so_pip:latest .
-```
+
+
 Usage
 --------------
 Consider getting a [key](https://stackapps.com/apps/oauth/register) and adding a [.so_pip.ini file](https://github.com/matthewdeanmartin/so_pip/blob/main/.so_pip.ini) The app will make best efforts if you don't.

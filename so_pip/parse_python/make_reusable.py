@@ -6,11 +6,14 @@ from typing import List
 
 def is_reusable(code: str) -> bool:
     """Try to find def or class"""
-    tokens = code.split()
+    # tokenizer splits only on space, not punct
+    #
+    # tokens = code.split()
     # TODO: when possible, actually parse the AST.
-    if "def" in tokens:
+    # In the meanwhile, be very loosy goosy
+    if "def" in code:
         return True
-    if "class" in tokens:
+    if "class" in code:
         return True
     return False
 

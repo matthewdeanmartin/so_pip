@@ -13,6 +13,7 @@ LOGGER = logging.getLogger(__name__)
 def upgrade_string(code: str) -> str:
     """Upgrade a string to python three"""
     # if we don't upgrade the py2 crap, ast fails & all sorts of things fail.
+    original = code
     at_least_one_worked = False
     with tempfile.TemporaryDirectory(prefix="upgrade_py") as temp_dir:
         temp_file_name = temp_dir.replace("\\", "/") + "/upgrade.py"
@@ -37,7 +38,8 @@ def upgrade_string(code: str) -> str:
         if at_least_one_worked:
             with open(temp_file_name, encoding="utf-8") as temp:
                 code = temp.read()
-
+    if not code:
+        return original
     return code
 
 

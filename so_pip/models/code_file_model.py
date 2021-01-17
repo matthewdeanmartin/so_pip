@@ -5,6 +5,7 @@ from dataclasses import dataclass, field
 from typing import List
 
 from whats_that_code.guess_by_code_and_tags import assign_extension
+
 from so_pip.models.code_block_model import CodeBlock
 from so_pip.parse_python.python_validator import validate_python
 
@@ -37,6 +38,8 @@ class CodeFile:
                 items.append(block.code_text)
             if block.footer_comments:
                 items.append(block.footer_comments)
+        if self.code_blocks and not items:
+            raise TypeError("We have code blocks, but no lines of code?")
         return items
 
     def all_code(self) -> List[str]:

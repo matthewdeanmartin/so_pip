@@ -14,3 +14,15 @@ docker-compose*
 README.md
 LICENSE
 .vscode
+examples
+output
+scripts
+test
+navio
+navio_tasks
+.tox
+.pytest_cache
+.mypy_cache
+.config
+docs
+so_pip.egg-info

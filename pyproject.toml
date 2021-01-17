@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "so_pip"
-version = "0.1.23"
+version = "0.1.28"
 description = "Generate packages from Stackoverflow answers"
 authors = ["Matthew Martin <matthewdeanmartin@gmail.com>"]
 keywords = ["packaging", "stackoverflow"]
@@ -60,7 +60,9 @@ pypinfo = "*"
 nbformat = "*"
 pyrankvote = "*"
 vermin = "*"
-whats-that-code = "*"
+markdown = "*"
+toml = "*"
+whats-that-code = ">=0.1.4"
 
 [tool.poetry.dev-dependencies]
 pytest = "==6.0.1"

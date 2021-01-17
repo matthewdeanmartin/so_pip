@@ -8,10 +8,11 @@ Focus on changes to the question/answers *only*, not who did it.
 from datetime import datetime
 from typing import Any, Dict, List
 
+import markdown
+
 from so_pip.api_clients.stackapi_facade import get_json_revisions_by_post_id
 from so_pip.make_from_template import load_template
 from so_pip.models.authors_model import normalize_user_link
-import markdown
 
 
 def changelog_for_post(post: Dict[str, Any], package_folder: str) -> None:

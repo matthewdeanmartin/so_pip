@@ -12,6 +12,8 @@ from so_pip import settings as settings
 
 def write_and_format_python_file(file_name: str, to_write: List[str]) -> bool:
     """format and dump it"""
+    if not to_write:
+        raise TypeError("No code to write.")
     if not file_name.endswith(".py"):
         raise TypeError("Why don't we have a .py extension?")
 
@@ -31,12 +33,14 @@ def write_and_format_python_file(file_name: str, to_write: List[str]) -> bool:
                     is_pyi=False,
                 ),
             )
+            if not blackened:
+                raise TypeError("Writing 0 bytes")
             generated.write(blackened)
             return True
         except black.InvalidInput:
-            if settings.COMMENT_OUT_BAD_PYTHON:
-                generated.write(joined)
-                return True
+            # TODO: if settings.COMMENT_OUT_BAD_PYTHON:
+            generated.write(joined)
+            return True
     return False
 
 

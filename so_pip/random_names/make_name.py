@@ -23,7 +23,7 @@ def initialize() -> None:
     # See ETL for what it took to get a clean file.
     words_path = find_file(FILE, __file__)
     with open(words_path) as name_file:
-        NAMES.extend(list(name.strip() for name in name_file.readlines()))
+        NAMES.extend(name.strip() for name in name_file.readlines())
 
     if len(NAMES) != 10000:
         raise TypeError(f"Init failed, didn't find 10,000 words, got {len(NAMES)}")

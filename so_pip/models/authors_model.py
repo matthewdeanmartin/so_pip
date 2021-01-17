@@ -100,17 +100,20 @@ def add_authors_from_post(post: Dict[str, Any], authors: Authors, is_answer: boo
             owner.urls.append(owner.twitter)
             owner.urls.append(owner.github)
 
-        full_user = get_json_by_user_id(post["owner"]["user_id"])["items"][0]
-        if "website_url" in full_user and full_user["website_url"]:
-            owner.urls.append(full_user["website_url"])
-        if "about_me" in full_user and full_user["about_me"]:
-            emails = email_from_bio(full_user["about_me"])
-            if emails:
-                owner.emails.extend(emails)
-        if "display_name" in post["owner"] and post["owner"]["display_name"]:
-            owner.display_name = post["owner"]["display_name"]
+            full_user = get_json_by_user_id(post["owner"]["user_id"])["items"][0]
+            if "website_url" in full_user and full_user["website_url"]:
+                owner.urls.append(full_user["website_url"])
+            if "about_me" in full_user and full_user["about_me"]:
+                emails = email_from_bio(full_user["about_me"])
+                if emails:
+                    owner.emails.extend(emails)
+            if "display_name" in post["owner"] and post["owner"]["display_name"]:
+                owner.display_name = post["owner"]["display_name"]
+            else:
+                owner.display_name = "Name not available"
         else:
             owner.display_name = "Name not available"
+
         if "link" in post["owner"] and post["owner"]["link"]:
             url = normalize_user_link(post["owner"]["link"], post["owner"]["user_id"])
             owner.urls.append(url)

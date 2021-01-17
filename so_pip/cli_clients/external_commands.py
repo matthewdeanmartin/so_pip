@@ -1,5 +1,20 @@
 """
 Shell out to run a few commands
+
+- pytest
+- pip-upgrade
+- pur
+- safety
+- pyflakes
+- pipreqs
+- futurize
+- 2to3
+- black
+- pyupgrade
+- isort
+- pylint
+- pypinfo
+- vermin
 """
 import logging
 import os
@@ -139,6 +154,7 @@ def pyupgrade(file_name: str) -> str:
 
 def isort(folder: str) -> str:
     """Sort the imports to discover import order bugs and prevent import order bugs"""
+
     guards.must_be_truthy(folder, "folder required")
     # This must run before black. black doesn't change import order but it wins
     # any arguments about formatting.
@@ -148,9 +164,14 @@ def isort(folder: str) -> str:
     command = f"{settings.SHELL} isort --profile black {folder}"
     LOGGER.debug(command)
     parts = shlex.split(command)
-    result = execute_get_text(parts)
-    LOGGER.debug(result)
-    return result
+    try:
+        result = execute_get_text(parts)
+        LOGGER.debug(result)
+        return result
+    except FileNotFoundError:
+        LOGGER.debug("isort not installed, skipping isort")
+        return ""
+    return ""
 
 
 def pylint(folder: str) -> str:
@@ -170,9 +191,14 @@ def pylint(folder: str) -> str:
     "".strip().replace("  ", " ")
     LOGGER.debug(command)
     parts = shlex.split(command)
-    result = execute_get_text(parts)
-    LOGGER.debug(result)
-    return result
+    try:
+        result = execute_get_text(parts)
+        LOGGER.debug(result)
+        return result
+    except FileNotFoundError:
+        LOGGER.debug("isort not installed, skipping isort")
+        return ""
+    return ""
 
 
 def pypinfo(package: str) -> str:
