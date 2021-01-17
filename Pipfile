@@ -27,7 +27,6 @@ ifaddr = "*"
 vendorize = "*"
 tox = "*"
 
-
 [packages]
 pyrankvote = "*"
 black = "*"
@@ -52,6 +51,9 @@ pypistats = "*"
 pypinfo = "*"
 nbformat = "*"
 vermin = "*"
+markdown = "*"
+toml = "*"
+whats-that-code = ">=0.1.3"
 
 [requires]
 python_version = "3.8"

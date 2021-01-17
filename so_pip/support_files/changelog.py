@@ -11,6 +11,7 @@ from typing import Any, Dict, List
 from so_pip.api_clients.stackapi_facade import get_json_revisions_by_post_id
 from so_pip.make_from_template import load_template
 from so_pip.models.authors_model import normalize_user_link
+import markdown
 
 
 def changelog_for_post(post: Dict[str, Any], package_folder: str) -> None:
@@ -61,8 +62,11 @@ def changelog_for_post(post: Dict[str, Any], package_folder: str) -> None:
     with open(
         package_folder + "/CHANGELOG.md", "w", encoding="utf-8", errors="replace"
     ) as log:
+        text = render_change_log(data=versions)
 
-        log.write(render_change_log(data=versions))
+        # calling this to see if it is somewhat valid markdown
+        _ = markdown.markdown(text)
+        log.write(text)
 
 
 def render_change_log(

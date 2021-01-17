@@ -4,6 +4,7 @@ Abstract model of the package_info I'm extracting from an post.
 import collections
 import logging
 from dataclasses import dataclass, field
+from datetime import datetime
 from typing import Any, Dict, List, Set, Union
 
 from so_pip.api_clients.stackapi_facade import get_json_revisions_by_post_id
@@ -109,10 +110,11 @@ class PythonPackage:
                 "Erasing old self.python_metadata, TODO: code shouldn't get here."
             )
 
+        creation_date = datetime.fromtimestamp(post["creation_date"])
         self.python_metadata = [
             f"__title__ = '{title}'",
             f"__version__ = '{self.version}'",
             f"__author__ = '{self.author}'",
             f"__license__ = '{post.get('content_license', 'N/A')}'",
-            f"__copyright__ = 'Copyright {post['creation_date']} by {self.author}'",
+            f"__copyright__ = 'Copyright {creation_date} by {self.author}'",
         ]

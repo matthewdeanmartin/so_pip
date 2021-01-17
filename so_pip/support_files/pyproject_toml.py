@@ -13,6 +13,7 @@ import toml
 
 from so_pip.make_from_template import load_template
 from so_pip.models.python_package_model import PythonPackage
+import toml
 
 LOGGER = logging.getLogger(__name__)
 
@@ -69,4 +70,6 @@ def render_pyproject_toml(
     template = load_template(template_filename="pyproject.toml.jinja", autoescape=False)
     # Turn off autoescape because this is python not html.
     output_text = template.render(data=data, autoescape=False)  # nosec
+    # validate toml
+    _ = toml.loads(output_text)
     return output_text

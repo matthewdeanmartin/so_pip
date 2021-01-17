@@ -14,6 +14,8 @@ import logging
 from collections import defaultdict
 from typing import Any, Collection, DefaultDict, Dict, List, Optional, Sequence, Union
 
+import markdown
+
 from so_pip.make_from_template import load_template
 from so_pip.models.authors_model import (
     Author,
@@ -47,10 +49,13 @@ def write_authors(
         author.urls.sort(key=lambda _: "" if "stackoverflow.com" in _ else _.lower())
 
     with open(
-        package_folder + "/AUTHORS.txt", "w", encoding="utf-8", errors="replace"
+        package_folder + "/AUTHORS.md", "w", encoding="utf-8", errors="replace"
     ) as author_file:
         item = {"name": package_name, "authors": sections}
-        author_file.write(render_authors(data=item))
+        text = render_authors(data=item)
+        # calling this to see if it is somewhat valid markdown
+        _ = markdown.markdown(text)
+        author_file.write(text)
 
 
 def render_authors(

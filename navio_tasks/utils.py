@@ -8,7 +8,6 @@ import sys
 from subprocess import CalledProcessError, check_call
 from typing import Any, Iterable
 
-from pynt import task
 
 __license__ = "MIT License"
 __contact__ = "http://rags.github.com/pynt-contrib/"
@@ -35,7 +34,6 @@ def safe_cd(path: str) -> Any:
         os.chdir(starting_directory)
 
 
-@task()
 def execute(script: str, *args: Iterable[str]) -> int:
     """
     Executes a command through the shell. Spaces should breakup the args.

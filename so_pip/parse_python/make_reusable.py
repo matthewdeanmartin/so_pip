@@ -6,7 +6,7 @@ from typing import List
 
 def is_reusable(code: str) -> bool:
     """Try to find def or class"""
-    tokens = code.split(" ")
+    tokens = code.split()
     # TODO: when possible, actually parse the AST.
     if "def" in tokens:
         return True

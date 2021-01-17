@@ -3,6 +3,8 @@ Rehash some fairly non-standardized stuff about the package
 """
 from typing import Any, Dict, Optional
 
+import markdown
+
 from so_pip.make_from_template import load_template
 from so_pip.models.python_package_model import PythonPackage
 
@@ -44,4 +46,6 @@ def render_readme_md(
     template = load_template(template_filename="README.md.jinja", autoescape=False)
     # Turn off autoescape because this is python not html.
     output_text = template.render(item=data, autoescape=False)  # nosec
+    # calling this to see if it is somewhat valid markdown
+    _ = markdown.markdown(output_text)
     return output_text
