@@ -16,6 +16,15 @@ pip install so_pip
 so_pip vendorize my_name --question=31049648 --output=output
 ```
 
+Using via [dockerhub](https://hub.docker.com/repository/docker/matthewdeanmartin/so_pip)
+```
+# for mac, unix, cmd.exe, powershell
+docker pull matthewdeanmartin/so_pip
+docker run --rm -i -v "$PWD/data:/data" matthewdeanmartin/so_pip --help
+```
+If you use git bash/mingw64/cygwin, see [run.sh](https://github.com/matthewdeanmartin/so_pip/blob/main/docker/run.sh)
+because docker needs help doing a volume mount.
+
 
 Usage
 --------------
