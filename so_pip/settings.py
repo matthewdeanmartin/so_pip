@@ -88,7 +88,11 @@ DEFAULT_LANGUAGE = cast(
 )
 
 # Language guesser needs hints.
-POSSIBLE_LANGUAGES = ast.literal_eval(section.get("POSSIBLE_LANGUAGES", "['*']"))
+# Default hints for python and javascript because
+# those languages now (or will) have more support for extracting a package.
+POSSIBLE_LANGUAGES = ast.literal_eval(
+    section.get("POSSIBLE_LANGUAGES", "['python','javascript']")
+)
 
 # cli client stuff
 section = config["SHELL_CONFIG"]

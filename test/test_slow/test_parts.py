@@ -2,13 +2,13 @@ from so_pip.api_clients.stackapi_facade import (
     get_json_by_answer_id,
     get_json_by_question_id,
 )
-from so_pip.parse_python.module_maker import map_post_to_python_package_model
+from so_pip.parse_python.module_maker import map_post_to_code_package_model
 
 
 def test_handle_python_answer():
     answer = get_json_by_answer_id(24139629)["items"][0]
     question = get_json_by_question_id(answer["question_id"])["items"][0]
-    submodule = map_post_to_python_package_model(
+    submodule = map_post_to_code_package_model(
         answer,
         answer["body"],
         "answer_module_name",
@@ -26,7 +26,7 @@ def test_handle_python_answer():
 
 def test_handle_python_question():
     value = get_json_by_question_id(24139250)["items"][0]
-    submodule = map_post_to_python_package_model(
+    submodule = map_post_to_code_package_model(
         value,
         value["body"],
         "answer_module_name",

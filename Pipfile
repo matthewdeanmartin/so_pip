@@ -53,7 +53,7 @@ nbformat = "*"
 vermin = "*"
 markdown = "*"
 toml = "*"
-whats-that-code = ">=0.1.4"
+whats-that-code = ">=0.1.6"
 
 [requires]
 python_version = "3.8"

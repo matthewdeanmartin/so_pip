@@ -12,7 +12,8 @@ from so_pip import settings as settings
 from so_pip.cli_clients.external_commands import isort
 from so_pip.models.code_block_from_text import find_code_blocks
 from so_pip.models.code_file_model import CodeFile
-from so_pip.models.python_package_model import PythonPackage
+from so_pip.models.python_package_model import CodePackage
+from so_pip.parse_code.comment_out_anything import html_to_comments
 from so_pip.parse_python.code_transformations import html_to_python_comments
 from so_pip.parse_python.upgrade_to_py3 import upgrade_string
 
@@ -37,11 +38,11 @@ def create_package_folder(
     return supporting_files_folder, python_source_folder
 
 
-def map_post_to_python_package_model(
+def map_post_to_code_package_model(
     post: Dict[str, Any], html: str, name: str, description: str, tags: List[str]
-) -> PythonPackage:
-    """Given html of ap post, fill in a PythonPackage object."""
-    package = PythonPackage(package_name=name, description=description)
+) -> CodePackage:
+    """Given html of ap post, fill in a CodePackage object."""
+    package = CodePackage(package_name=name, description=description)
     package.extract_metadata(post=post)
     package.code_blocks.extend(find_code_blocks(html, tags))
     if not package.code_blocks:
@@ -60,9 +61,8 @@ def map_post_to_python_package_model(
         if block.extension == ".py":
             if settings.BUMP_TO_PY3:
                 block.code_text = upgrade_string(block.code_text)
-            # comment out bad py code here.
-            block.header_comments = html_to_python_comments(block.header_comments)
-            block.footer_comments = html_to_python_comments(block.footer_comments)
+        # commenting done in the to_write() method
+
     for code_file in package.code_files:
         if not code_file.extension:
             code_file.analyze(tags)

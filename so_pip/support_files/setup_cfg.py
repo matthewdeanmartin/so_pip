@@ -8,10 +8,10 @@ import configparser
 from typing import Any, Dict
 
 from so_pip.make_from_template import load_template
-from so_pip.models.python_package_model import PythonPackage
+from so_pip.models.python_package_model import CodePackage
 
 
-def create_setup_cfg(package_folder: str, python_submodule: PythonPackage) -> None:
+def create_setup_cfg(package_folder: str, python_submodule: CodePackage) -> None:
     """Put everything into setup.cfg"""
     full_path = package_folder + "/setup.cfg"
     with open(full_path, "w", encoding="utf-8", errors="replace") as setup_cfg:

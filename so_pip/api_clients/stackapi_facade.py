@@ -121,3 +121,17 @@ def get_json_comments_by_post_id(post_id: int) -> Dict[str, Any]:
             filter="!--1nZxT00Un.",
         ),
     )
+
+
+@lru_cache(maxsize=1000)
+def get_json_related_tags(tag: str) -> Dict[str, Any]:
+    """Low level access, returns unprocessed json"""
+    return cast(
+        Dict[str, Any],
+        SITE.fetch(
+            "tags/{ids}/related",
+            ids=[
+                tag,
+            ],
+        ),
+    )

@@ -97,8 +97,10 @@ def add_authors_from_post(post: Dict[str, Any], authors: Authors, is_answer: boo
             owner.roles.append("Question Owner")
         if "user_id" in post["owner"]:
             owner.twitter, owner.github = scrape_urls(post["owner"]["user_id"])
-            owner.urls.append(owner.twitter)
-            owner.urls.append(owner.github)
+            if owner.twitter:
+                owner.urls.append(owner.twitter)
+            if owner.github:
+                owner.urls.append(owner.github)
 
             full_user = get_json_by_user_id(post["owner"]["user_id"])["items"][0]
             if "website_url" in full_user and full_user["website_url"]:
@@ -116,7 +118,8 @@ def add_authors_from_post(post: Dict[str, Any], authors: Authors, is_answer: boo
 
         if "link" in post["owner"] and post["owner"]["link"]:
             url = normalize_user_link(post["owner"]["link"], post["owner"]["user_id"])
-            owner.urls.append(url)
+            if url:
+                owner.urls.append(url)
         authors.everyone.append(owner)
     else:
         if post["user"]["user_type"] != "does_not_exist":
@@ -140,12 +143,15 @@ def add_authors_from_post(post: Dict[str, Any], authors: Authors, is_answer: boo
         if "website_url" in full_user and full_user["website_url"]:
             reviser.urls.append(full_user["website_url"])
         if "about_me" in full_user and full_user["about_me"]:
-            reviser.emails.extend(email_from_bio(full_user["about_me"]))
+            email = email_from_bio(full_user["about_me"])
+            if email:
+                reviser.emails.extend(email)
         if "link" in post["owner"] and post["owner"]["link"]:
             url = normalize_user_link(
                 revision["user"]["link"], revision["user"]["user_id"]
             )
-            reviser.urls.append(url)
+            if url:
+                reviser.urls.append(url)
 
         authors.everyone.append(reviser)
     comments = get_json_comments_by_post_id(post[post_id_name])
@@ -165,9 +171,12 @@ def add_authors_from_post(post: Dict[str, Any], authors: Authors, is_answer: boo
         if "website_url" in full_user and full_user["website_url"]:
             commenter.urls.append(full_user["website_url"])
         if "about_me" in full_user and full_user["about_me"]:
-            commenter.emails.extend(email_from_bio(full_user["about_me"]))
+            email = email_from_bio(full_user["about_me"])
+            if email:
+                commenter.emails.extend(email)
         if "link" in comment["owner"] and comment["owner"]["link"]:
             url = comment["owner"]["link"]
             link = normalize_user_link(url, comment["owner"]["user_id"])
-            commenter.urls.append(link)
+            if link:
+                commenter.urls.append(link)
         authors.everyone.append(commenter)

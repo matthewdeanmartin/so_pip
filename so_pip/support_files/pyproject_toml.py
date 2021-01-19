@@ -12,14 +12,14 @@ from typing import Any, Dict, Optional
 import toml
 
 from so_pip.make_from_template import load_template
-from so_pip.models.python_package_model import PythonPackage
+from so_pip.models.python_package_model import CodePackage
 
 LOGGER = logging.getLogger(__name__)
 
 
 def create_pytroject_toml(
     package_folder: str,
-    python_submodule: PythonPackage,
+    python_submodule: CodePackage,
     question: Dict[str, Any],
     answer: Optional[Dict[str, Any]],
 ) -> None:

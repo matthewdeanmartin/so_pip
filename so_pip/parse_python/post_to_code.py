@@ -12,13 +12,13 @@ from so_pip.api_clients import stackapi_facade as stackapi_client
 from so_pip.cli_clients.external_commands import black, isort, pur, pylint, safety
 from so_pip.file_writing import write_as_html, write_as_md, write_as_text
 from so_pip.models.code_file_model import CodeFile
-from so_pip.models.python_package_model import PythonPackage
+from so_pip.models.python_package_model import CodePackage
 from so_pip.parse_code.write_anything import write_and_format_any_file
 from so_pip.parse_python.format_code import write_and_format_python_file
 from so_pip.parse_python.make_reusable import is_reusable
 from so_pip.parse_python.module_maker import (
     create_package_folder,
-    map_post_to_python_package_model,
+    map_post_to_code_package_model,
 )
 from so_pip.parse_python.python_validator import validate_with_vermin
 from so_pip.parse_python.upgrade_to_py3 import upgrade_file
@@ -95,7 +95,7 @@ def handle_post(
             module_name = make_up_module_name(post["question_id"], package_prefix, "q")
         packages_made.append(module_name)
 
-        package_info = map_post_to_python_package_model(
+        package_info = map_post_to_code_package_model(
             post,
             post["body"],
             module_name,
@@ -122,7 +122,7 @@ def handle_post(
         frequencies = package_info.file_frequencies()
         for code_file in package_info.code_files:
             i += 1
-            success = write_one_python_file(
+            success = write_one_code_file(
                 code_file, frequencies, i, package_info, submodule_path, joiner=""
             )
             if success:
@@ -186,11 +186,11 @@ def handle_post(
     return packages_made
 
 
-def write_one_python_file(
+def write_one_code_file(
     code_file: CodeFile,
     frequencies: collections.Counter,
     i: int,
-    package_info: PythonPackage,
+    package_info: CodePackage,
     submodule_path: str,
     joiner: str,
 ) -> bool:
@@ -203,6 +203,7 @@ def write_one_python_file(
         code_file_name = f"{submodule_path}_{joiner}{i}{code_file.extension}"
     else:
         code_file_name = f"{submodule_path}{code_file.extension}"
+
     to_write = code_file.to_write()
     if code_file.extension == ".py":
         metadata = [] if settings.METADATA_IN_INIT else package_info.python_metadata

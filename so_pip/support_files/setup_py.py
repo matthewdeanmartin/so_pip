@@ -6,10 +6,10 @@ DEPRECATED. I MAY DELETE THIS ALTOGETHER.
 from typing import Dict, Sequence, Union
 
 from so_pip.make_from_template import load_template
-from so_pip.models.python_package_model import PythonPackage
+from so_pip.models.python_package_model import CodePackage
 
 
-def create_setup_py(package_folder: str, python_submodule: PythonPackage) -> None:
+def create_setup_py(package_folder: str, python_submodule: CodePackage) -> None:
     """Just the setup.py part"""
     with open(
         package_folder + "/setup.py", "w", encoding="utf-8", errors="replace"

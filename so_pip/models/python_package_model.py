@@ -15,7 +15,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 @dataclass()
-class PythonPackage:
+class CodePackage:
     """A question or answers's code in python module format"""
 
     package_name: str

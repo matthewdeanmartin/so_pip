@@ -4,7 +4,7 @@ Abstract model of the package_info I'm extracting from an post.
 from dataclasses import dataclass, field
 from typing import List
 
-from whats_that_code.guess_by_code_and_tags import assign_extension
+from so_pip.api_clients.what_that_code_facade import guess_language_and_extension
 
 from so_pip.parse_python.python_validator import validate_python
 
@@ -35,5 +35,9 @@ class CodeBlock:
         self.is_ipython_block = ">>>" in self.code_text
         self.is_valid_python, self.errors = validate_python(self.code_text)
 
-        value = assign_extension(self.code_text, tags)
+        value = guess_language_and_extension(
+            self.code_text,
+            surrounding_text=self.header_comments + self.footer_comments,
+            tags=tags,
+        )
         self.extension, self.language = value

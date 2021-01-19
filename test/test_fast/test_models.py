@@ -1,6 +1,6 @@
 from so_pip.models.code_block_model import CodeBlock
 from so_pip.models.code_file_model import CodeFile
-from so_pip.models.python_package_model import PythonPackage
+from so_pip.models.python_package_model import CodePackage
 
 
 def test_code_block():
@@ -50,6 +50,6 @@ def test_code_file_two_blocks():
 
 
 def test_python_submodule():
-    psm = PythonPackage("name", "desc")
+    psm = CodePackage("name", "desc")
     # how to make an post/question?
     # psm.extract_metadata()
