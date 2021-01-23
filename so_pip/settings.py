@@ -80,6 +80,7 @@ GENERATE_CODE_OF_CONDUCT = ast.literal_eval(
 )
 GENERATE_CHANGE_LOG = ast.literal_eval(section.get("GENERATE_CHANGE_LOG", "True"))
 GENERATE_SETUP_CFG = ast.literal_eval(section.get("GENERATE_SETUP_CFG", "True"))
+GENERATE_JUPYTER = ast.literal_eval(section.get("GENERATE_JUPYTER", "True"))
 
 section = config["LANGUAGE_DETECTION"]
 DEFAULT_LANGUAGE = cast(

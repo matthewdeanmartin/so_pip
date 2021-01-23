@@ -5,7 +5,9 @@ RELEASE 1.0 Goals
 -----------------
 - Code Debt: extract_metadata should be jinja
 - Code Debt: PackageObject should be more like a post object with optional language specific things
-
+- Feature: Add shebang if no reusable code (assume script)
+- BUG: shebang gets stuck in middle
+    - import_so_answer("unzip", 1855118, OUTPUT_FOLDER, revision_id=-1)
 - BUG: not all licenses found?
 - Feature: Infer minimum python version & fill in pyproject.toml & Readme.md.
     - 1/2 done

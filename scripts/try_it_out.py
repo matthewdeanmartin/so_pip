@@ -4,7 +4,7 @@ from so_pip.utils.files_utils import find_file
 OUTPUT_FOLDER = find_file("../output", __file__)
 if __name__ == "__main__":
 
-    import_so_question("javascript", 2095697, OUTPUT_FOLDER)
+    import_so_answer("unzip", 1855118, OUTPUT_FOLDER, revision_id=-1)
     # import_so_question("package_for_module", 49764802, OUTPUT_FOLDER)
     exit()
     # import_so_answer("popular", 237028, OUTPUT_FOLDER, 2)  # questoin 231767

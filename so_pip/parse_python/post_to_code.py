@@ -15,6 +15,7 @@ from so_pip.models.code_file_model import CodeFile
 from so_pip.models.python_package_model import CodePackage
 from so_pip.parse_code.write_anything import write_and_format_any_file
 from so_pip.parse_python.format_code import write_and_format_python_file
+from so_pip.parse_python.make_notebook import write_jupyter_notebook
 from so_pip.parse_python.make_reusable import is_reusable
 from so_pip.parse_python.module_maker import (
     create_package_folder,
@@ -127,6 +128,9 @@ def handle_post(
             )
             if success:
                 wrote_py_file = True
+
+        if settings.GENERATE_JUPYTER:
+            write_jupyter_notebook(post, package_info, submodule_path)
 
         if settings.POSTS_AS_HTML:
             write_as_html(post, f"{supporting_files_folder}/post")
