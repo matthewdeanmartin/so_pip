@@ -120,7 +120,7 @@ from setuptools_scm import get_version;from setuptools_scm.version import guess_
 endef
 export BUMP_VERSION_PY
 
-NEXT_VERSION_BASH=$(VENV) python -c '$(BUMP_VERSION_PY)'  || '0.1.0' &&
+NEXT_VERSION_BASH=$(VENV) python -c '$(BUMP_VERSION_PY)'  || '0.1.0'
 
 bump_version:
 	# current version, assuming at least one tag of say, 0.1.0
@@ -128,7 +128,7 @@ bump_version:
 	# echo
 	# export NEXT_VERSION=
 
-	git tag "$$($(VENV) python -c '$(BUMP_VERSION_PY)'  || '0.1.0')"
+	git tag "$$($(NEXT_VERSION_BASH))"
 	# git commit -m bump version to $$NEXT_VERSION
 
 
