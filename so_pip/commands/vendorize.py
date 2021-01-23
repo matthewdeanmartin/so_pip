@@ -62,8 +62,10 @@ def import_so_question(
     packages_made: List[str] = []
     question = stackapi_client.get_json_by_question_id(question_id)["items"][0]
 
-    if question["answers"]:
-        packages_made.extend(
-            handle_post(output_folder, package_prefix, question, question["answers"])
+    # if "answers" in question and question["answers"]:
+    packages_made.extend(
+        handle_post(
+            output_folder, package_prefix, question, question.get("answers", [])
         )
+    )
     return packages_made

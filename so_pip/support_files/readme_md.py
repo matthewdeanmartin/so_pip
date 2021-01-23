@@ -44,7 +44,7 @@ def render_readme_md(
     """
 
     template = load_template(template_filename="README.md.jinja", autoescape=False)
-    # Turn off autoescape because this is python not html.
+    # Turn off autoescape because this is markdown, not html
     output_text = template.render(item=data, autoescape=False)  # nosec
     # calling this to see if it is somewhat valid markdown
     _ = markdown.markdown(output_text)

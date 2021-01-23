@@ -32,7 +32,9 @@ RELEASE 1.0 Goals
     - bad_words
     - random_names
     - pypi_query
-
+- BUG: python comments at top of code file for .cs and .js
+- BUG: README talks about pypi for non-python code.
+- TODO: Build with Makefile (in addition to regular build script)
 
 RELEASE 2.0 Goals
 -----------------

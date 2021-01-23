@@ -13,27 +13,23 @@ from so_pip.cli_clients.external_commands import isort
 from so_pip.models.code_block_from_text import find_code_blocks
 from so_pip.models.code_file_model import CodeFile
 from so_pip.models.python_package_model import CodePackage
-from so_pip.parse_code.comment_out_anything import html_to_comments
-from so_pip.parse_python.code_transformations import html_to_python_comments
 from so_pip.parse_python.upgrade_to_py3 import upgrade_string
+from so_pip.support_files.python_init import make_python_init_file
 
 LOGGER = logging.getLogger(__name__)
 
 
 def create_package_folder(
-    target_folder: str, package_name: str, module_name: str, metadata: str
+    target_folder: str, package_name: str, module_name: str, package_info: CodePackage
 ) -> Tuple[str, str]:
     """Create folder and init file"""
     supporting_files_folder = f"{target_folder}/{package_name}/"
     python_source_folder = f"{target_folder}/{package_name}/{module_name}"
     os.makedirs(python_source_folder, exist_ok=True)
-    with open(
-        f"{python_source_folder}/__init__.py", "w", encoding="utf-8", errors="replace"
-    ) as init_file:
-        if metadata:
-            init_file.write(metadata)
-        else:
-            init_file.write("\n")
+
+    make_python_init_file(
+        file_name=f"{python_source_folder}/__init__.py", python_submodule=package_info
+    )
 
     return supporting_files_folder, python_source_folder
 

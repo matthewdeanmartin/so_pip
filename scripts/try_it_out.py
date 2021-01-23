@@ -3,8 +3,14 @@ from so_pip.utils.files_utils import find_file
 
 OUTPUT_FOLDER = find_file("../output", __file__)
 if __name__ == "__main__":
+    # https://stackoverflow.com/questions/29312494/
 
-    import_so_answer("unzip", 1855118, OUTPUT_FOLDER, revision_id=-1)
+    import_so_question("lua", 29312494, OUTPUT_FOLDER)
+    # https://stackoverflow.com/questions/32833797/
+
+    # import_so_question("js", 32833797, OUTPUT_FOLDER)
+    # import_so_question("cs", 65859313, OUTPUT_FOLDER)
+    # import_so_answer("unzip", 1855118, OUTPUT_FOLDER, revision_id=-1)
     # import_so_question("package_for_module", 49764802, OUTPUT_FOLDER)
     exit()
     # import_so_answer("popular", 237028, OUTPUT_FOLDER, 2)  # questoin 231767

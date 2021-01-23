@@ -3,9 +3,10 @@ Sett up the whats_that_code call
 """
 from typing import List, Tuple
 
-from so_pip.settings import POSSIBLE_LANGUAGES
 from whats_that_code.election import guess_language_all_methods
 from whats_that_code.known_languages import FILE_EXTENSIONS
+
+from so_pip.settings import POSSIBLE_LANGUAGES
 
 
 def guess_language_and_extension(
@@ -14,13 +15,12 @@ def guess_language_and_extension(
     """Guess language and extension"""
     if not code:
         return "", ""
-
+    if not tags:
+        raise TypeError("Missing tags")
     result = guess_language_all_methods(
         code,
         file_name="",
-        # TODO: include this when bug fixed.
-        # surrounding_text=surrounding_text,
-        surrounding_text="",
+        surrounding_text=surrounding_text,
         tags=tags,
         priors=POSSIBLE_LANGUAGES,
     )

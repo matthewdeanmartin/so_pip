@@ -2,46 +2,30 @@
 Format and save python.
 """
 import textwrap
-from typing import List
+from typing import cast
 
 import black
 from black import format_str
 
-from so_pip import settings as settings
 
-
-def write_and_format_python_file(file_name: str, to_write: List[str]) -> bool:
+def format_python_file(code: str) -> str:
     """format and dump it"""
-    if not to_write:
-        raise TypeError("No code to write.")
-    if not file_name.endswith(".py"):
-        raise TypeError("Why don't we have a .py extension?")
-
-    while to_write[-1].strip() in ("", "#"):
-        to_write.pop()
-
-    joined = "\n".join(to_write)
-
-    with open(file_name, "w", encoding="utf-8") as generated:
-        try:
-            blackened = format_str(
-                joined,
-                mode=black.Mode(
-                    target_versions={black.TargetVersion.PY38},
-                    line_length=88,
-                    string_normalization=True,
-                    is_pyi=False,
-                ),
-            )
-            if not blackened:
-                raise TypeError("Writing 0 bytes")
-            generated.write(blackened)
-            return True
-        except black.InvalidInput:
-            # TODO: if settings.COMMENT_OUT_BAD_PYTHON:
-            generated.write(joined)
-            return True
-    return False
+    try:
+        blackened = format_str(
+            code,
+            mode=black.Mode(
+                target_versions={black.TargetVersion.PY38},
+                line_length=88,
+                string_normalization=True,
+                is_pyi=False,
+            ),
+        )
+        if not blackened:
+            raise TypeError("Writing 0 bytes")
+        return cast(str, blackened)
+    except black.InvalidInput:
+        # TODO: if settings.COMMENT_OUT_BAD_PYTHON:
+        return code
 
 
 def deindent(code: str) -> str:

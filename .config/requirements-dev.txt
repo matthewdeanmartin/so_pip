@@ -25,6 +25,7 @@ pytest-cov>=2.10.1
 pytest-timeout
 pytest-xdist>=2.1.0
 pytest==6.0.1
+setuptools-scm
 sshtunnel
 tox
 vendorize

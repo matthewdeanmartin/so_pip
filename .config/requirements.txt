@@ -32,4 +32,4 @@ stackapi
 stdlib-list
 toml
 vermin
-whats-that-code>=0.1.4
+whats-that-code>=0.1.9

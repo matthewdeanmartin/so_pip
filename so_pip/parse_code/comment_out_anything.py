@@ -3,6 +3,7 @@ Add safe comments symbols to any list of string
 """
 import html2text
 from bs4 import BeautifulSoup
+
 from so_pip.parse_python.code_transformations import html_to_python_comments
 
 LANGUAGE_TO_SYMBOL = {
@@ -19,7 +20,7 @@ LANGUAGE_TO_SYMBOL = {
     "java": [".java", "//"],
     "javascript": [".js", "//"],
     "jupyter notebook": [".nb", ""],
-    "lua": [".lua", "//"],
+    "lua": [".lua", "--"],
     "markdown": [".md", ""],
     "matlab": [".matlab", "//"],
     "objective-C": [".objc", "//"],

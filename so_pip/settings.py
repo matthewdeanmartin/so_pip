@@ -92,7 +92,7 @@ DEFAULT_LANGUAGE = cast(
 # Default hints for python and javascript because
 # those languages now (or will) have more support for extracting a package.
 POSSIBLE_LANGUAGES = ast.literal_eval(
-    section.get("POSSIBLE_LANGUAGES", "['python','javascript']")
+    section.get("POSSIBLE_LANGUAGES", "['python','javascript','lua']")
 )
 
 # cli client stuff

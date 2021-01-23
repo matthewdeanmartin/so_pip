@@ -5,7 +5,6 @@ from dataclasses import dataclass, field
 from typing import List
 
 from so_pip.api_clients.what_that_code_facade import guess_language_and_extension
-
 from so_pip.parse_python.python_validator import validate_python
 
 
@@ -32,6 +31,8 @@ class CodeBlock:
 
     def analyze(self, tags: List[str]) -> None:
         """Do expensive checks"""
+        if not tags:
+            raise TypeError("Missing tags")
         self.is_ipython_block = ">>>" in self.code_text
         self.is_valid_python, self.errors = validate_python(self.code_text)
 

@@ -14,7 +14,6 @@ from so_pip.file_writing import write_as_html, write_as_md, write_as_text
 from so_pip.models.code_file_model import CodeFile
 from so_pip.models.python_package_model import CodePackage
 from so_pip.parse_code.write_anything import write_and_format_any_file
-from so_pip.parse_python.format_code import write_and_format_python_file
 from so_pip.parse_python.make_notebook import write_jupyter_notebook
 from so_pip.parse_python.make_reusable import is_reusable
 from so_pip.parse_python.module_maker import (
@@ -30,6 +29,7 @@ from so_pip.support_files.changelog import changelog_for_post
 from so_pip.support_files.code_of_conduct import render_code_of_conduct
 from so_pip.support_files.license import write_license
 from so_pip.support_files.pyproject_toml import create_pytroject_toml
+from so_pip.support_files.python_file import make_python_file
 from so_pip.support_files.readme_md import create_readme_md
 from so_pip.support_files.requirements_for_post import requirements_for_file
 from so_pip.utils.user_trace import inform
@@ -69,15 +69,6 @@ def handle_post(
         else:
             post = question
 
-        if (
-            post_type == "answer"
-            and not KEEP_ANSWERS_WITH_NO_DEF_OR_CLASS
-            and not is_reusable(post["body"])
-        ):
-            # TODO: make this more strict
-            inform("Answer lacks def/class, not re-usable...skipping")
-            continue
-
         def post_has_code(answer: Dict[str, Any]) -> bool:
             """This will probably get more complicated"""
             return "<pre><code" in answer["body"] and "</code>" in answer["body"]
@@ -104,17 +95,22 @@ def handle_post(
             tags=question["tags"],
         )
 
+        if (
+            post_type == "answer"
+            and not KEEP_ANSWERS_WITH_NO_DEF_OR_CLASS
+            and not is_reusable(post["body"])
+            and any(_.language == "python" for _ in package_info.code_blocks)
+        ):
+            # TODO: make this more strict
+            inform("Answer lacks def/class, not re-usable...skipping")
+            continue
+
         i = 0
+
         package_info.extract_metadata(post)
-        if settings.METADATA_IN_INIT:
-            metadata_for_init = "\n".join(
-                package_info.header + package_info.python_metadata
-            )
-        else:
-            metadata_for_init = ""
 
         supporting_files_folder, python_source_folder = create_package_folder(
-            output_folder, module_name, module_name, metadata_for_init
+            output_folder, module_name, module_name, package_info
         )
         wrote_py_file = False
 
@@ -200,9 +196,7 @@ def write_one_code_file(
 ) -> bool:
     """Just code to write a python file"""
     wrote_py_file = False
-    file_header = (
-        package_info.brief_header if settings.METADATA_IN_INIT else package_info.header
-    )
+
     if frequencies.get(code_file.extension, 0) > 1:
         code_file_name = f"{submodule_path}_{joiner}{i}{code_file.extension}"
     else:
@@ -210,11 +204,17 @@ def write_one_code_file(
 
     to_write = code_file.to_write()
     if code_file.extension == ".py":
-        metadata = [] if settings.METADATA_IN_INIT else package_info.python_metadata
-        code_to_write = file_header + metadata + to_write
-        wrote_py_file = write_and_format_python_file(
+
+        code_to_write = to_write
+        while code_to_write[-1].strip() in ("", "#"):
+            code_to_write.pop()
+
+        code_to_write_joined = "\n".join(code_to_write)
+        wrote_py_file = make_python_file(
             code_file_name,
-            code_to_write,
+            long_header=settings.METADATA_IN_INIT,
+            code=code_to_write_joined,
+            python_submodule=package_info,
         )
 
     else:
