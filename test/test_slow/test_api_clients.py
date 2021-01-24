@@ -4,6 +4,10 @@ Also, this library blows up a lot.
 """
 
 from so_pip.api_clients.pystackexchange_facade import question_by_id
+import so_pip.settings as settings
+from so_pip.utils.files_utils import find_file
+
+settings.OUTPUT_FOLDER = find_file("../../output/unittest/", __file__)
 from so_pip.api_clients.stackapi_facade import (
     get_json_by_answer_id,
     get_json_by_question_id,

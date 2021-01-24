@@ -6,11 +6,6 @@ import re
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
 
-from so_pip.api_clients.stackapi_facade import (
-    get_json_by_user_id,
-    get_json_comments_by_post_id,
-    get_json_revisions_by_post_id,
-)
 from so_pip.api_clients.stackoverflow_scraper import scrape_urls
 
 LOGGER = logging.getLogger(__name__)
@@ -89,6 +84,12 @@ def bind_answer_to_authors(
 
 def add_authors_from_post(post: Dict[str, Any], authors: Authors, is_answer: bool):
     """Add authors from post to Object"""
+    from so_pip.api_clients.stackapi_facade import (
+        get_json_by_user_id,
+        get_json_comments_by_post_id,
+        get_json_revisions_by_post_id,
+    )
+
     if post["owner"]:
         owner = Author()
         if is_answer:

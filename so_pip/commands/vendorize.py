@@ -6,7 +6,7 @@ Vendorize because I'm not installing it to a venv.
 
 from typing import List, Optional
 
-from so_pip.api_clients import stackapi_facade as stackapi_client
+from so_pip import settings as settings
 from so_pip.parse_python.post_to_code import handle_post
 from so_pip.utils import guards as guards
 from so_pip.utils.user_trace import inform
@@ -27,6 +27,9 @@ def import_so_answer(
     if not package_prefix:
         package_prefix = ""
     packages_made: List[str] = []
+    settings.OUTPUT_FOLDER = output_folder
+    from so_pip.api_clients import stackapi_facade as stackapi_client
+
     answer_data = stackapi_client.get_json_by_answer_id(answer_id)
     if not answer_data["items"]:
         raise TypeError("Answer not found, maybe this is a question id?")
@@ -60,6 +63,9 @@ def import_so_question(
     """
     inform(f"Importing question #'{question_id}'...")
     packages_made: List[str] = []
+    settings.OUTPUT_FOLDER = output_folder
+    from so_pip.api_clients import stackapi_facade as stackapi_client
+
     question = stackapi_client.get_json_by_question_id(question_id)["items"][0]
 
     # if "answers" in question and question["answers"]:

@@ -29,6 +29,7 @@ tox = "*"
 setuptools-scm = "*"
 
 [packages]
+random_names= "*"
 pyrankvote = "*"
 black = "*"
 requests = "*"
@@ -55,6 +56,7 @@ vermin = "*"
 markdown = "*"
 toml = "*"
 whats-that-code = ">=0.1.10"
+diskcache = "*"
 
 [requires]
 python_version = "3.8"

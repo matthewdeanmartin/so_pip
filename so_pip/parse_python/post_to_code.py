@@ -8,7 +8,6 @@ import collections
 from typing import Any, Dict, List, Optional, Tuple
 
 from so_pip import settings as settings
-from so_pip.api_clients import stackapi_facade as stackapi_client
 from so_pip.cli_clients.external_commands import black, isort, pur, pylint, safety
 from so_pip.file_writing import write_as_html, write_as_md, write_as_text
 from so_pip.models.code_file_model import CodeFile
@@ -22,7 +21,7 @@ from so_pip.parse_python.module_maker import (
 )
 from so_pip.parse_python.python_validator import validate_with_vermin
 from so_pip.parse_python.upgrade_to_py3 import upgrade_file
-from so_pip.random_names.make_name import make_up_module_name
+from random_names.make_name import number_to_name
 from so_pip.settings import KEEP_ANSWERS_WITH_NO_CODE, KEEP_ANSWERS_WITH_NO_DEF_OR_CLASS
 from so_pip.support_files.authors import write_authors
 from so_pip.support_files.changelog import changelog_for_post
@@ -63,6 +62,8 @@ def handle_post(
             continue
 
         if post_type == "answer":
+            from so_pip.api_clients import stackapi_facade as stackapi_client
+
             post = stackapi_client.get_json_by_answer_id(shallow_post["answer_id"])[
                 "items"
             ][0]
@@ -82,9 +83,9 @@ def handle_post(
             continue
 
         if post_type == "answer":
-            module_name = make_up_module_name(post["answer_id"], package_prefix, "a")
+            module_name = number_to_name(post["answer_id"], package_prefix, "a")
         else:
-            module_name = make_up_module_name(post["question_id"], package_prefix, "q")
+            module_name = number_to_name(post["question_id"], package_prefix, "q")
         packages_made.append(module_name)
 
         package_info = map_post_to_code_package_model(

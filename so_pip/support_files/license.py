@@ -18,10 +18,6 @@ from typing import Any, Dict, List
 
 import html2text
 
-from so_pip.api_clients.stackapi_facade import (
-    get_json_comments_by_post_id,
-    get_json_revisions_by_post_id,
-)
 from so_pip.utils.files_utils import find_file
 
 
@@ -33,6 +29,11 @@ def write_license(post: Dict[str, Any], package_folder: str) -> None:
     post_license = post.get("content_license", "N/A")
     licenses.append(post_license)
     post_id = post["answer_id"] if "answer_id" in post else post["question_id"]
+    from so_pip.api_clients.stackapi_facade import (
+        get_json_comments_by_post_id,
+        get_json_revisions_by_post_id,
+    )
+
     revision_json = get_json_revisions_by_post_id(post_id)
 
     for revision in revision_json.get("items", []):
@@ -53,15 +54,6 @@ def write_license(post: Dict[str, Any], package_folder: str) -> None:
             # these really happen, not sure why.
             continue
         license_path = find_file(f"../licenses/{license_name}.txt", __file__)
-        if not os.path.exists(license_path) and (
-            "2.0" in license_name or "2.5" in license_name
-        ):
-            # Can't find text versions of 2.5 or 2.0
-            # ref https://wiki.creativecommons.org/wiki/License%20Versions
-            license_path_txt = find_file(f"../licenses/{license_name}.txt", __file__)
-            convert_html_to_text(
-                license_path.replace(".txt", ".html"), license_path_txt
-            )
 
         destination_path = f"{package_folder}/LICENSE/{license_name}.txt"
 

@@ -7,7 +7,6 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any, Dict, List, Set, Union
 
-from so_pip.api_clients.stackapi_facade import get_json_revisions_by_post_id
 from so_pip.models.code_block_model import CodeBlock
 from so_pip.models.code_file_model import CodeFile
 
@@ -64,6 +63,8 @@ class CodePackage:
         )
 
         if not self.answer_revisions:
+            from so_pip.api_clients.stackapi_facade import get_json_revisions_by_post_id
+
             self.answer_revisions = get_json_revisions_by_post_id(
                 post.get("answer_id", post["question_id"])
             )

@@ -100,3 +100,5 @@ section = config["SHELL_CONFIG"]
 RUNNING_IN_VENV = "VIRTUAL_ENV" in os.environ
 SHELL = section.get("SHELL", "") if not RUNNING_IN_VENV else ""
 QUIET = False
+
+OUTPUT_FOLDER = ""

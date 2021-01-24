@@ -50,6 +50,7 @@ def main() -> int:
     # print(arguments)
     # LOGGER.debug(arguments)
     output_folder = arguments["--output"]
+    settings.OUTPUT_FOLDER = output_folder
     if arguments["--quiet"]:
         settings.QUIET = True
 

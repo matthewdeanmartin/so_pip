@@ -3,38 +3,53 @@ TODO
 
 RELEASE 1.0 Goals
 -----------------
-- Code Debt: extract_metadata should be jinja
-- Code Debt: PackageObject should be more like a post object with optional language specific things
-- Feature: Add shebang if no reusable code (assume script)
-- BUG: shebang gets stuck in middle
-    - import_so_answer("unzip", 1855118, OUTPUT_FOLDER, revision_id=-1)
+*Workflow*
+- FEATURE: Question as "all-in-one", put all code files into one python package
+    - why? because some questions are like a library of all the ways to do a thing, e.g. zip a folder
+- FEATURE: update_any module
+    - no code for handling overwriting previously generated code (clean, ask, merge)
+    - counter point- maybe 1% of answers are in a fully re-usable form
+- Test needed: exercise workflow, check in example with bash script for each command, 1/2 done
+- Run tool as Dockerfile, 1/2 done
+    - mount volume
+
+*Supporting Files*
 - BUG: not all licenses found?
+- BUG: README talks about pypi for non-python code.
+- TODO: support a few other languages
+    - js/npm
+    - lua/luarocks
+    - cs/
+
+*Python version*
 - Feature: Infer minimum python version & fill in pyproject.toml & Readme.md.
     - 1/2 done
 - BUG: Pyproject.toml
     - classifiers don't take into account min/max python version
+
+*Post packaging*
+- Test needed: `pip install so_pip` works for each example, but only for sdist
+    - integration test & run sdist package for each.
+
+*Code debt, Reorg, Refactoring, Build Scripts*
+- Carve out "subprojects"
+    - guess_language - DONE
+    - bad_words - Done but bundled with random names.
+    - random_names - DONE
+    - pypi_query - maybe revive pypi_librarian?
+- Code Debt: PackageObject should be more like a post object with optional language specific things
+- TODO: Build with Makefile (in addition to regular build script)
+- Performance: Switch(es) to turn off black/pylint/safety/etc
+
+RELEASE 2.1
+------------
 - UX:
     - just 1 question
     - pinned question
     - version pinning, 1/2 done, answers-only by revision
-- Test needed: code files other than python poorly tested.
-- Test needed: check in example with bash script for each command, 1/2 done
-- Test needed: `pip install so_pip` works for each example, but only for sdist
-    - integration test & run sdist package for each.
-- Dockerfile, 1/2 done
-    - mount volume
-- Performance: Caching API calls between invocations for X minutes
-    - Investigating disk caching. @lru caching already in place, but limited value.
-- FEATURE: update_any module
-    - no code for handling overwriting previously generated code (clean, ask, merge)
-- Carve out "subprojects"
-    - guess_language - DONE
-    - bad_words
-    - random_names
-    - pypi_query
-- BUG: python comments at top of code file for .cs and .js
-- BUG: README talks about pypi for non-python code.
-- TODO: Build with Makefile (in addition to regular build script)
+- Feature: Add shebang if no reusable code (assume script)
+- BUG: shebang gets stuck in middle
+    - import_so_answer("unzip", 1855118, OUTPUT_FOLDER, revision_id=-1)
 
 RELEASE 2.0 Goals
 -----------------

@@ -10,7 +10,6 @@ from typing import Any, Dict, List
 
 import markdown
 
-from so_pip.api_clients.stackapi_facade import get_json_revisions_by_post_id
 from so_pip.make_from_template import load_template
 from so_pip.models.authors_model import normalize_user_link
 
@@ -19,6 +18,8 @@ def changelog_for_post(post: Dict[str, Any], package_folder: str) -> None:
     """Requirements for running `safety`"""
     versions = []
     post_id = post["answer_id"] if "answer_id" in post else post["question_id"]
+    from so_pip.api_clients.stackapi_facade import get_json_revisions_by_post_id
+
     revision_json = get_json_revisions_by_post_id(post_id)
     # if len(revision_json.get("items", [])) == 0:
     #     return

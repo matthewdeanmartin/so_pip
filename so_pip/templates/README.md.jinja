@@ -6,14 +6,23 @@ This project is code extracted from the question ["{{ item["title"] }}"]({{ item
 ## Setup
 To build and install this package:
 
-```
-# Read code to see if it all looks legit
-$ python setup.py build sdist
-# copy vendor_packages folder to your code base
-# Add vendor folder to PYTHONPATH
-$ pip install vendor_packages/*.* -t vendor
-```
-Don't push to pypi unless you put substantial effort into it, pypi is already full of junk.
+{% if item["language"] == "python" %}
+    ```
+    # Read code to see if it all looks legit
+    $ python setup.py build sdist
+    # copy vendor_packages folder to your code base
+    # Add vendor folder to PYTHONPATH
+    $ pip install vendor_packages/*.* -t vendor
+    ```
+    Don't push to pypi unless you put substantial effort into it, pypi is already full of junk.
+{% elif item["language"] == "python" %}
+    <td id="good"> {{ RepoOutput[RepoName.index(repo)] }} </td>
+{% elif item["language"] == "python" %}
+    <td id="good"> {{ RepoOutput[RepoName.index(repo)] }} </td>
+{% else %}
+    consult your
+{% endif %}
+
 
 ## Supporting Documents
 - [Contributing](CONTRIBUTING.md)

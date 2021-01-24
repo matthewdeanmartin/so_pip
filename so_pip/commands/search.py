@@ -3,7 +3,6 @@ Do a search, generate modules for the questions & answers returned.
 """
 from typing import List
 
-from so_pip.api_clients.stackapi_facade import get_json_by_search
 from so_pip.commands.vendorize import import_so_question
 from so_pip.utils import guards as guards
 from so_pip.utils.user_trace import inform
@@ -23,6 +22,10 @@ def import_so_search(
     if not package_prefix:
         package_prefix = ""
     tags.sort()
+
+    # import late
+    from so_pip.api_clients.stackapi_facade import get_json_by_search
+
     possibles = get_json_by_search(query, tuple(tags))
     all_results = []
     found = 0

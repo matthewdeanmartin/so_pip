@@ -1,5 +1,10 @@
 import tempfile
 
+import so_pip.settings as settings
+from so_pip.utils.files_utils import find_file
+
+settings.OUTPUT_FOLDER = find_file("../../output/unittest/", __file__)
+
 import so_pip.api_clients.stackapi_facade as stackapi_client
 
 # from so_pip.support_files.authors import (
