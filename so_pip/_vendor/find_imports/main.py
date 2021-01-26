@@ -2,7 +2,7 @@
 CC BY-SA 2.5 Daniel G
 https://stackoverflow.com/questions/2572582/return-a-list-of-imported-python-modules-used-in-a-script/2572654#2572654
 """
-import imp
+import importlib
 from typing import List
 
 # Well, you could always write a simple script that searches the file for
@@ -39,18 +39,24 @@ def process_line(
         # remove commas (this doesn't check for commas if
         # they're supposed to be there!
         imported = imported.strip(", ")
+        if not importable_only:
+            # MDM: if we don't care if importable, then just add it
+            # we're just doing some light parsing of import lines.
+            imported_items.append(imported)
+            continue
         try:
             # check to see if the module can be imported
             # (doesn't actually import - just finds it if it exists)
 
-            imp.find_module(imported)
+            # MDM: I think this replaces the deprecated on
+            print(importlib.util.find_spec(imported))
+            # imp.find_module(imported)
             # add to the list of items we imported
             imported_items.append(imported)
         except ImportError:
             # ignore items that can't be imported
             # (unless that isn't what you want?)
-            if not importable_only:
-                imported_items.append(imported)
+            pass
 
 
 if __name__ == "__main__":
