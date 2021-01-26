@@ -20,6 +20,7 @@ Options:
   -q --question=<question_id>  Stackoverflow question id
   -a --answer=<answer_id>      Stackoverflow answer id
   -r --revision=<revision>     Revision id for answer.
+  --all-in-one                 Combine all code into one module
   --verbose                    Show logging
   --quiet                      No informational logging
 
@@ -71,6 +72,7 @@ def main() -> int:
         question = arguments["--question"]
         answer = arguments["--answer"]
         revision = arguments["<revision>"]
+        all_in_one = arguments["--all-in-one"]
         if not question and not answer:
             print("Must specify --question or --answer identifier")
             return -1
@@ -79,7 +81,7 @@ def main() -> int:
             return -1
         if question:
             packages_made = vendorize.import_so_question(
-                prefix, question, output_folder
+                prefix, question, output_folder, all_in_one
             )
         elif answer:
             packages_made = vendorize.import_so_answer(
