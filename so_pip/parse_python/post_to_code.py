@@ -39,6 +39,7 @@ def handle_post(
     package_prefix: str,
     question: Dict[str, Any],
     answers: List[Dict[str, Any]],
+    all_in_one:str,
     answer_revision: Optional[Dict[str, Any]] = None,
 ) -> List[str]:
     """Loop through answers"""

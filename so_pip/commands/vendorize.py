@@ -53,7 +53,7 @@ def import_so_answer(
 
 
 def import_so_question(
-    package_prefix: str, question_id: int, output_folder: str
+    package_prefix: str, question_id: int, output_folder: str, all_in_one:str
 ) -> List[str]:
     """main entry point
 
@@ -71,7 +71,8 @@ def import_so_question(
     # if "answers" in question and question["answers"]:
     packages_made.extend(
         handle_post(
-            output_folder, package_prefix, question, question.get("answers", [])
+            output_folder, package_prefix, question, question.get("answers", []),
+            all_in_one
         )
     )
     return packages_made
