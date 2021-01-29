@@ -8,6 +8,8 @@ generate the accessory files to make it look like a python package.
 The feature-set overlaps a bit with [cookie cutter, vendorizing libraries and
 stackoverflow search cli's](https://github.com/matthewdeanmartin/so_pip/blob/main/docs/prior_art.md).
 
+[![DepShield Badge](https://depshield.sonatype.org/badges/owner/repository/depshield.svg)](https://depshield.github.io)
+
 Installation
 ------------
 Requires Python 3.7+, tested with 3.7, 3.8, 3.9

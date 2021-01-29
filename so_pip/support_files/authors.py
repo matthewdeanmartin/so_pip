@@ -31,6 +31,7 @@ def write_authors(
     package_name: str,
     question: Dict[str, Any],
     answer: Optional[Dict[str, Any]] = None,
+    uniqifier="",
 ) -> None:
     """write file"""
     if answer:
@@ -49,7 +50,10 @@ def write_authors(
         author.urls.sort(key=lambda _: "" if "stackoverflow.com" in _ else _.lower())
 
     with open(
-        package_folder + "/AUTHORS.md", "w", encoding="utf-8", errors="replace"
+        package_folder + f"/AUTHORS{uniqifier}.md",
+        "w",
+        encoding="utf-8",
+        errors="replace",
     ) as author_file:
         item = {"name": package_name, "authors": sections}
         text = render_authors(data=item)

@@ -27,6 +27,7 @@ ifaddr = "*"
 vendorize = "*"
 tox = "*"
 setuptools-scm = "*"
+jake = "*"
 
 [packages]
 random_names= "*"

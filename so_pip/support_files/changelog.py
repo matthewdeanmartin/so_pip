@@ -14,7 +14,9 @@ from so_pip.make_from_template import load_template
 from so_pip.models.authors_model import normalize_user_link
 
 
-def changelog_for_post(post: Dict[str, Any], package_folder: str) -> None:
+def changelog_for_post(
+    post: Dict[str, Any], package_folder: str, uniqifier: str = ""
+) -> None:
     """Requirements for running `safety`"""
     versions = []
     post_id = post["answer_id"] if "answer_id" in post else post["question_id"]
@@ -62,7 +64,10 @@ def changelog_for_post(post: Dict[str, Any], package_folder: str) -> None:
         versions.append(version)
 
     with open(
-        package_folder + "/CHANGELOG.md", "w", encoding="utf-8", errors="replace"
+        package_folder + f"/CHANGELOG{uniqifier}.md",
+        "w",
+        encoding="utf-8",
+        errors="replace",
     ) as log:
         text = render_change_log(data=versions)
 

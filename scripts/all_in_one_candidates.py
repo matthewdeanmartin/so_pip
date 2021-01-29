@@ -9,4 +9,4 @@ if __name__ == "__main__":
     # https://stackoverflow.com/questions/32833797/
 
     # https://stackoverflow.com/questions/12524994/encrypt-decrypt-using-pycrypto-aes-256
-    import_so_question("encrypt", 12524994, OUTPUT_FOLDER)
+    import_so_question("encrypt", 12524994, OUTPUT_FOLDER, all_in_one="True")
