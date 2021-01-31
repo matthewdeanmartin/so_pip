@@ -41,7 +41,7 @@ def create_setup_cfg(package_folder: str, python_submodule: CodePackage) -> None
         package_folder + "/setup.py", "w", encoding="utf-8", errors="replace"
     ) as setup_py:
         template = load_template(
-            template_filename="setup_bare.py.jinja", autoescape=False
+            template_filename="python/setup_bare.py.jinja", autoescape=False
         )
         # Turn off autoescape because this is python not html.
         output_text = template.render(item=data, autoescape=False)  # nosec
@@ -54,7 +54,9 @@ def render_setup_cfg(
     """
     Render minimal setup.py suitable for `pip install -e .`
     """
-    template = load_template(template_filename="setup.cfg.jinja", autoescape=False)
+    template = load_template(
+        template_filename="python/setup.cfg.jinja", autoescape=False
+    )
     # Turn off autoescape because this is python not html.
     output_text = template.render(item=data, autoescape=False)  # nosec
     return output_text

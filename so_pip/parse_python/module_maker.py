@@ -27,8 +27,9 @@ def create_package_folder(
     python_source_folder = f"{target_folder}/{package_name}/{module_name}"
     os.makedirs(python_source_folder, exist_ok=True)
 
+    # this will skip if there are no python files
     make_python_init_file(
-        file_name=f"{python_source_folder}/__init__.py", python_submodule=package_info
+        file_name=f"{python_source_folder}/__init__.py", code_info=package_info
     )
 
     return supporting_files_folder, python_source_folder

@@ -39,9 +39,6 @@ KEEP_ANSWERS_WITH_NO_CODE = ast.literal_eval(
 KEEP_ANSWERS_WITH_NO_DEF_OR_CLASS = ast.literal_eval(
     section.get("KEEP_ANSWERS_WITH_NO_CODE", "False")
 )
-KEEP_ANSWERS_WITH_THESE_LANGUAGES = ast.literal_eval(
-    section.get("KEEP_ANSWERS_WITH_THESE_LANGUAGES", '["*"]')
-)
 
 # this pattern won't work once so_pip is pip installed.
 section = config["VENDORIZING"]
@@ -60,7 +57,7 @@ ASSUME_ONE_LINER_IS_NOT_CODE = ast.literal_eval(
     section.get("ASSUME_ONE_LINER_IS_NOT_CODE", "True")
 )
 WRAP_IN_RUN = ast.literal_eval(section.get("WRAP_IN_RUN", "False"))
-TEXT_AS_COMMENTS = ast.literal_eval(section.get("TEXT_AS_COMMENTS", "True"))
+
 # Slow but necessary because so many answers are old.
 BUMP_TO_PY3 = ast.literal_eval(section.get("BUMP_TO_PY3", "True"))
 IMPORT_STARTS_NEW_FILE = ast.literal_eval(section.get("IMPORT_STARTS_NEW_FILE", "True"))

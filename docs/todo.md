@@ -4,8 +4,20 @@ TODO
 RELEASE 1.0 Goals
 -----------------
 *Workflow*
+- FEATURE: Better "re-usable code" detections
+    - High lines of code
+    - def/class syntax
+    - has `__name__ == '__main__'` or assert or unittest
+- FEATURE: SUPER MEGA SEARCH
+    - multiquestion, multianswer search that
+    - searches e.g. `[python] (def or class) is:answer email`
+    - stricter defaults (skip content with no def/class, too little code)
+    - questions as all-in-one
+    - (general idea to avoid an explosion of folders & files)
+    - turn off all slow bits (upgrading to py3, etc)
 - FEATURE: Question as "all-in-one", put all code files into one python package
     - why? because some questions are like a library of all the ways to do a thing, e.g. zip a folder
+    - now 1/2 done, needs better naming other than main1.py, etc.
 - Merged Question+One Answer Pattern
     - Basically, install question.py and answer.py instead of main.py
 - FEATURE: update_any module

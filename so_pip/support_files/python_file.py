@@ -42,9 +42,9 @@ def render_code_file_py(
     Rehash other stuff and act as table of contents
     """
     if long_header:
-        template_filename = "python_long_header.py.jinja"
+        template_filename = "python/python_long_header.py.jinja"
     else:
-        template_filename = "python_brief_header.py.jinja"
+        template_filename = "python/python_brief_header.py.jinja"
     template = load_template(template_filename=template_filename, autoescape=False)
     # Turn off autoescape because this is python not html.
     output_text = template.render(data=data, autoescape=False)  # nosec

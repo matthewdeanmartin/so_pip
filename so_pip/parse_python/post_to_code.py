@@ -39,7 +39,7 @@ def handle_post(
     package_prefix: str,
     question: Dict[str, Any],
     answers: List[Dict[str, Any]],
-    all_in_one: str,
+    all_in_one: bool,
     answer_revision: Optional[Dict[str, Any]] = None,
 ) -> List[str]:
     """Loop through answers"""
@@ -57,14 +57,21 @@ def handle_post(
     for data in answers:
         posts.append(("answer", data))
 
-    # this will never be used
-    # but if I don't set it, the code analysis thinks
-    # that it might never be set.
-    package_info = CodePackage("dummy", "dummy")
+    # Always fetch the question
+    # if doing all in one, we
+    question_package_name = number_to_name(question["question_id"], package_prefix, "q")
+    question_info = map_post_to_code_package_model(
+        question,
+        question["body"],
+        question_package_name,
+        f"StackOverflow post #{question['title']}",
+        tags=question["tags"],
+    )
     python_source_folder = ""
     supporting_files_folder = ""
     i = 0
-    answer_info = None
+    name_uniqifier = ""
+    all_in_one_folder_created = False
     for post_type, shallow_post in posts:
         if post_type == "answer" and shallow_post["score"] < settings.MINIMUM_SCORE:
             inform(f"Answer lacks minimum score of {settings.MINIMUM_SCORE}...skipping")
@@ -98,55 +105,50 @@ def handle_post(
 
         packages_made.append(module_name)
 
-        if post_type == "answer" and all_in_one:
-            answer_info = map_post_to_code_package_model(
-                post,
-                post["body"],
-                module_name,
-                f"StackOverflow post #{question['title']}",
-                tags=question["tags"],
-            )
-        elif (post_type == "answer" and all_in_one) or post_type == "question":
-            package_info = map_post_to_code_package_model(
-                post,
-                post["body"],
-                module_name,
-                f"StackOverflow post #{question['title']}",
-                tags=question["tags"],
-            )
-
-        if package_info.package_name == "dummy":
-            raise TypeError("Need package by this point")
+        # if doing all in one, we need the code info, with new code each iteration
+        code_info = map_post_to_code_package_model(
+            post,
+            post["body"],
+            module_name,
+            f"StackOverflow post #{question['title']}",
+            tags=question["tags"],
+        )
 
         if (
             post_type == "answer"
             and not KEEP_ANSWERS_WITH_NO_DEF_OR_CLASS
             and not is_reusable(post["body"])
-            and any(_.language == "python" for _ in package_info.code_blocks)
+            and any(_.language == "python" for _ in code_info.code_blocks)
         ):
             # TODO: make this more strict
             inform("Answer lacks def/class, not re-usable...skipping")
             continue
 
+        # Number files so they can be dumped in the same folder for all_in_one
         if not all_in_one:
             i = 0
 
-        package_info.extract_metadata(post)
+        # HACK: should initialize in constructor, not here
+        code_info.extract_metadata(post)
 
-        if (post_type == "answer" and not all_in_one) or post_type == "question":
+        if all_in_one and not all_in_one_folder_created:
+            # we do this 1x
             supporting_files_folder, python_source_folder = create_package_folder(
-                output_folder, module_name, module_name, package_info
+                output_folder, module_name, module_name, question_info
             )
-        wrote_py_file = False
+            all_in_one_folder_created = True
+        else:
+            # 1x per post, both q & a
+            supporting_files_folder, python_source_folder = create_package_folder(
+                output_folder, module_name, module_name, code_info
+            )
 
-        if all_in_one and answer_info:
-            package_info = answer_info
         if not python_source_folder:
             raise TypeError("Need python_source_folder by here.")
 
-        frequencies = package_info.file_frequencies()
+        frequencies = code_info.file_frequencies()
         wrote_py_file = False
-        for code_file in package_info.code_files:
+        for code_file in code_info.code_files:
             i += 1
             if all_in_one:
                 name_uniqifier = str(i)
@@ -154,13 +156,13 @@ def handle_post(
                 name_uniqifier = ""
             submodule_path = f"{python_source_folder}/main{name_uniqifier}"
             success = write_one_code_file(
-                code_file, frequencies, i, package_info, submodule_path, joiner=""
+                code_file, frequencies, i, code_info, submodule_path, joiner=""
             )
             if success:
                 wrote_py_file = True
 
         if settings.GENERATE_JUPYTER:
-            write_jupyter_notebook(post, package_info, submodule_path)
+            write_jupyter_notebook(post, code_info, submodule_path)
 
         if post_type == "answer" and all_in_one:
             # TODO: should be like "joes_post"
@@ -190,7 +192,7 @@ def handle_post(
         if settings.GENERATE_README:
             create_readme_md(
                 supporting_files_folder,
-                package_info,
+                code_info,
                 question,
                 post if post_type == "answer" else None,
             )
@@ -200,14 +202,14 @@ def handle_post(
 
         if wrote_py_file:
             python_versions = validate_with_vermin(python_source_folder)
-            package_info.minimum_python = python_versions
-            print(package_info.minimum_python)
+            code_info.minimum_python = python_versions
+            print(code_info.minimum_python)
 
             # extract requirements, pin, check for security issues
             requirements_txt, count = requirements_for_file(
-                supporting_files_folder, package_info
+                supporting_files_folder, code_info
             )
-            create_pytroject_toml(supporting_files_folder, package_info, question, post)
+            create_pytroject_toml(supporting_files_folder, code_info, question, post)
             if requirements_txt and count > 0:
                 pur(requirements_txt)
                 result = safety(requirements_txt)
@@ -258,7 +260,7 @@ def write_one_code_file(
         code_to_write_joined = "\n".join(code_to_write)
         wrote_py_file = make_python_file(
             code_file_name,
-            long_header=settings.METADATA_IN_INIT,
+            long_header=not settings.METADATA_IN_INIT,
             code=code_to_write_joined,
             python_submodule=package_info,
         )
@@ -266,6 +268,8 @@ def write_one_code_file(
     else:
         # Write a different file.
         # Same thing, but different comment symbols and no python improvements
+        # Other than AssemblyInfo.cs, I don't know of any ecosystems
+        # that have metadata-in-source code pattern.
         headers = (
             package_info.brief_header
             if settings.METADATA_IN_INIT

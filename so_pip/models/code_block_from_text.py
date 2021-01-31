@@ -12,6 +12,7 @@ from bs4 import BeautifulSoup
 from so_pip.models.code_block_model import CodeBlock
 from so_pip.parse_python.code_transformations import fix_interactive, fix_shell
 from so_pip.parse_python.format_code import deindent
+from so_pip.settings import IMPORT_STARTS_NEW_FILE
 
 
 def find_code_blocks(html: str, tags: List[str]) -> List[CodeBlock]:
@@ -80,8 +81,12 @@ def find_code_blocks(html: str, tags: List[str]) -> List[CodeBlock]:
         block.code_text = code
 
         block.analyze(tags)
-        if block.extension == ".py" and (
-            code.startswith("import ") or code.startswith("from ")
+
+        # BUG: This is a bug feature.
+        if (
+            block.extension == ".py"
+            and (code.startswith("import ") or code.startswith("from "))
+            and IMPORT_STARTS_NEW_FILE
         ):
             block.starts_new_file = True
         # blocks.append(block)

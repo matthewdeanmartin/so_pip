@@ -27,6 +27,7 @@ def test_process_docopts():
         "--quiet": False,
         "--verbose": False,
         "<revision>": None,
+        "--all-in-one": None,
     }
     with patch("docopt.docopt", return_value=anything) as mock:
         main()
@@ -55,6 +56,7 @@ def test_process_docopts_other():
         "--quiet": False,
         "--verbose": False,
         "<revision>": None,
+        "--all-in-one": None,
     }
     with patch("docopt.docopt", return_value=anything) as mock:
         assert main() == 0

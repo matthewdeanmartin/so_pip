@@ -15,12 +15,12 @@ To build and install this package:
     $ pip install vendor_packages/*.* -t vendor
     ```
     Don't push to pypi unless you put substantial effort into it, pypi is already full of junk.
-{% elif item["language"] == "python" %}
-    <td id="good"> {{ RepoOutput[RepoName.index(repo)] }} </td>
-{% elif item["language"] == "python" %}
-    <td id="good"> {{ RepoOutput[RepoName.index(repo)] }} </td>
+{% elif item["language"] == "lua" %}
+    TODO: lua rocks usage example
+{% elif item["language"] == "go" %}
+    TODO: go module usage example
 {% else %}
-    consult your
+    consult documentation for the {{ item["language"] }} language as to how to use or package it.
 {% endif %}
 
 

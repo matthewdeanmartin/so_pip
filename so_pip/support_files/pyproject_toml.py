@@ -66,7 +66,9 @@ def render_pyproject_toml(
     """
     Help the world get away from setup.py
     """
-    template = load_template(template_filename="pyproject.toml.jinja", autoescape=False)
+    template = load_template(
+        template_filename="python/pyproject.toml.jinja", autoescape=False
+    )
     # Turn off autoescape because this is python not html.
     output_text = template.render(data=data, autoescape=False)  # nosec
     # validate toml

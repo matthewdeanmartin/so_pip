@@ -1,23 +1,41 @@
 """
 SO questions and answers look a lot alike jupyter notebooks.
 """
+import html
+
 import json
+from nbformat import NotebookNode
 from typing import Any, Dict
 
 import nbformat
 
 from so_pip.models.python_package_model import CodePackage
+from so_pip.parse_python.code_transformations import fix_interactive
 from so_pip.parse_python.format_code import deindent
 
 
 def write_jupyter_notebook(
-    post: Dict[str, Any], package_info: CodePackage, submodule_path: str
-) -> None:
+    post: Dict[str, Any], code_info: CodePackage, submodule_path: str
+) -> bool:
     """75% of SO answers are written in the form of a notebook."""
 
     # TODO: jupyter supports 100+ kernels
     #  https://github.com/jupyter/jupyter/wiki/Jupyter-kernels
+    has_python = any(_.language == "python" for _ in code_info.code_blocks)
+    if not has_python:
+        return False
+    notebook = parse_to_jupyter_notebook(post["body_markdown"])
+    with open(f"{submodule_path}.ipynb", "w", encoding="utf-8") as file:
+        string = json.dumps(notebook)
+        file.write(string)
+    return True
 
+
+def parse_to_jupyter_notebook(body_markdown: str) -> NotebookNode:
+    """
+    Just turn markdown into a notebook
+    """
+    # TODO: check python version and set python 2/3 correctly
     notebook = nbformat.v4.new_notebook()
     notebook.metadata = {
         "kernelspec": {
@@ -39,21 +57,25 @@ def write_jupyter_notebook(
     markdown_lines = []
     code = []
     state = "md"
-    normal_markdown = post["body_markdown"].replace("\r\n", "\n").replace("\r", "\n")
+    normal_markdown = body_markdown.replace("\r\n", "\n").replace("\r", "\n")
     for line in normal_markdown.split("\n"):
         # could be either.
-        if not line.strip():
+        if not line.strip() and state != "code":
             if markdown_lines or state == "md":
-                markdown_lines.append(line)
+                if not line:
+                    print("blank!")
+                # BUG: lines in code don't start with four spaces.
+                if line:
+                    markdown_lines.append(line)
                 continue
             if code or state == "code":
                 code.append(line)
                 continue
 
         # now in code.
-        if line.startswith("    "):
+        if line.startswith("    ") or line == "":
             # change over
-            if markdown_lines:
+            if markdown_lines and not all(_ == "" for _ in markdown_lines):
                 cell = nbformat.v4.new_markdown_cell(source="\n".join(markdown_lines))
                 notebook.cells.append(cell)
                 markdown_lines = []
@@ -63,7 +85,11 @@ def write_jupyter_notebook(
 
         # now in markdown
         if code:
-            cell = nbformat.v4.new_code_cell(source=deindent("\n".join(code)))
+            source = deindent(html.unescape("\n".join(code)))
+            source = fix_interactive(source)
+            if "&gt;" in source:
+                raise TypeError("unescape failed")
+            cell = nbformat.v4.new_code_cell(source=source)
             notebook.cells.append(cell)
             code = []
         markdown_lines.append(line)
@@ -75,7 +101,4 @@ def write_jupyter_notebook(
     if code:
         cell = nbformat.v4.new_code_cell(source=deindent("\n".join(code)))
         notebook.cells.append(cell)
-
-    with open(f"{submodule_path}.ipynb", "w", encoding="utf-8") as file:
-        string = json.dumps(notebook)
-        file.write(string)
+    return notebook

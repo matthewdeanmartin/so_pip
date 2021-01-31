@@ -9,7 +9,7 @@ def is_reusable(code: str) -> bool:
     # tokenizer splits only on space, not punct
     #
     # tokens = code.split()
-    # TODO: when possible, actually parse the AST.
+    # TODO: when possible, actually parse the AST, with astroid
     # In the meanwhile, be very loosy goosy
     if "def" in code:
         return True

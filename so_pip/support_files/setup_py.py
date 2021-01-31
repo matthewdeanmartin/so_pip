@@ -33,7 +33,9 @@ def render_setup_py(
     """
     Render minimal setup.py suitable for `pip install -e .`
     """
-    template = load_template(template_filename="setup.py.jinja", autoescape=False)
+    template = load_template(
+        template_filename="python/setup.py.jinja", autoescape=False
+    )
     # Turn off autoescape because this is python not html.
     output_text = template.render(item=data, autoescape=False)  # nosec
     return output_text
