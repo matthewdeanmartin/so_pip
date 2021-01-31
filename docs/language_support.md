@@ -8,11 +8,14 @@ Default
 If I don't know much about the programming language you get gnits style project documentation files
 and a coding file with hopefully the correct extension.
 
+Generically, you can opt to put the code files into an SRC file or leave them in the package root.
+
 Python
 ------
 `so_pip` is implemented in python so it has the most python specific features.
 
 Language specific features
+- Supports extra folder for the module to hold the init file.
 - formatting- calls out to `black`
 - upgrading- calls out to `pyupgrade`
 - generating dependency file by string parsing of source
@@ -30,7 +33,8 @@ that I have valid "code".
 
 JavaScript
 -------
-npm package support is on the roadmap.
+- Generates basic package.json file
+- TODO: usage instructions for use as local, non-npm package
 
 Lua
 -------

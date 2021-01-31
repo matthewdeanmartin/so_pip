@@ -1,19 +1,12 @@
 {
-  "name": "my_package",
-  "description": "",
-  "version": "1.0.0",
+  "name": "{{ data["name"] }}",
+  "description": "{{ data["question_title"] }}",
+  "version": "{{ data["revision_number"] }}",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/monatheoctocat/my_package.git"
-  },
-  "keywords": [],
-  "author": "Your Name <email@example.com> (http://example.com)",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/monatheoctocat/my_package/issues"
-  },
-  "homepage": "https://github.com/monatheoctocat/my_package"
+  "keywords": [{% for tag in data["tags"] %}"{{ tag }}"{%- if not loop.last -%}, {% endif %}{% endfor %}],
+  "author": "See AUTHORS.md <email@example.com> (http://example.com)",
+  "license": "CC BY SA",
+  "homepage": "{{ data["url"] }}"
 }

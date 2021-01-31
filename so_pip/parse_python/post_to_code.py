@@ -27,6 +27,7 @@ from so_pip.support_files.authors import write_authors
 from so_pip.support_files.changelog import changelog_for_post
 from so_pip.support_files.code_of_conduct import render_code_of_conduct
 from so_pip.support_files.license import write_license
+from so_pip.support_files.package_json import create_package_json
 from so_pip.support_files.pyproject_toml import create_pytroject_toml
 from so_pip.support_files.python_file import make_python_file
 from so_pip.support_files.readme_md import create_readme_md
@@ -148,6 +149,8 @@ def handle_post(
 
         frequencies = code_info.file_frequencies()
         wrote_py_file = False
+
+        code_files_written = []
         for code_file in code_info.code_files:
             i += 1
             if all_in_one:
@@ -155,11 +158,9 @@ def handle_post(
             else:
                 name_uniqifier = ""
             submodule_path = f"{python_source_folder}/main{name_uniqifier}"
-            success = write_one_code_file(
+            code_files_written = write_one_code_file(
                 code_file, frequencies, i, code_info, submodule_path, joiner=""
             )
-            if success:
-                wrote_py_file = True
 
         if settings.GENERATE_JUPYTER:
             write_jupyter_notebook(post, code_info, submodule_path)
@@ -200,7 +201,7 @@ def handle_post(
         if settings.GENERATE_CODE_OF_CONDUCT:
             render_code_of_conduct(supporting_files_folder)
 
-        if wrote_py_file:
+        if "python" in code_files_written:
             python_versions = validate_with_vermin(python_source_folder)
             code_info.minimum_python = python_versions
             print(code_info.minimum_python)
@@ -227,6 +228,9 @@ def handle_post(
                 lint_file_name, "w", encoding="utf-8", errors="replace"
             ) as lint_writer:
                 lint_writer.write(pylint(python_source_folder))
+        # could many several languages per post
+        if "javascript" in code_files_written:
+            create_package_json(supporting_files_folder, code_info, question, post)
 
     return packages_made
 
@@ -238,12 +242,12 @@ def write_one_code_file(
     package_info: CodePackage,
     submodule_path: str,
     joiner: str,
-) -> bool:
+) -> List[str]:
     """Just code to write a python file"""
     if not submodule_path:
         raise TypeError("Need folder")
 
-    wrote_py_file = False
+    languages_written = set()
 
     if frequencies.get(code_file.extension, 0) > 1:
         code_file_name = f"{submodule_path}_{joiner}{i}{code_file.extension}"
@@ -258,12 +262,14 @@ def write_one_code_file(
             code_to_write.pop()
 
         code_to_write_joined = "\n".join(code_to_write)
-        wrote_py_file = make_python_file(
+        make_python_file(
             code_file_name,
             long_header=not settings.METADATA_IN_INIT,
             code=code_to_write_joined,
             python_submodule=package_info,
         )
+
+        languages_written.add("python")
 
     else:
         # Write a different file.
@@ -280,4 +286,6 @@ def write_one_code_file(
             code_file_name,
             code_to_write,
         )
-    return wrote_py_file
+        languages_written.add(code_file.language)
+
+    return list(languages_written)

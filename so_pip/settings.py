@@ -49,27 +49,39 @@ section = config["VENDORIZING"]
 # how to make the module look
 # ------------------------
 section = config["CODE_CLEANUP"]
-COMMENT_OUT_BAD_PYTHON = ast.literal_eval(
-    section.get("COMMENT_OUT_BAD_PYTHON", "False")
-)
 # one liners are often english with <code/> used for styling
 ASSUME_ONE_LINER_IS_NOT_CODE = ast.literal_eval(
     section.get("ASSUME_ONE_LINER_IS_NOT_CODE", "True")
 )
-WRAP_IN_RUN = ast.literal_eval(section.get("WRAP_IN_RUN", "False"))
+CODE_IN_SRC_FOLDER = ast.literal_eval(section.get("CODE_IN_SRC_FOLDER", "False"))
 
+# python stuff
+PYTHON_CODE_IN_MODULE_FOLDER = ast.literal_eval(
+    section.get("PYTHON_CODE_IN_MODULE_FOLDER", "False")
+)
+COMMENT_OUT_BAD_PYTHON = ast.literal_eval(
+    section.get("COMMENT_OUT_BAD_PYTHON", "False")
+)
+WRAP_IN_RUN = ast.literal_eval(section.get("WRAP_IN_RUN", "False"))
 # Slow but necessary because so many answers are old.
 BUMP_TO_PY3 = ast.literal_eval(section.get("BUMP_TO_PY3", "True"))
 IMPORT_STARTS_NEW_FILE = ast.literal_eval(section.get("IMPORT_STARTS_NEW_FILE", "True"))
 
 section = config["SUPPORTING_FILES"]
+# stackover flow stuff
 POSTS_AS_TXT = ast.literal_eval(section.get("POSTS_AS_TXT", "True"))
 POSTS_AS_HTML = ast.literal_eval(section.get("POSTS_AS_HTML", "True"))
 POSTS_AS_MD = ast.literal_eval(section.get("POSTS_AS_MD", "True"))
+
+# python stuff
+CODE_IN_SRC_FOLDER = ast.literal_eval(section.get("CODE_IN_SRC_FOLDER", "True"))
 METADATA_IN_INIT = ast.literal_eval(section.get("METADATA_IN_INIT", "True"))
 GENERATE_REQUIREMENTS_TXT = ast.literal_eval(
     section.get("GENERATE_REQUIREMENTS_TXT", "True")
 )
+GENERATE_JUPYTER = ast.literal_eval(section.get("GENERATE_JUPYTER", "True"))
+
+# gnits stuff
 GENERATE_AUTHORS = ast.literal_eval(section.get("GENERATE_AUTHORS", "True"))
 GENERATE_README = ast.literal_eval(section.get("GENERATE_README", "True"))
 GENERATE_CODE_OF_CONDUCT = ast.literal_eval(
@@ -77,7 +89,6 @@ GENERATE_CODE_OF_CONDUCT = ast.literal_eval(
 )
 GENERATE_CHANGE_LOG = ast.literal_eval(section.get("GENERATE_CHANGE_LOG", "True"))
 GENERATE_SETUP_CFG = ast.literal_eval(section.get("GENERATE_SETUP_CFG", "True"))
-GENERATE_JUPYTER = ast.literal_eval(section.get("GENERATE_JUPYTER", "True"))
 
 section = config["LANGUAGE_DETECTION"]
 DEFAULT_LANGUAGE = cast(

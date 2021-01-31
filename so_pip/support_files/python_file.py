@@ -20,7 +20,7 @@ def make_python_file(
         data = {
             "title": python_submodule.title,
             "version": python_submodule.version,
-            "url": python_submodule.url,
+            "post_url": python_submodule.url,
             "author": python_submodule.author,
             "author_link": python_submodule.author,
             "license": python_submodule.content_license,
