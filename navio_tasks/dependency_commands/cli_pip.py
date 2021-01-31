@@ -10,8 +10,14 @@ from navio_tasks.cli_commands import (
     config_pythonpath,
     execute,
     execute_with_environment,
+    execute_get_text,
 )
-from navio_tasks.settings import PIPENV_ACTIVE, PROJECT_NAME, VENV_SHELL
+from navio_tasks.settings import (
+    PIPENV_ACTIVE,
+    PROJECT_NAME,
+    VENV_SHELL,
+    PIP_CHECK_SKIPS,
+)
 from navio_tasks.utils import inform
 
 
@@ -48,7 +54,28 @@ def do_pip_check() -> str:
     """
     Call as normal function
     """
-    execute("pip", "check")
+
+    # TODO
+    result = execute_get_text(
+        command=["pip", "check"], ignore_error=True, env=config_pythonpath()
+    )
+    problems = []
+    if PIP_CHECK_SKIPS:
+        print(f"Ignoring pip incompat problems for : {PIP_CHECK_SKIPS}")
+    for line in result.split("\n"):
+        if not line.strip():
+            continue
+        for skip in PIP_CHECK_SKIPS:
+            if skip in line:
+                pass
+            else:
+                problems.append(line)
+    if problems:
+        for problem in problems:
+            print(problem)
+        print("pip check problems, even after skips")
+        sys.exit(-1)
+
     environment = config_pythonpath()
     environment["PIPENV_PYUP_API_KEY"] = ""
     if PIPENV_ACTIVE:

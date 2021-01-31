@@ -84,6 +84,7 @@ def bind_answer_to_authors(
 
 def add_authors_from_post(post: Dict[str, Any], authors: Authors, is_answer: bool):
     """Add authors from post to Object"""
+    # pylint: disable=import-outside-toplevel
     from so_pip.api_clients.stackapi_facade import (
         get_json_by_user_id,
         get_json_comments_by_post_id,

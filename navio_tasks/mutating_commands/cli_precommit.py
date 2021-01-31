@@ -13,6 +13,7 @@ from navio_tasks.cli_commands import (
 )
 from navio_tasks.output import say_and_exit
 from navio_tasks.settings import VENV_SHELL
+from navio_tasks.system_info import is_git_repo
 from navio_tasks.utils import inform
 
 
@@ -25,10 +26,12 @@ def do_precommit(is_interactive: bool) -> None:
         return
     check_command_exists("pre-commit")
 
-    command_text = f"{VENV_SHELL} pre-commit install".strip().replace("  ", " ")
-    inform(command_text)
-    command = shlex.split(command_text)
-    execute(*command)
+    if is_git_repo("."):
+        # don't try to install because it isn't a git repo
+        command_text = f"{VENV_SHELL} pre-commit install".strip().replace("  ", " ")
+        inform(command_text)
+        command = shlex.split(command_text)
+        execute(*command)
 
     command_text = f"{VENV_SHELL} pre-commit run --all-files".strip().replace("  ", " ")
     inform(command_text)
@@ -46,6 +49,9 @@ def do_precommit(is_interactive: bool) -> None:
         sys.exit(-1)
 
     if is_interactive:
+        if not is_git_repo("."):
+            # don't need to git add anything because this isn't a git repo
+            return
         for change in changed:
             command_text = f"git add {change}"
             inform(command_text)

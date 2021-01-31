@@ -63,6 +63,7 @@ class CodePackage:
         )
 
         if not self.answer_revisions:
+            # pylint: disable=import-outside-toplevel
             from so_pip.api_clients.stackapi_facade import get_json_revisions_by_post_id
 
             self.answer_revisions = get_json_revisions_by_post_id(

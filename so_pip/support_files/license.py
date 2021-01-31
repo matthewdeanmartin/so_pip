@@ -29,6 +29,7 @@ def write_license(post: Dict[str, Any], package_folder: str) -> None:
     post_license = post.get("content_license", "N/A")
     licenses.append(post_license)
     post_id = post["answer_id"] if "answer_id" in post else post["question_id"]
+    # pylint: disable=import-outside-toplevel
     from so_pip.api_clients.stackapi_facade import (
         get_json_comments_by_post_id,
         get_json_revisions_by_post_id,

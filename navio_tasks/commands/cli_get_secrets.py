@@ -11,7 +11,7 @@ import subprocess
 
 from navio_tasks.cli_commands import check_command_exists, execute, is_cmd_exe
 from navio_tasks.settings import IS_GITLAB
-from navio_tasks.system_info import check_is_aws
+from navio_tasks.system_info import check_is_aws, is_git_repo
 from navio_tasks.utils import inform
 
 
@@ -23,6 +23,9 @@ def do_git_secrets() -> str:
         inform("git secrets is a bash script, only works in bash (or maybe PS")
         return "skipped git secrets, this is cmd.exe shell"
     # not sure how to check for a git subcommand
+    if not is_git_repo("."):
+        inform("This is not a git repo, won't run git-secrets")
+        return "Not a git repo, skipped"
     check_command_exists("git")
 
     if check_is_aws():

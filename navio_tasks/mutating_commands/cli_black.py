@@ -16,7 +16,7 @@ from navio_tasks.cli_commands import (
     execute_get_text,
 )
 from navio_tasks.settings import IS_GITLAB, PROJECT_NAME, VENV_SHELL
-from navio_tasks.system_info import is_windows
+from navio_tasks.system_info import is_git_repo, is_windows
 from navio_tasks.utils import inform
 
 
@@ -52,6 +52,9 @@ def do_formatting(check: str, state: Dict[str, bool]) -> None:
             file = line[len("reformatted ") :].strip()
             changed.append(file)
     if not IS_GITLAB:
+        if not is_git_repo("."):
+            # don't need to git add anything because this isn't a git repo
+            return
         for change in changed:
             if is_windows():
                 change = change.replace("\\", "/")

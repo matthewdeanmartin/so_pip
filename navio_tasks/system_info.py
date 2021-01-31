@@ -6,9 +6,22 @@ import platform
 import re
 import socket
 
+import git
 import psutil
 
 from navio_tasks.utils import inform
+
+
+def is_git_repo(path: str) -> bool:
+    """
+    Are we in a git repo if not, several tools don't make sense to run
+    https://stackoverflow.com/a/39956572/33264
+    """
+    try:
+        _ = git.Repo(path).git_dir
+        return True
+    except git.exc.InvalidGitRepositoryError:
+        return False
 
 
 def is_windows() -> bool:
@@ -25,11 +38,8 @@ def is_powershell() -> bool:
     # Get the parent process name.
 
     try:
-        proc = psutil.Process(os.getppid())
         process_name = psutil.Process(os.getppid()).name()
-        exe_name = proc.exe()
         grand_process_name = psutil.Process(os.getppid()).parent().name()
-        gp_exe_name= psutil.Process(os.getppid()).parent().exe()
         # See if it is Windows PowerShell (powershell.exe) or PowerShell Core
         # (pwsh[.exe]):
         is_that_shell = bool(re.fullmatch("pwsh|pwsh.exe|powershell.exe", process_name))
@@ -42,7 +52,6 @@ def is_powershell() -> bool:
         is_that_shell = False
     return is_that_shell
 
-is_powershell()
 
 def check_is_aws() -> bool:
     """

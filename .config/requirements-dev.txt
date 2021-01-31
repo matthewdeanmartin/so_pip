@@ -15,6 +15,7 @@ dodgy==0.2.1
 gitchangelog==3.0.4
 gitpython
 ifaddr
+jake
 liccheck==0.4.3
 pebble==4.5.0
 pip-check==2.6

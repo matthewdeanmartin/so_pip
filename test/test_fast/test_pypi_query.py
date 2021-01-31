@@ -1,4 +1,4 @@
-from so_pip.pypi_query.main import PackageInfo
+from so_pip.infer_packages_needed.package_by_name import PackageInfo
 
 
 def test_do_they_exist():

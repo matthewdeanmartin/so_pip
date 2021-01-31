@@ -3,7 +3,7 @@ SO questions and answers look a lot alike jupyter notebooks.
 """
 import html
 import json
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 import nbformat
 from nbformat import NotebookNode
@@ -53,8 +53,8 @@ def parse_to_jupyter_notebook(body_markdown: str) -> NotebookNode:
         },
     }
 
-    markdown_lines = []
-    code = []
+    markdown_lines: List[str] = []
+    code: List[str] = []
     state = "md"
     normal_markdown = body_markdown.replace("\r\n", "\n").replace("\r", "\n")
     for line in normal_markdown.split("\n"):
@@ -79,7 +79,7 @@ def parse_to_jupyter_notebook(body_markdown: str) -> NotebookNode:
                 notebook.cells.append(cell)
                 markdown_lines = []
             code.append(line)
-            state == "code"
+            state = "code"
             continue
 
         # now in markdown

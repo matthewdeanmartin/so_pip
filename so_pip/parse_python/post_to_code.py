@@ -82,6 +82,8 @@ def handle_post(
             continue
 
         if post_type == "answer":
+            # cache must be imported late! import too early and cache writes to wrong folder
+            # pylint: disable=import-outside-toplevel
             from so_pip.api_clients import stackapi_facade as stackapi_client
 
             post = stackapi_client.get_json_by_answer_id(shallow_post["answer_id"])[
@@ -151,7 +153,6 @@ def handle_post(
             raise TypeError("Need python_source_folder by here.")
 
         frequencies = code_info.file_frequencies()
-        wrote_py_file = False
 
         code_files_written = []
         for code_file in code_info.code_files:
