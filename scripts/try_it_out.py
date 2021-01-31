@@ -3,9 +3,7 @@ from so_pip.utils.files_utils import find_file
 
 OUTPUT_FOLDER = find_file("../output", __file__)
 if __name__ == "__main__":
-    # https://stackoverflow.com/questions/29312494/
 
-    # import_so_question("lua", 29312494, OUTPUT_FOLDER)
     # https://stackoverflow.com/questions/32833797/
 
     import_so_question(

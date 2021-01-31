@@ -14,7 +14,7 @@ from so_pip.models.code_block_from_text import find_code_blocks
 from so_pip.models.code_file_model import CodeFile
 from so_pip.models.python_package_model import CodePackage
 from so_pip.parse_python.upgrade_to_py3 import upgrade_string
-from so_pip.settings import PYTHON_CODE_IN_MODULE_FOLDER, CODE_IN_SRC_FOLDER
+from so_pip.settings import CODE_IN_SRC_FOLDER, PYTHON_CODE_IN_MODULE_FOLDER
 from so_pip.support_files.python_init import make_python_init_file
 
 LOGGER = logging.getLogger(__name__)

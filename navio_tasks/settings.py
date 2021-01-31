@@ -17,7 +17,7 @@ def load_config() -> configparser.SectionProxy:
     Load config
     """
     config = configparser.ConfigParser()
-    config.read(f"../{CONFIG_FOLDER}/.pynt")
+    config.read(f"{CONFIG_FOLDER}/.pynt")
     return config["DEFAULT"]
 
 

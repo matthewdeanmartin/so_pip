@@ -1,0 +1,19 @@
+{
+    "name": "{{ data["name"] }}/{{ data["name"] }}",
+    "type": "library",
+    "description": "{{ data["title"] }}",
+    "keywords": [{% for tag in data["tags"] %}"{{ tag }}"{%- if not loop.last -%}, {% endif %}{% endfor %}],
+    "homepage": "{{ data["url"] }}",
+    "license": "{{ data["license"] }}",
+    "authors": [
+        {
+            "name": "TODO",
+            "email": "TODO",
+            "homepage": "TODO",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    }
+}

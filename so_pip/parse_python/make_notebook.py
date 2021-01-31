@@ -2,12 +2,11 @@
 SO questions and answers look a lot alike jupyter notebooks.
 """
 import html
-
 import json
-from nbformat import NotebookNode
 from typing import Any, Dict
 
 import nbformat
+from nbformat import NotebookNode
 
 from so_pip.models.python_package_model import CodePackage
 from so_pip.parse_python.code_transformations import fix_interactive

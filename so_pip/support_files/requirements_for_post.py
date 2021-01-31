@@ -21,8 +21,8 @@ from so_pip._vendor.find_imports.main import find_imports
 
 # ^\s*(from|import)\s+\w+
 from so_pip.cli_clients.external_commands import generate_requirements
+from so_pip.infer_packages_needed.package_by_name import find_modules
 from so_pip.models.python_package_model import CodePackage
-from so_pip.pypi_query.main import find_modules
 from so_pip.support_files.setup_cfg import create_setup_cfg
 
 # https://github.com/ohjeah/pip-validate

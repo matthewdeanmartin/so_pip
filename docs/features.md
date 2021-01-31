@@ -1,8 +1,7 @@
 
-
 Things I can do now
 -------------------
-- Convert question or answer HTML into one or more .py files
+- Convert question or answer HTML into one or more code files, python, lua, js, etc.
     - Header with authorship and license info
     - Comment out all non-code, optionally comment out code that doesn't parse.
     - File splits on blocks starting with `import`
@@ -10,6 +9,7 @@ Things I can do now
     - Tag based guess
     - Markdown annotation based, eg. lang-py
     - Confirm as python by parsing (could still be bad python)
+- Generate package for several non python languages, e.g. npm, ruby, etc.
 - Clean up python
     - Handle interactive console syntax (e.g. >>> and ... prefixes)
     - Upgrade python to 3.x

@@ -7,6 +7,8 @@ Vendorize because I'm not installing it to a venv.
 import collections
 from typing import Any, Dict, List, Optional, Tuple
 
+from random_names.make_name import number_to_name
+
 from so_pip import settings as settings
 from so_pip.cli_clients.external_commands import black, isort, pur, pylint, safety
 from so_pip.file_writing import write_as_html, write_as_md, write_as_text
@@ -21,17 +23,18 @@ from so_pip.parse_python.module_maker import (
 )
 from so_pip.parse_python.python_validator import validate_with_vermin
 from so_pip.parse_python.upgrade_to_py3 import upgrade_file
-from random_names.make_name import number_to_name
 from so_pip.settings import KEEP_ANSWERS_WITH_NO_CODE, KEEP_ANSWERS_WITH_NO_DEF_OR_CLASS
 from so_pip.support_files.authors import write_authors
 from so_pip.support_files.changelog import changelog_for_post
 from so_pip.support_files.code_of_conduct import render_code_of_conduct
 from so_pip.support_files.license import write_license
+from so_pip.support_files.lua_rockspec import create_rockspec
 from so_pip.support_files.package_json import create_package_json
 from so_pip.support_files.pyproject_toml import create_pytroject_toml
 from so_pip.support_files.python_file import make_python_file
 from so_pip.support_files.readme_md import create_readme_md
 from so_pip.support_files.requirements_for_post import requirements_for_file
+from so_pip.support_files.ruby_gemspec import create_gemspec
 from so_pip.utils.user_trace import inform
 
 
@@ -231,7 +234,10 @@ def handle_post(
         # could many several languages per post
         if "javascript" in code_files_written:
             create_package_json(supporting_files_folder, code_info, question, post)
-
+        if "lua" in code_files_written:
+            create_rockspec(supporting_files_folder, code_info, question, post)
+        if "ruby" in code_files_written:
+            create_gemspec(supporting_files_folder, code_info, question, post)
     return packages_made
 
 

@@ -33,13 +33,30 @@ that I have valid "code".
 
 JavaScript
 -------
+- can detect js
 - Generates basic package.json file
 - TODO: usage instructions for use as local, non-npm package
+- Can't yet detect what version of js/node code is
 
 Lua
 -------
-lua rocks package support is on the roadmap.
+- can detect lua
+- Generates basic rockspec file
+- Can parse generated rockspec to see if it a valid lua table
+- Can't detect minimum lua version
+- Looks like it could be easy to get 1st pass on dependencies from "requires" statements
 
 C#/nuget
 -------
+- can detect cs
 C# nuget package support is on the roadmap.
+
+Go
+---
+- can detect go
+- TODO: Looks like it would be easy...
+
+Ruby
+-------
+- can detect ruby
+- Generates basic gemspec file

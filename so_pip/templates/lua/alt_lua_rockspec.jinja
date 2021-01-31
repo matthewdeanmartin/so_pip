@@ -1,0 +1,23 @@
+package = "{{ data["name"] }}"
+version = "{{ data["version"] }}"
+source = {
+   url = "{{ data["url"] }}"
+}
+description = {
+   summary = "{{ data["title"] }}",
+   detailed = [[
+      {{ data["description"] }}
+   ]],
+   license = "{{ data["license"] }}"
+}
+dependencies = {
+   "lua >= 5.1"
+}
+build = {
+   type = "builtin",
+   modules = {
+      lfs = "{{ data["path_to_file"] }}"
+   },
+   copy_directories = {
+   }
+}
