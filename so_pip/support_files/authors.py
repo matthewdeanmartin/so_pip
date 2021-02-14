@@ -31,7 +31,7 @@ def write_authors(
     package_name: str,
     question: Dict[str, Any],
     answer: Optional[Dict[str, Any]] = None,
-    uniqifier="",
+    uniqifier: str = "",
 ) -> None:
     """write file"""
     if answer:

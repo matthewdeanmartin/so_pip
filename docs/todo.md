@@ -6,19 +6,19 @@ RELEASE 1.0 Goals
 - BUG:
     - generic code files are missing brief header
     - more templates for code files? e.g. go/js/etc
-- FEATURE: specify entire module name for 1-offs
-    - if only 1 module
-    - e.g. so_pip vendorize --question 1234 --single_name=send_email ...
 - meta.so_pip file
     - has all the data for doing an subsequent update
 - FEATURE: Better "re-usable code" detections
     - High lines of code
     - def/class syntax
     - has `__name__ == '__main__'` or assert or unittest
+- FEATURE: specify entire module name for 1-offs
+    - if only 1 module
+    - e.g. so_pip vendorize --question 1234 --single_name=send_email ...
 - FEATURE: Question as "all-in-one", put all code files into one python package
     - why? because some questions are like a library of all the ways to do a thing, e.g. zip a folder
     - now 1/2 done, needs better naming other than main1.py, etc.
-- Merged Question+One Answer Pattern
+- FEATURE: Merged Question+One Answer Pattern
     - Basically, install question.py and answer.py instead of main.py
 - FEATURE: update_any module
     - no code for handling overwriting previously generated code (clean, ask, merge)

@@ -20,6 +20,7 @@ Options:
   -q --question=<question_id>  Stackoverflow question id
   -a --answer=<answer_id>      Stackoverflow answer id
   -r --revision=<revision>     Revision id for answer.
+  --package=<package>          Question or answer id in random_name format
   --all-in-one                 Combine all code into one module
   --verbose                    Show logging
   --quiet                      No informational logging
@@ -29,7 +30,7 @@ import logging
 import sys
 
 import docopt
-
+from random_names.make_name import number_from_name
 from so_pip import _version as meta
 from so_pip import settings as settings
 from so_pip.commands import freeze as freeze
@@ -48,10 +49,20 @@ LOGGER = logging.getLogger(__name__)
 def main() -> int:
     """Get the args object from command parameters"""
     arguments = docopt.docopt(__doc__, version=f"so_pip {meta.__version__}")
-    # print(arguments)
-    # LOGGER.debug(arguments)
+    print(arguments)
+    LOGGER.debug(arguments)
     output_folder = arguments["--output"]
     settings.OUTPUT_FOLDER = output_folder
+    package_name = arguments["--package"]
+    id_by_package_name = 0
+    if package_name:
+        try:
+            id_by_package_name = number_from_name(package_name)
+        except TypeError:
+            print(f"{package_name} can't be converted to a question or answer id.")
+            print("Please check meta data and re-run with a numeric id")
+            return -1
+
     if arguments["--quiet"]:
         settings.QUIET = True
 
@@ -71,9 +82,19 @@ def main() -> int:
         prefix = arguments["<name>"] or ""
         question = arguments["--question"]
         answer = arguments["--answer"]
-        revision = arguments["<revision>"]
+        # why is this sometimes <revision>?
+        revision_string = arguments.get("--revision", None)
+        # will people expect 0 based revisions...
+        if not revision_string:
+            revision_string = arguments.get("<revision>", None)
+
+        if revision_string is not None:
+            revision = int(revision_string)
+        else:
+            revision = None
         all_in_one = arguments["--all-in-one"]
-        if not question and not answer:
+
+        if not question and not answer and not id_by_package_name:
             print("Must specify --question or --answer identifier")
             return -1
         if not output_folder:
@@ -87,6 +108,16 @@ def main() -> int:
             packages_made = vendorize.import_so_answer(
                 prefix, answer, output_folder, revision
             )
+        elif id_by_package_name:
+            # HACK: Should check if that id is a q or a.
+            if "_a_" in package_name:
+                packages_made = vendorize.import_so_answer(
+                    prefix, id_by_package_name, output_folder, revision
+                )
+            else:
+                packages_made = vendorize.import_so_question(
+                    prefix, id_by_package_name, output_folder, all_in_one
+                )
         else:
             raise TypeError("Need to specify a question or answer")
         print(f"Vendorized {','.join(packages_made)} at {output_folder}")

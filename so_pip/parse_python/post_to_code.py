@@ -82,6 +82,8 @@ def handle_post(
             continue
 
         if post_type == "answer":
+            # cache must be imported late! import too early and cache writes to wrong folder
+            # pylint: disable=import-outside-toplevel
             from so_pip.api_clients import stackapi_facade as stackapi_client
 
             post = stackapi_client.get_json_by_answer_id(shallow_post["answer_id"])[

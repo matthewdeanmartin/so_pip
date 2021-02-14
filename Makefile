@@ -133,16 +133,16 @@ print(guess_next_version(v))
 endef
 export BUMP_VERSION_PY
 
-# NEXT_VERSION_BASH := $(VENV) python -c "$$BUMP_VERSION_PY"
+NEXT_VERSION_BASH := $(VENV) python -c "$$BUMP_VERSION_PY"
 
 bump_version:
 	# current version, assuming at least one tag of say, 0.1.0
-	#echo $(NEXT_VERSION_BASH)
+	echo $(NEXT_VERSION_BASH)
 	# echo
-	# export NEXT_VERSION=
+	export NEXT_VERSION=
 	@echo
-	# git tag "$$($(NEXT_VERSION_BASH))"
-	# git commit -m bump version to $$NEXT_VERSION
+	git tag "$$($(NEXT_VERSION_BASH))"
+	git commit -m bump version to $$NEXT_VERSION
 
 
 

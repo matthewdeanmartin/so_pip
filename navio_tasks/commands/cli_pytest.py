@@ -19,8 +19,8 @@ from navio_tasks.settings import (
     MINIMUM_TEST_COVERAGE,
     PROJECT_NAME,
     REPORTS_FOLDER,
-    VENV_SHELL,
     RUN_ALL_TESTS_REGARDLESS_TO_NETWORK,
+    VENV_SHELL,
 )
 from navio_tasks.utils import inform
 

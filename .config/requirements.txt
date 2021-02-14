@@ -11,8 +11,10 @@
 ################################################################################
 
 2to3
+astroid
 beautifulsoup4
 black
+diskcache
 html2text
 jinja2
 markdown
@@ -27,9 +29,11 @@ pypistats
 pyrankvote
 python-dotenv
 pyupgrade
+random-names
 requests
+slpp-23
 stackapi
 stdlib-list
 toml
 vermin
-whats-that-code>=0.1.9
+whats-that-code>=0.1.10

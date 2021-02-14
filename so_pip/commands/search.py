@@ -1,11 +1,15 @@
 """
 Do a search, generate modules for the questions & answers returned.
 """
+import logging
+
 from typing import List
 
 from so_pip.commands.vendorize import import_so_question
 from so_pip.utils import guards as guards
 from so_pip.utils.user_trace import inform
+
+LOGGER = logging.getLogger(__name__)
 
 
 def import_so_search(
@@ -19,6 +23,7 @@ def import_so_search(
     guards.must_be_truthy(query, "query required")
     guards.must_be_truthy(output_folder, "output_folder required")
     inform(f"Starting search for '{query}'...")
+    LOGGER.info(f"tags : {tags}")
     if not package_prefix:
         package_prefix = ""
     tags.sort()
@@ -30,6 +35,7 @@ def import_so_search(
     possibles = get_json_by_search(query, tuple(tags))
     all_results = []
     found = 0
+
     for possible in possibles["items"]:
         result = import_so_question(
             package_prefix, possible["question_id"], output_folder
@@ -38,6 +44,9 @@ def import_so_search(
         found += 1
         if stop_after != -1 and (found > stop_after):
             break
+    else:
+        # nothing in possibles[items]
+        print("No search results for query")
     return all_results
 
 

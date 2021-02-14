@@ -28,6 +28,8 @@ def import_so_answer(
         package_prefix = ""
     packages_made: List[str] = []
     settings.OUTPUT_FOLDER = output_folder
+    # cache must be imported late! import too early and cache writes to wrong folder
+    # pylint: disable=import-outside-toplevel
     from so_pip.api_clients import stackapi_facade as stackapi_client
 
     answer_data = stackapi_client.get_json_by_answer_id(answer_id)
@@ -64,6 +66,8 @@ def import_so_question(
     inform(f"Importing question #'{question_id}'...")
     packages_made: List[str] = []
     settings.OUTPUT_FOLDER = output_folder
+    # cache must be imported late! import too early and cache writes to wrong folder
+    # pylint: disable=import-outside-toplevel
     from so_pip.api_clients import stackapi_facade as stackapi_client
 
     question = stackapi_client.get_json_by_question_id(question_id)["items"][0]
