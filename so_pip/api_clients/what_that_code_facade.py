@@ -1,7 +1,7 @@
 """
 Sett up the whats_that_code call
 """
-from typing import List, Tuple
+from typing import List, Optional, Tuple
 
 from whats_that_code.election import guess_language_all_methods
 from whats_that_code.known_languages import FILE_EXTENSIONS
@@ -10,7 +10,7 @@ from so_pip.settings import POSSIBLE_LANGUAGES
 
 
 def guess_language_and_extension(
-    code: str, surrounding_text: str = "", tags: List[str] = None
+    code: str, surrounding_text: str = "", tags: Optional[List[str]] = None
 ) -> Tuple[str, str]:
     """Guess language and extension"""
     if not code:

@@ -5,7 +5,7 @@ import collections
 import logging
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Any, Dict, List, Set, Union
+from typing import Any, Dict, List, Sequence
 
 from so_pip.models.code_block_model import CodeBlock
 from so_pip.models.code_file_model import CodeFile
@@ -36,8 +36,8 @@ class CodePackage:
     url: str = ""
     author: str = ""
     author_email: str = ""
-    coauthors: Union[List[str], Set[str]] = field(default_factory=list)
-    dependencies: Union[List[str], Set[str]] = field(default_factory=list)
+    coauthors: Sequence[str] = field(default_factory=list)
+    dependencies: Sequence[str] = field(default_factory=list)
 
     answer_revisions: Dict[str, Any] = field(default_factory=dict)
 
@@ -63,6 +63,7 @@ class CodePackage:
         )
 
         if not self.answer_revisions:
+            # pylint: disable=import-outside-toplevel
             from so_pip.api_clients.stackapi_facade import get_json_revisions_by_post_id
 
             self.answer_revisions = get_json_revisions_by_post_id(

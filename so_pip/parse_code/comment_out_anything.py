@@ -40,7 +40,7 @@ LANGUAGE_TO_SYMBOL = {
 }
 
 
-def html_to_comments(html, language: str) -> str:
+def html_to_comments(html: str, language: str) -> str:
     """Convert html to text and comment it out according to
     line by line comment syntax for language"""
     if language in ("python", ".py"):

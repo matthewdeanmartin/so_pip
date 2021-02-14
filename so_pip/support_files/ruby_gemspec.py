@@ -7,8 +7,6 @@ TODO: https://guides.rubygems.org/specification-reference/
 import logging
 from typing import Any, Dict, Optional
 
-from slpp import slpp as lua
-
 from so_pip.make_from_template import load_template
 from so_pip.models.python_package_model import CodePackage
 

@@ -79,7 +79,7 @@ def parse_to_jupyter_notebook(body_markdown: str) -> NotebookNode:
                 notebook.cells.append(cell)
                 markdown_lines = []
             code.append(line)
-            state == "code"
+            state = "code"
             continue
 
         # now in markdown

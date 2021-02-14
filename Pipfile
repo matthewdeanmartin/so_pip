@@ -60,6 +60,7 @@ whats-that-code = ">=0.1.10"
 diskcache = "*"
 astroid = "*"
 slpp-23 = "*"
+slpp = "*"
 
 [requires]
 python_version = "3.8"

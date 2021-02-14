@@ -238,7 +238,7 @@ def pyupgrade() -> str:
     # supported py3, py36, py37, py38
     # Should be logically consistent with other minimum python version
     # tools (vermin, compile_py, tox)
-    return do_pyupgrade(IS_INTERACTIVE, "py38")
+    return do_pyupgrade(IS_INTERACTIVE, "py36")
 
 
 @task()

@@ -151,7 +151,6 @@ def handle_post(
             raise TypeError("Need python_source_folder by here.")
 
         frequencies = code_info.file_frequencies()
-        wrote_py_file = False
 
         code_files_written = []
         for code_file in code_info.code_files:

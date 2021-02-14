@@ -24,6 +24,7 @@ def import_so_search(
     tags.sort()
 
     # import late
+    # pylint: disable=import-outside-toplevel
     from so_pip.api_clients.stackapi_facade import get_json_by_search
 
     possibles = get_json_by_search(query, tuple(tags))

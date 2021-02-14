@@ -20,6 +20,7 @@ def changelog_for_post(
     """Requirements for running `safety`"""
     versions = []
     post_id = post["answer_id"] if "answer_id" in post else post["question_id"]
+    # pylint: disable=import-outside-toplevel
     from so_pip.api_clients.stackapi_facade import get_json_revisions_by_post_id
 
     revision_json = get_json_revisions_by_post_id(post_id)

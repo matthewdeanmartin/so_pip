@@ -33,7 +33,7 @@ def validate_with_vermin(folder: str) -> str:
         if "\n" in minimum:
             minimum = minimum.split("\n")[0]
         if "," in minimum:
-            minimum = minimum.split(",")
+            minimum = minimum.split(",")[0]
         if "Incompatible" in result:
             parts = result.split("Incompatible versions:")
             maximum = parts[1].strip("\n").strip(" ")

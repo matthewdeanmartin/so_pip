@@ -2,7 +2,7 @@
 CC BY-SA 2.5 Daniel G
 https://stackoverflow.com/questions/2572582/return-a-list-of-imported-python-modules-used-in-a-script/2572654#2572654
 """
-import importlib
+from importlib.util import find_spec
 from typing import List
 
 # Well, you could always write a simple script that searches the file for
@@ -49,7 +49,7 @@ def process_line(
             # (doesn't actually import - just finds it if it exists)
 
             # MDM: I think this replaces the deprecated on
-            print(importlib.util.find_spec(imported))
+            print(find_spec(imported))
             # imp.find_module(imported)
             # add to the list of items we imported
             imported_items.append(imported)
