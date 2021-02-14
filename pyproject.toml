@@ -39,7 +39,7 @@ documentation ="https://github.com/matthewdeanmartin/so_pip"
 so_pip = 'so_pip.__main__:main'
 
 [tool.poetry.dependencies]
-python = ">=3.6"
+python = ">=3.6, <4.0"
 black = "*"
 requests = "*"
 py-stackexchange = "*"

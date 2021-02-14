@@ -15,7 +15,8 @@ def make_python_file(
     python_submodule: CodePackage,
 ) -> bool:
     """write file"""
-
+    if not python_submodule.url:
+        raise TypeError("Missing post url")
     with open(file_name, "w", encoding="utf-8", errors="replace") as readme:
         data = {
             "title": python_submodule.title,
@@ -47,5 +48,7 @@ def render_code_file_py(
         template_filename = "python/python_brief_header.py.jinja"
     template = load_template(template_filename=template_filename, autoescape=False)
     # Turn off autoescape because this is python not html.
+    if not data["post_url"]:
+        raise TypeError("missing post+url")
     output_text = template.render(data=data, autoescape=False)  # nosec
     return output_text
