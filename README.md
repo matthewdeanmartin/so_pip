@@ -8,13 +8,16 @@ generate the accessory files to make it look like a python package.
 The feature-set overlaps a bit with [cookie cutter, vendorizing libraries and
 stackoverflow search cli's](https://github.com/matthewdeanmartin/so_pip/blob/main/docs/prior_art.md).
 
-[![DepShield Badge](https://depshield.sonatype.org/badges/owner/repository/depshield.svg)](https://depshield.github.io)
+[//]: # [![DepShield Badge](https://depshield.sonatype.org/badges/owner/repository/depshield.svg)](https://depshield.github.io)
 
 Installation
 ------------
 Requires Python 3.7+, tested with 3.7, 3.8, 3.9
 ```
 pip install so_pip
+# or
+pipenv install so_pip --pre --skip-lock
+
 so_pip vendorize my_name --question=31049648 --output=output
 ```
 
@@ -44,6 +47,7 @@ Consider getting a [key](https://stackapps.com/apps/oauth/register) and adding a
 Docs
 -----
 * [Examples](https://github.com/matthewdeanmartin/so_pip/tree/main/examples)
+* [Workflows](https://github.com/matthewdeanmartin/so_pip/blob/main/docs/workflows.md)
 * [CLI](https://github.com/matthewdeanmartin/so_pip/blob/main/docs/cli.md)
 * [Code reuse scanarios you see on StackOverflow](https://github.com/matthewdeanmartin/so_pip/blob/main/docs/scenarios.md)
 * [Features](https://github.com/matthewdeanmartin/so_pip/blob/main/docs/features.md)

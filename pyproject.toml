@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "so_pip"
-version = "0.1.29"
+version = "0.1.30"
 description = "Generate packages from Stackoverflow answers"
 authors = ["Matthew Martin <matthewdeanmartin@gmail.com>"]
 keywords = ["packaging", "stackoverflow"]
@@ -40,29 +40,42 @@ so_pip = 'so_pip.__main__:main'
 
 [tool.poetry.dependencies]
 python = ">=3.6"
-black = "*"
+# core functions
+python-dotenv = "*"
+diskcache = "*"
+html2text = "*"
+jinja2 = "*"
+pyrankvote = "*"
+
+# api
 requests = "*"
 py-stackexchange = "*"
 beautifulsoup4 = "*"
-python-dotenv = "*"
+stackapi = "*"
+
+# py tools
+black = "*"
 pipreqs = "*"
 pyupgrade = "*"
 2to3 = "*"
-html2text = "*"
 pyflakes = "*"
 stdlib-list = "*"
-jinja2 = "*"
-stackapi = "*"
 pip-upgrader = "*"
 pur = "*"
 pypistats = "*"
 pypinfo = "*"
-nbformat = "*"
-pyrankvote = "*"
 vermin = "*"
+astroid = "*"
+
+# Not just py
+nbformat = "*"
 markdown = "*"
 toml = "*"
-whats-that-code = ">=0.1.6"
+slpp-23 = "*"
+
+# projects split out from so_pip
+random_names= ">=0.1.0"
+whats-that-code = ">=0.1.10"
 
 [tool.poetry.dev-dependencies]
 pytest = "==6.0.1"

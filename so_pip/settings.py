@@ -60,7 +60,7 @@ CODE_IN_SRC_FOLDER = ast.literal_eval(_SECTION.get("CODE_IN_SRC_FOLDER", "False"
 
 # python stuff
 PYTHON_CODE_IN_MODULE_FOLDER = ast.literal_eval(
-    _SECTION.get("PYTHON_CODE_IN_MODULE_FOLDER", "False")
+    _SECTION.get("PYTHON_CODE_IN_MODULE_FOLDER", "True")
 )
 COMMENT_OUT_BAD_PYTHON = ast.literal_eval(
     _SECTION.get("COMMENT_OUT_BAD_PYTHON", "False")
