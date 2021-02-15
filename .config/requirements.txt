@@ -31,6 +31,7 @@ python-dotenv
 pyupgrade
 random-names
 requests
+slpp
 slpp-23
 stackapi
 stdlib-list

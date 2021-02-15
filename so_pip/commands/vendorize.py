@@ -55,7 +55,11 @@ def import_so_answer(
 
 
 def import_so_question(
-    package_prefix: str, question_id: int, output_folder: str, all_in_one: bool = False
+    package_prefix: str,
+    question_id: int,
+    output_folder: str,
+    all_in_one: bool = False,
+    minimum_loc: int = -1,
 ) -> List[str]:
     """main entry point
 
@@ -80,6 +84,7 @@ def import_so_question(
             question,
             question.get("answers", []),
             all_in_one,
+            minimum_loc=minimum_loc,
         )
     )
     return packages_made

@@ -13,6 +13,7 @@ from so_pip import settings as settings
 from so_pip.cli_clients.external_commands import black, isort, pur, pylint, safety
 from so_pip.file_writing import write_as_html, write_as_md, write_as_text
 from so_pip.models.code_file_model import CodeFile
+from so_pip.models.count_loc_in_post import count_loc, post_has_code
 from so_pip.models.python_package_model import CodePackage
 from so_pip.parse_code.write_anything import write_and_format_any_file
 from so_pip.parse_python.make_notebook import write_jupyter_notebook
@@ -45,6 +46,7 @@ def handle_post(
     answers: List[Dict[str, Any]],
     all_in_one: bool,
     answer_revision: Optional[Dict[str, Any]] = None,
+    minimum_loc: int = -1,
 ) -> List[str]:
     """Loop through answers"""
     # HACK: still thinking this out
@@ -92,9 +94,8 @@ def handle_post(
         else:
             post = question
 
-        def post_has_code(answer: Dict[str, Any]) -> bool:
-            """This will probably get more complicated"""
-            return "<pre><code" in answer["body"] and "</code>" in answer["body"]
+        if count_loc(post) < minimum_loc:
+            continue
 
         if (
             not post_has_code(post)

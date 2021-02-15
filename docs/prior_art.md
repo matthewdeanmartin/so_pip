@@ -20,7 +20,7 @@ template optimized for an SO answer. Cookie cutter doesn't handle package workfl
 
 PIP
 ---
-Pip and related tools handle intentially created packages with source probably in GitHub and packages stored in pypi.
+Pip and related tools handle intentionally created packages with source probably in GitHub and packages stored in pypi.
 
 You could publish a so_pip created package to pypi, (possibly not a good idea), but so_pip packages are better vendorized.
 

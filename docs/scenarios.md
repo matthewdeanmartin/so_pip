@@ -161,7 +161,7 @@ data = pandas.read_csv("data.csv")
 
 Some people use a convention of putting a file name right above the block
 
-> hello_world.py
+hello_world.py
 ```
 print("hello world")
 ```

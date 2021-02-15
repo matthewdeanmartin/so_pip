@@ -79,7 +79,6 @@ POSTS_AS_HTML = ast.literal_eval(_SECTION.get("POSTS_AS_HTML", "True"))
 POSTS_AS_MD = ast.literal_eval(_SECTION.get("POSTS_AS_MD", "True"))
 
 # python stuff
-CODE_IN_SRC_FOLDER = ast.literal_eval(_SECTION.get("CODE_IN_SRC_FOLDER", "True"))
 METADATA_IN_INIT = ast.literal_eval(_SECTION.get("METADATA_IN_INIT", "True"))
 GENERATE_REQUIREMENTS_TXT = ast.literal_eval(
     _SECTION.get("GENERATE_REQUIREMENTS_TXT", "True")

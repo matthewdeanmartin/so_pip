@@ -1,9 +1,8 @@
 """
 Low level access. Makes no effort to parse results.
 """
-import pickle
-
 import os
+import pickle  # nosec
 from typing import Any, Dict, Tuple, cast
 
 from diskcache import Cache
@@ -35,6 +34,24 @@ def get_json_by_search(query: str, tagged: Tuple[str, ...]) -> Dict[str, Any]:
             "search?tagged={tagged}&intitle={intitle}",
             tagged=[";".join(tagged)],
             intitle=[query],
+        ),
+    )
+
+def get_json_by_advanced_search(query: str, tagged: Tuple[str, ...]) -> Dict[str, Any]:
+    """Low level access, returns unprocessed json
+    example:
+    /2.2/search/advanced?order=desc&sort=activity&answers=1&body=def&tagged=python&site=stackoverflow
+    """
+    return cast(
+        Dict[str, Any],
+        SITE.fetch(
+            "search/advanced?order={desc}&sort={sort}&answers={answers}&body={body}&tagged={tagged}&site={site}",
+            sort="votes",
+            order="desc",
+            answers=1,
+            body=query,
+            tagged=[";".join(tagged)],
+            site="stackoverflow"
         ),
     )
 

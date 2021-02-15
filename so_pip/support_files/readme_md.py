@@ -16,7 +16,7 @@ def create_readme_md(
     answer: Optional[Dict[str, Any]] = None,
 ) -> None:
     """write file"""
-
+    _ = answer
     # TODO: this isn't done yet.
 
     with open(

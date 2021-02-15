@@ -7,7 +7,7 @@ RELEASE 1.0 Goals
     - generic code files are missing brief header
     - more templates for code files? e.g. go/js/etc
 - meta.so_pip file
-    - has all the data for doing an subsequent update
+    - has all the data for doing a subsequent update
 - FEATURE: Better "re-usable code" detections
     - High lines of code
     - def/class syntax

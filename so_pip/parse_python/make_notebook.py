@@ -61,8 +61,6 @@ def parse_to_jupyter_notebook(body_markdown: str) -> NotebookNode:
         # could be either.
         if not line.strip() and state != "code":
             if markdown_lines or state == "md":
-                if not line:
-                    print("blank!")
                 # BUG: lines in code don't start with four spaces.
                 if line:
                     markdown_lines.append(line)

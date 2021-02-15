@@ -2,7 +2,6 @@
 Do a search, generate modules for the questions & answers returned.
 """
 import logging
-
 from typing import List
 
 from so_pip.commands.vendorize import import_so_question
@@ -18,6 +17,7 @@ def import_so_search(
     tags: List[str],
     output_folder: str,
     stop_after: int = -1,
+    minimum_loc: int = -1,
 ) -> List[str]:
     """Fetch questions and answers via a search"""
     guards.must_be_truthy(query, "query required")
@@ -38,7 +38,10 @@ def import_so_search(
 
     for possible in possibles["items"]:
         result = import_so_question(
-            package_prefix, possible["question_id"], output_folder
+            package_prefix,
+            possible["question_id"],
+            output_folder,
+            minimum_loc=minimum_loc,
         )
         all_results.extend(result)
         found += 1

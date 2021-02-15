@@ -1,18 +1,18 @@
 """
 Shell out to run a few commands
 
-- pytest
+- pytest - NOPE
 - pip-upgrade
 - pur
 - safety
 - pyflakes
 - pipreqs
-- futurize
+- futurize - NOPE
 - 2to3
 - black
 - pyupgrade
-- isort
-- pylint
+- isort - NOPE
+- pylint - NOPE
 - pypinfo
 - vermin
 """

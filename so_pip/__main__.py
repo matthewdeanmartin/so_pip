@@ -31,6 +31,7 @@ import sys
 
 import docopt
 from random_names.make_name import number_from_name
+
 from so_pip import _version as meta
 from so_pip import settings as settings
 from so_pip.commands import freeze as freeze
@@ -49,7 +50,6 @@ LOGGER = logging.getLogger(__name__)
 def main() -> int:
     """Get the args object from command parameters"""
     arguments = docopt.docopt(__doc__, version=f"so_pip {meta.__version__}")
-    print(arguments)
     LOGGER.debug(arguments)
     output_folder = arguments["--output"]
     settings.OUTPUT_FOLDER = output_folder
