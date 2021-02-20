@@ -37,21 +37,28 @@ def get_json_by_search(query: str, tagged: Tuple[str, ...]) -> Dict[str, Any]:
         ),
     )
 
-def get_json_by_advanced_search(query: str, tagged: Tuple[str, ...]) -> Dict[str, Any]:
+
+def get_json_by_advanced_search(
+    query: str, tagged: Tuple[str, ...], page: int, minimal: bool = True
+) -> Dict[str, Any]:
     """Low level access, returns unprocessed json
     example:
     /2.2/search/advanced?order=desc&sort=activity&answers=1&body=def&tagged=python&site=stackoverflow
     """
+    pager = StackAPI("stackoverflow", key=os.environ["key"], max_pages=5000)
+    # filter = "&filter=!)5IW-1CBJh7IUcXv2R9eY(KE__tA" if minimal else ""
     return cast(
         Dict[str, Any],
-        SITE.fetch(
-            "search/advanced?order={desc}&sort={sort}&answers={answers}&body={body}&tagged={tagged}&site={site}",
-            sort="votes",
-            order="desc",
-            answers=1,
-            body=query,
+        pager.fetch(
+            "search/advanced?order=desc&sort={sort}&answers={answers}&body={body}&tagged={tagged}",
+            page=page,
+            sort=["votes"],
+            # order=["desc"],
+            answers=[1],
+            body=[query],
             tagged=[";".join(tagged)],
-            site="stackoverflow"
+            filter="!BHMIb2uw8ZCNzk.BY)VCLpavh_59fq" if minimal else None
+            # site="stackoverflow"
         ),
     )
 

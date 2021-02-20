@@ -17,6 +17,7 @@ gitpython
 ifaddr
 jake
 liccheck==0.4.3
+navio-builder-win
 pebble==4.5.0
 pip-check==2.6
 psutil==5.6.7

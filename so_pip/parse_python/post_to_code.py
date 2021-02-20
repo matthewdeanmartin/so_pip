@@ -94,7 +94,12 @@ def handle_post(
         else:
             post = question
 
-        if count_loc(post) < minimum_loc:
+        loc = count_loc(post)
+        if loc < minimum_loc:
+            inform(
+                f"Answer lacks minimum lines of code, "
+                f"{loc} vs {minimum_loc} ...skipping"
+            )
             continue
 
         if (

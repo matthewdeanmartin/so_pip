@@ -4,6 +4,7 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+navio-builder-win = "*"
 pytest = "==6.0.1"
 pytest-cov = ">=2.10.1"
 pytest-timeout = "*"

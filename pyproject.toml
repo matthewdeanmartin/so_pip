@@ -78,6 +78,7 @@ slpp-23 = "*"
 # projects split out from so_pip
 random-names = "*"
 whats-that-code = ">=0.1.10"
+navio-builder-win = "^0.1.52"
 
 [tool.poetry.dev-dependencies]
 pytest = "==6.0.1"

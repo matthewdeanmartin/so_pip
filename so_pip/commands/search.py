@@ -36,6 +36,7 @@ def import_so_search(
     all_results = []
     found = 0
 
+    inform(f"Found {len(possibles['items'])} possible answers")
     for possible in possibles["items"]:
         result = import_so_question(
             package_prefix,
