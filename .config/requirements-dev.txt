@@ -16,6 +16,7 @@ gitchangelog==3.0.4
 gitpython
 ifaddr
 jake
+libyear
 liccheck==0.4.3
 navio-builder-win
 pebble==4.5.0

@@ -1,12 +1,13 @@
-FROM python:3.9.0-slim-buster
+FROM python:3.9.2-slim-buster
 WORKDIR /app
 ENV PIP_NO_CACHE_DIR=off
 ENV PYTHONUNBUFFERED=1
 # multidict doesnt have pre-compiled things for many OSs
 ENV MULTIDICT_NO_EXTENSIONS=1
 # RUN apk add --no-cache linux-headers==4.19.36-r0 wget
-RUN python3 -m pip install --user pipx
-RUN python3 -m pipx ensurepath
+ENV PATH="/root/.local/bin:${PATH}"
+RUN python -m pip install --user pipx && python -m pipx ensurepath
+# RUN python3 -m pipx ensurepath
 # isort depends on pylint
 RUN pipx install isort && \
     pipx install pylint

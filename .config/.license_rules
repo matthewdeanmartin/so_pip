@@ -83,6 +83,7 @@ authorized_licenses :
     MPL 2.0
     Mozilla Public License 2.0 (MPL 2.0)
     https://github.com/IlyaSkriblovsky/slpp-23/blob/master/LICENSE
+    LGPL-2.1-or-later
 
 unauthorized_licenses :
     foobar

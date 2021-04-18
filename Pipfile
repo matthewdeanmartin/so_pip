@@ -29,6 +29,7 @@ vendorize = "*"
 tox = "*"
 setuptools-scm = "*"
 jake = "*"
+libyear = "*"
 
 [packages]
 random_names= "*"
