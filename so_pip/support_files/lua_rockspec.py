@@ -2,7 +2,7 @@
 Packaging for lua ecosystem
 """
 import logging
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, cast
 
 from slpp import slpp as lua
 
@@ -64,4 +64,4 @@ def render_lua_rockspec(
     output_text = template.render(data=data, autoescape=False)  # nosec
     # check if it parses.
     _ = lua.decode(output_text)
-    return output_text
+    return cast(str, output_text)

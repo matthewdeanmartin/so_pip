@@ -5,7 +5,7 @@ TODO: https://guides.rubygems.org/specification-reference/
 - has support for authors and licenses (plural!)
 """
 import logging
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, cast
 
 from so_pip.make_from_template import load_template
 from so_pip.models.python_package_model import CodePackage
@@ -65,4 +65,4 @@ def render_ruby_gempec(
     output_text = template.render(data=data, autoescape=False)  # nosec
     # check if it parses.
 
-    return output_text
+    return cast(str, output_text)

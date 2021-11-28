@@ -6,7 +6,7 @@ Design strategy, follow this format: https://keepachangelog.com/en/1.0.0/
 Focus on changes to the question/answers *only*, not who did it.
 """
 from datetime import datetime
-from typing import Any, Dict, List
+from typing import Any, Dict, List, cast
 
 import markdown
 
@@ -85,4 +85,4 @@ def render_change_log(
     """
     template = load_template(template_filename="HISTORY.md.jinja", autoescape=False)
     output_text = template.render(item=data)
-    return output_text
+    return cast(str, output_text)

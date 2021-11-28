@@ -3,7 +3,7 @@ Create a setup.py file
 
 DEPRECATED. I MAY DELETE THIS ALTOGETHER.
 """
-from typing import Dict, Sequence, Union
+from typing import Dict, Sequence, Union, cast
 
 from so_pip.make_from_template import load_template
 from so_pip.models.python_package_model import CodePackage
@@ -38,4 +38,4 @@ def render_setup_py(
     )
     # Turn off autoescape because this is python not html.
     output_text = template.render(item=data, autoescape=False)  # nosec
-    return output_text
+    return cast(str, output_text)

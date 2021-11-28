@@ -1,6 +1,8 @@
 """
 Create a code of conduct file
 """
+from typing import cast
+
 import markdown
 
 from so_pip.make_from_template import load_template
@@ -21,4 +23,4 @@ def render_code_of_conduct(package_folder: str) -> str:
     ) as author_file:
         author_file.write(output_text)
 
-    return output_text
+    return cast(str, output_text)

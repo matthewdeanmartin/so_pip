@@ -1,7 +1,7 @@
 """
 Generate a python file
 """
-from typing import Any, Dict
+from typing import Any, Dict, cast
 
 from so_pip.make_from_template import load_template
 from so_pip.models.python_package_model import CodePackage
@@ -51,4 +51,4 @@ def render_code_file_py(
     if not data["post_url"]:
         raise TypeError("missing post+url")
     output_text = template.render(data=data, autoescape=False)  # nosec
-    return output_text
+    return cast(str, output_text)

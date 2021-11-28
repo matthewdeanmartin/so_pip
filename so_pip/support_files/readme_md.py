@@ -1,7 +1,7 @@
 """
 Rehash some fairly non-standardized stuff about the package
 """
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, cast
 
 import markdown
 
@@ -48,4 +48,4 @@ def render_readme_md(
     output_text = template.render(item=data, autoescape=False)  # nosec
     # calling this to see if it is somewhat valid markdown
     _ = markdown.markdown(output_text)
-    return output_text
+    return cast(str, output_text)

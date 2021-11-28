@@ -1,7 +1,7 @@
 """
 Generate a python init file
 """
-from typing import Any, Dict
+from typing import Any, Dict, cast
 
 from so_pip.make_from_template import load_template
 from so_pip.models.python_package_model import CodePackage
@@ -45,4 +45,4 @@ def render_python_init_file_py(
     )
     # Turn off autoescape because this is python not html.
     output_text = template.render(data=data, autoescape=False)  # nosec
-    return output_text
+    return cast(str, output_text)

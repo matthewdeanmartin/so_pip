@@ -7,7 +7,7 @@ Supports:
 - list of tags
 """
 import logging
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, cast
 
 import toml
 
@@ -73,4 +73,4 @@ def render_pyproject_toml(
     output_text = template.render(data=data, autoescape=False)  # nosec
     # validate toml
     _ = toml.loads(output_text)
-    return output_text
+    return cast(str, output_text)

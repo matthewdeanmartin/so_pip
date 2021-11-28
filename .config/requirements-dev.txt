@@ -18,6 +18,7 @@ ifaddr
 jake
 libyear
 liccheck==0.4.3
+mypy
 navio-builder-win
 pebble==4.5.0
 pip-check==2.6
@@ -31,4 +32,7 @@ pytest==6.0.1
 setuptools-scm
 sshtunnel
 tox
+types-markdown
+types-requests
+types-toml
 vendorize

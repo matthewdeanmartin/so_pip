@@ -12,7 +12,17 @@ https://www.npmjs.com/package/author-regex
 """
 import logging
 from collections import defaultdict
-from typing import Any, Collection, DefaultDict, Dict, List, Optional, Sequence, Union
+from typing import (
+    Any,
+    Collection,
+    DefaultDict,
+    Dict,
+    List,
+    Optional,
+    Sequence,
+    Union,
+    cast,
+)
 
 import markdown
 
@@ -70,4 +80,4 @@ def render_authors(
     """
     template = load_template(template_filename="AUTHORS.jinja", autoescape=False)
     output_text = template.render(item=data)
-    return output_text
+    return cast(str, output_text)

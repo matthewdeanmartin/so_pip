@@ -30,6 +30,10 @@ tox = "*"
 setuptools-scm = "*"
 jake = "*"
 libyear = "*"
+types-requests = "*"
+types-toml = "*"
+types-markdown = "*"
+mypy = "*"
 
 [packages]
 random_names= "*"

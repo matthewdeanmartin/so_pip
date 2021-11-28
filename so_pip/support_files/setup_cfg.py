@@ -5,7 +5,7 @@ The setup.cfg file is weird. It can only override values in setup.py
 and is used by some tools as a centralized config.ini file.
 """
 import configparser
-from typing import Any, Dict
+from typing import Any, Dict, cast
 
 from so_pip.make_from_template import load_template
 from so_pip.models.python_package_model import CodePackage
@@ -59,4 +59,4 @@ def render_setup_cfg(
     )
     # Turn off autoescape because this is python not html.
     output_text = template.render(item=data, autoescape=False)  # nosec
-    return output_text
+    return cast(str, output_text)

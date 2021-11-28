@@ -1,7 +1,7 @@
 """
 Generate a python file
 """
-from typing import Any, Dict
+from typing import Any, Dict, cast
 
 from so_pip.make_from_template import load_template
 
@@ -31,4 +31,4 @@ def render_generic_code_file(
     )
     # Turn off autoescape because this is something, but not html.
     output_text = template.render(data=data, autoescape=False)  # nosec
-    return output_text
+    return cast(str, output_text)

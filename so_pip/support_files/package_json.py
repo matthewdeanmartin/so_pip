@@ -8,7 +8,7 @@ Supports:
 """
 import json
 import logging
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, cast
 
 from so_pip.make_from_template import load_template
 from so_pip.models.python_package_model import CodePackage
@@ -71,4 +71,4 @@ def render_package_json(
     output_text = template.render(data=data, autoescape=False)  # nosec
     # validate toml
     _ = json.loads(output_text)
-    return output_text
+    return cast(str, output_text)
