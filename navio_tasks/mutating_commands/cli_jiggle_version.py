@@ -29,7 +29,7 @@ def do_jiggle_version(
     try:
         repo = Repo(".")
         active_branch = str(repo.active_branch)
-    except InvalidGitRepositoryError:
+    except:  #  InvalidGitRepositoryError:
         inform("Can't detect what branch we are on. Is this a git repo?")
         active_branch = "don't know what branch we are on"
 

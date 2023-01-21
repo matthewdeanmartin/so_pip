@@ -8,8 +8,10 @@ settings.OUTPUT_FOLDER = find_file("../../output/unittest/", __file__)
 # GET search endpoint is rotten!
 # Only "intitle" so can't search if body has def/class! (i.e. basic units of re-usability)
 
+
 def test_import_so_search():
     import so_pip.settings as settings
+
     settings.QUIET = False
     result = import_so_search(
         package_prefix="test",
@@ -17,7 +19,7 @@ def test_import_so_search():
         tags=["python"],
         output_folder=settings.OUTPUT_FOLDER,
         stop_after=2,
-        minimum_loc=5
+        minimum_loc=5,
     )
     print(result)
     assert result

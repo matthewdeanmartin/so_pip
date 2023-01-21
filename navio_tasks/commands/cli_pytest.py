@@ -38,7 +38,7 @@ def do_pytest() -> None:
         fast_only = True
     if fast_only:
         test_folder = "test/test_fast"
-        minimum_coverage = 48
+        minimum_coverage = MINIMUM_TEST_COVERAGE
     else:
         test_folder = "test"
         minimum_coverage = MINIMUM_TEST_COVERAGE
@@ -56,8 +56,9 @@ def do_pytest() -> None:
     # when it works, it is FAST. when it doesn't, we get lots of timeouts.
     # if not IS_GITLAB:
     #     command += f" -n {multiprocessing.cpu_count()} "
-    if not IS_GITLAB:
-        command += " -n 2 "
+    # pytest & coverage don't seem to be able to cope with parallel now?
+    # if not IS_GITLAB:
+    #     command += " -n 2 "
 
     inform(command)
     execute_with_environment(command, my_env)

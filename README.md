@@ -12,7 +12,7 @@ stackoverflow search cli's](https://github.com/matthewdeanmartin/so_pip/blob/mai
 
 Installation
 ------------
-Requires Python 3.7+, tested with 3.7, 3.8, 3.9
+Requires Python 3.11+
 ```
 pip install so_pip
 # or

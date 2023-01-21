@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "so_pip"
-version = "0.1.31"
+version = "0.2.0"
 description = "Generate packages from Stackoverflow answers"
 authors = ["Matthew Martin <matthewdeanmartin@gmail.com>"]
 keywords = ["packaging", "stackoverflow"]
@@ -39,7 +39,7 @@ documentation ="https://github.com/matthewdeanmartin/so_pip"
 so_pip = 'so_pip.__main__:main'
 
 [tool.poetry.dependencies]
-python = ">=3.6, <4.0"
+python = ">=3.11, <4.0"
 # core functions
 python-dotenv = "*"
 diskcache = "*"
@@ -81,21 +81,21 @@ whats-that-code = ">=0.1.10"
 navio-builder-win = "^0.1.52"
 
 [tool.poetry.dev-dependencies]
-pytest = "==6.0.1"
+pytest = ">=7.2.0"
 pytest-cov = ">=2.10.1"
 pytest-timeout = "*"
 pytest-xdist = ">=2.1.0"
-pip-check = "==2.6"
+pip-check = ">=2.6"
 pynt = "==0.8.2"
 pynt-contrib = "==0.2.0"
 checksumdir = "==1.1.7"
-requests = "==2.22.0"
+requests = ">=2.22.0"
 dodgy = "==0.2.1"
-gitchangelog = "==3.0.4"
+gitchangelog = ">=3.0.4"
 liccheck = "==0.4.3"
-psutil = "==5.6.7"
-pebble = "==4.5.0"
-python-dotenv = "==0.11.0"
+psutil = ">=5.6.7"
+pebble = ">=4.5.0"
+python-dotenv = ">=0.11.0"
 gitpython = "*"
 sshtunnel = "*"
 ifaddr = "*"
@@ -107,7 +107,7 @@ vendorize = "*"
 
 [tool.black]
 line-length = 88
-target-version = ['py37']
+target-version = ['py311']
 include = '\.pyi?$'
 exclude = '''
 

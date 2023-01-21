@@ -17,7 +17,7 @@ def show(target_folder: str, package_name: str) -> None:
     guards.must_be_truthy(package_name, "package_name required")
     package_path = os.path.join(target_folder, package_name)
     init_path = os.path.join(target_folder, package_name, "__init__.py")
-    with open(init_path) as meta:
+    with open(init_path, encoding="utf-8") as meta:
         for line in meta:
             if "Author Link:" in line:
                 contact = line.split(":")[1].strip()
@@ -35,7 +35,7 @@ def show(target_folder: str, package_name: str) -> None:
     requirements_path = os.path.join(target_folder, package_name, "requirements.txt")
     requirements = []
     if os.path.exists(requirements_path):
-        with open(requirements_path) as requirements_file:
+        with open(requirements_path, encoding="utf-8") as requirements_file:
             for line in requirements_file:
                 requirements.append(line)
 
