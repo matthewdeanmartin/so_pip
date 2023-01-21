@@ -14,5 +14,5 @@ RUN python -m pip install --no-cache-dir --upgrade pip --quiet \
     && pip install pipenv  --no-cache-dir --quiet
 # Github action doesn't build a local package. But we have one on pypi!
 # inexplicable fail with pipenv.
-RUN pipx install "so-pip>=0.2.0"
+RUN pipx install "so-pip>=0.2.1"
 ENTRYPOINT ["so_pip"]

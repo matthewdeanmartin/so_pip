@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "so_pip"
-version = "0.2.0"
+version = "0.2.1"
 description = "Generate packages from Stackoverflow answers"
 authors = ["Matthew Martin <matthewdeanmartin@gmail.com>"]
 keywords = ["packaging", "stackoverflow"]
@@ -39,7 +39,7 @@ documentation ="https://github.com/matthewdeanmartin/so_pip"
 so_pip = 'so_pip.__main__:main'
 
 [tool.poetry.dependencies]
-python = ">=3.11, <4.0"
+python = ">=3.11"
 # core functions
 python-dotenv = "*"
 diskcache = "*"
@@ -78,9 +78,10 @@ slpp-23 = "*"
 # projects split out from so_pip
 random-names = "*"
 whats-that-code = ">=0.1.10"
-navio-builder-win = "^0.1.52"
+
 
 [tool.poetry.dev-dependencies]
+navio-builder-win = "^0.1.52"
 pytest = ">=7.2.0"
 pytest-cov = ">=2.10.1"
 pytest-timeout = "*"
