@@ -8,7 +8,12 @@ generate the accessory files to make it look like a python package.
 The feature-set overlaps a bit with [cookie cutter, vendorizing libraries and
 stackoverflow search cli's](https://github.com/matthewdeanmartin/so_pip/blob/main/docs/prior_art.md).
 
-[//]: # [![DepShield Badge](https://depshield.sonatype.org/badges/owner/repository/depshield.svg)](https://depshield.github.io)
+Badges
+------
+
+![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/pypi/so-pip)
+[![Downloads](https://pepy.tech/badge/so-pip/month)](https://pepy.tech/project/so-pip/month)
+[![CodeFactor](https://www.codefactor.io/repository/github/matthewdeanmartin/so_pip/badge)](https://www.codefactor.io/repository/github/matthewdeanmartin/so_pip)
 
 Installation
 ------------
