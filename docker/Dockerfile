@@ -1,4 +1,4 @@
-FROM python:3.11.1-slim-buster
+FROM python:3.12.0b1-slim-buster
 WORKDIR /app
 ENV PIP_NO_CACHE_DIR=off
 ENV PYTHONUNBUFFERED=1
