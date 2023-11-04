@@ -1,3 +1,6 @@
+"""
+Plain web scraper
+"""
 import pprint
 from typing import Any
 
@@ -16,6 +19,8 @@ def search_string(query: str) -> Any:
 
 
 if __name__ == "__main__":
-    results = search_string(query="[python] is:answer def class aws")
-    for result in results:
-        pprint.pprint(result)
+
+    def run() -> None:
+        results = search_string(query="[python] is:answer def class aws")
+        for result in results:
+            pprint.pprint(result)

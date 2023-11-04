@@ -47,13 +47,13 @@ class PackageInfo:
         self.html_file = find_file("../_cache/pypi.html", __file__)
         self.packages: List[str] = []
         if not os.path.exists(self.html_file):
-            client = requests.get("https://pypi.python.org/simple/")
+            client = requests.get("https://pypi.python.org/simple/", timeout=10)
             client.raise_for_status()
-            with open(self.html_file, "w") as file:
+            with open(self.html_file, "w", encoding="utf-8") as file:
                 self.html_raw = client.text
                 file.write(self.html_raw)
         else:
-            with open(self.html_file) as file:
+            with open(self.html_file, encoding="utf-8") as file:
                 self.html_raw = file.read()
         self.html_lines = self.html_raw.split("\n")
         for line in self.html_lines:

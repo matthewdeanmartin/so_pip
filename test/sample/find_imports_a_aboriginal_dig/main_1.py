@@ -19,7 +19,6 @@ class SingleFileModuleFinder(modulefinder.ModuleFinder):
             )
 
     def __call__(self, node):
-
         self.name = str(node)
 
         self.run_script(self.name)

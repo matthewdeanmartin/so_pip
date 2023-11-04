@@ -28,6 +28,7 @@ Options:
 """
 import logging
 import sys
+from typing import Optional
 
 import docopt
 from random_names.make_name import number_from_name
@@ -89,7 +90,7 @@ def main() -> int:
             revision_string = arguments.get("<revision>", None)
 
         if revision_string is not None:
-            revision = int(revision_string)
+            revision: Optional[int] = int(revision_string)
         else:
             revision = None
         all_in_one = arguments["--all-in-one"]

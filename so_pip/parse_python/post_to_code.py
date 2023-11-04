@@ -269,7 +269,6 @@ def write_one_code_file(
 
     to_write = code_file.to_write()
     if code_file.extension == ".py":
-
         code_to_write = to_write
         while code_to_write[-1].strip() in ("", "#"):
             code_to_write.pop()

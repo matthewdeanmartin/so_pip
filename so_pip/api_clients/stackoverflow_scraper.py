@@ -14,7 +14,7 @@ from bs4 import BeautifulSoup
 @lru_cache(maxsize=1000)
 def scrape_urls(user_id: int) -> Tuple[str, str]:
     """Get twiter and github"""
-    response = requests.get(f"https://stackoverflow.com/users/{user_id}/")
+    response = requests.get(f"https://stackoverflow.com/users/{user_id}/", timeout=10)
     if response.status_code != 200:
         return "", ""
     soup = BeautifulSoup(response.text, features="html.parser")

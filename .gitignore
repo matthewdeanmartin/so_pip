@@ -145,3 +145,7 @@ output
 
 problems.
 reports/
+
+.build_history/
+
+cache4/

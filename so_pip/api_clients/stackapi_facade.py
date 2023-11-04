@@ -11,7 +11,9 @@ from stackapi import StackAPI
 from so_pip import settings as settings
 
 if settings.OUTPUT_FOLDER == "":
-    raise TypeError("Loaded this module too early.")
+    print("Don't have an output folder using .")
+    settings.OUTPUT_FOLDER = "."
+    # raise TypeError("Loaded this module too early.")
 # TODO: consider moving to JsonDisk from same library
 # not sure if that means python in, json out, so may have to change all client code
 _CACHE = Cache(directory=settings.OUTPUT_FOLDER + f"/cache{pickle.DEFAULT_PROTOCOL}/")
@@ -24,8 +26,7 @@ else:
 CACHE_SECONDS = 86400
 
 
-# @lru_cache(maxsize=1000)
-@_CACHE.memoize(expire=CACHE_SECONDS)
+@_CACHE.memoize(expire=CACHE_SECONDS)  # type: ignore
 def get_json_by_search(query: str, tagged: Tuple[str, ...]) -> Dict[str, Any]:
     """Low level access, returns unprocessed json"""
     return cast(
@@ -63,8 +64,7 @@ def get_json_by_advanced_search(
     )
 
 
-# @lru_cache(maxsize=1000)
-@_CACHE.memoize(expire=CACHE_SECONDS)
+@_CACHE.memoize(expire=CACHE_SECONDS)  # type: ignore
 def get_json_by_question_id(question_id: int) -> Dict[str, Any]:
     """Low level access, returns unprocessed json"""
     return cast(
@@ -86,8 +86,7 @@ def get_json_by_question_id(question_id: int) -> Dict[str, Any]:
     )
 
 
-# @lru_cache(maxsize=1000)
-@_CACHE.memoize(expire=CACHE_SECONDS)
+@_CACHE.memoize(expire=CACHE_SECONDS)  # type: ignore
 def get_json_by_answer_id(answer_id: int) -> Dict[str, Any]:
     """Low level access, returns unprocessed json"""
     return cast(
@@ -110,8 +109,7 @@ def get_json_by_answer_id(answer_id: int) -> Dict[str, Any]:
     )
 
 
-# @lru_cache(maxsize=1000)
-@_CACHE.memoize(expire=CACHE_SECONDS)
+@_CACHE.memoize(expire=CACHE_SECONDS)  # type: ignore
 def get_json_by_user_id(user_id: int) -> Dict[str, Any]:
     """Low level access, returns unprocessed json"""
     return cast(
@@ -128,8 +126,7 @@ def get_json_by_user_id(user_id: int) -> Dict[str, Any]:
 
 
 # /2.2/posts/26344315/revisions?site=stackoverflow
-# @lru_cache(maxsize=1000)
-@_CACHE.memoize(expire=CACHE_SECONDS)
+@_CACHE.memoize(expire=CACHE_SECONDS)  # type: ignore
 def get_json_revisions_by_post_id(post_id: int) -> Dict[str, Any]:
     """
     Low level access, returns unprocessed json
@@ -147,8 +144,7 @@ def get_json_revisions_by_post_id(post_id: int) -> Dict[str, Any]:
     )
 
 
-# @lru_cache(maxsize=1000)
-@_CACHE.memoize(expire=CACHE_SECONDS)
+@_CACHE.memoize(expire=CACHE_SECONDS)  # type: ignore
 def get_json_comments_by_post_id(post_id: int) -> Dict[str, Any]:
     """Low level access, returns unprocessed json"""
     return cast(
@@ -164,8 +160,7 @@ def get_json_comments_by_post_id(post_id: int) -> Dict[str, Any]:
     )
 
 
-# @lru_cache(maxsize=1000)
-@_CACHE.memoize(expire=CACHE_SECONDS)
+@_CACHE.memoize(expire=CACHE_SECONDS)  # type: ignore
 def get_json_related_tags(tag: str) -> Dict[str, Any]:
     """Low level access, returns unprocessed json"""
     return cast(

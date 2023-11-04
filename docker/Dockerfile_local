@@ -7,12 +7,12 @@ ENV MULTIDICT_NO_EXTENSIONS=1
 # RUN apk add --no-cache linux-headers==4.19.36-r0 wget
 ENV PATH="/root/.local/bin:${PATH}"
 RUN python -m pip install --user pipx && python -m pipx ensurepath
-# These two tools conflict or we could combine them in the same venv
+# RUN python3 -m pipx ensurepath
+# isort depends on pylint
 RUN pipx install isort && \
     pipx install pylint
 RUN python -m pip install --no-cache-dir --upgrade pip --quiet \
-    && pip install poetry --no-cache-dir --quiet
-# Github action doesn't build a local package. But we have one on pypi!
-# inexplicable fail with pipenv.
-RUN pipx install "so-pip>=0.2.1"
+    && pip install poetry  --no-cache-dir --quiet
+COPY dist/so_pip-*-py3-none-any.whl /app/
+RUN pip install so_pip-*.whl
 ENTRYPOINT ["so_pip"]

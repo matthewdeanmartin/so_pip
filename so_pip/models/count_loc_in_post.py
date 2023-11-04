@@ -13,7 +13,7 @@ def post_has_code(answer: Dict[str, Any]) -> bool:
     return "<pre><code" in answer["body"] and "</code>" in answer["body"]
 
 
-def count_loc(post: Dict[str, Any]) -> bool:
+def count_loc(post: Dict[str, Any]) -> int:
     """
     Only the <pre><code> blocks. Inline code blocks aren't the
     strongly reusable parts.

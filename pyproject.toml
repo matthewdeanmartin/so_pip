@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "so_pip"
-version = "0.1.31"
+version = "1.0.0"
 description = "Generate packages from Stackoverflow answers"
 authors = ["Matthew Martin <matthewdeanmartin@gmail.com>"]
 keywords = ["packaging", "stackoverflow"]
@@ -39,75 +39,63 @@ documentation ="https://github.com/matthewdeanmartin/so_pip"
 so_pip = 'so_pip.__main__:main'
 
 [tool.poetry.dependencies]
-python = ">=3.6, <4.0"
+python = ">=3.11, <4.0"
 # core functions
-python-dotenv = "*"
-diskcache = "*"
-html2text = "*"
-jinja2 = "*"
-pyrankvote = "*"
+python-dotenv = ">=1.0.0"
+diskcache = ">=5.6.3"
+html2text = ">=2020.1.16"
+jinja2 = ">=3.1.2"
+pyrankvote = ">=2.0.6"
 
 # api
-requests = "*"
-py-stackexchange = "*"
-beautifulsoup4 = "*"
-stackapi = "*"
-search-engine-parser = "*"
+requests = ">=2.31.0"
+py-stackexchange = ">=2.2.7"
+beautifulsoup4 = ">=4.12.2"
+stackapi = ">=0.3.0"
+search-engine-parser = ">=0.6.8"
 
 # py tools
-black = "*"
-pipreqs = "*"
-pyupgrade = "*"
-2to3 = "*"
-pyflakes = "*"
-stdlib-list = "*"
-pip-upgrader = "*"
-pur = "*"
-pypistats = "*"
-pypinfo = "*"
-vermin = "*"
-astroid = "*"
-safety = "*"
+black = ">=23.10.1"
+pipreqs = ">=0.4.13"
+pyupgrade = ">=3.15.0"
+2to3 = ">=1.0"
+pyflakes = ">=3.1.0"
+stdlib-list = ">=0.9.0"
+pip-upgrader = ">=1.4.15"
+pur = ">=7.3.1"
+pypistats = ">=1.5.0"
+pypinfo = ">=21.0.0"
+vermin = ">=1.5.2"
+astroid = ">=3.0.1"
+# must pipx install, conflicts with tox
+# safety = ">=2.3.5"
 
 # Not just py
-nbformat = "*"
-markdown = "*"
-toml = "*"
-slpp-23 = "*"
+nbformat = ">=5.9.2"
+markdown = ">=3.5.1"
+toml = ">=0.10.2"
+slpp-23 = ">=1.1"
 
 # projects split out from so_pip
-random-names = "*"
+random-names = ">=0.2.0"
 whats-that-code = ">=0.1.10"
-navio-builder-win = "^0.1.52"
+
 
 [tool.poetry.dev-dependencies]
-pytest = "==6.0.1"
+pytest = ">=6.0.1"
 pytest-cov = ">=2.10.1"
-pytest-timeout = "*"
-pytest-xdist = ">=2.1.0"
-pip-check = "==2.6"
-pynt = "==0.8.2"
-pynt-contrib = "==0.2.0"
-checksumdir = "==1.1.7"
-requests = "==2.22.0"
-dodgy = "==0.2.1"
-gitchangelog = "==3.0.4"
-liccheck = "==0.4.3"
-psutil = "==5.6.7"
-pebble = "==4.5.0"
-python-dotenv = "==0.11.0"
-gitpython = "*"
-sshtunnel = "*"
-ifaddr = "*"
-vendorize = "*"
-# dotenv-linter = "==0.1.5"
-# colorama = "==0.4.1"
-# click = "==6.7"
-# hypothesis = "*"
+vendorize = ">=0.3.0"
+tox = ">=4.11.3"
+types-requests = "*"
+types-toml = "*"
+types-markdown = "*"
+mypy = ">=1.6.1"
+pre-commit = ">=3.5.0"
+ruff = ">=0.1.3"
 
 [tool.black]
 line-length = 88
-target-version = ['py37']
+target-version = ['py311']
 include = '\.pyi?$'
 exclude = '''
 
@@ -129,8 +117,8 @@ exclude = '''
 )
 '''
 [build-system]
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
 minversion = "6.0"

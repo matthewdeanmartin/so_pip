@@ -151,7 +151,7 @@ If an answer is two blocks, if each starts with a shebang or `import` it likely 
 For example, this probably is meant to be two files
 ```
 import requests
-requests.get("https://google.com")
+requests.get("https://google.com", timeout=10)
 ```
 
 ```

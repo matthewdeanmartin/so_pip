@@ -1,6 +1,7 @@
 """
 Create a code of conduct file
 """
+
 import markdown
 
 from so_pip.make_from_template import load_template

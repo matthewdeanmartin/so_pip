@@ -6,9 +6,9 @@ I personally am registering multiple keys for the same product.
 To run a build
 ```
 git clone https://github.com/matthewdeanmartin/so_pip.git
-pipenv install --dev --skip-lock
+poetry install --with dev
 # todo list pipx installs, e.g. pylint, isort, etc.
-pipenv shell
+poetry shell
 # verify code
 python -m navio package
 # update version number...

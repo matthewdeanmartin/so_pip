@@ -82,7 +82,9 @@ def bind_answer_to_authors(
     return authors
 
 
-def add_authors_from_post(post: Dict[str, Any], authors: Authors, is_answer: bool):
+def add_authors_from_post(
+    post: Dict[str, Any], authors: Authors, is_answer: bool
+) -> None:
     """Add authors from post to Object"""
     # pylint: disable=import-outside-toplevel
     from so_pip.api_clients.stackapi_facade import (
