@@ -1,6 +1,7 @@
 """
 Module wide setup work
 """
+
 import os
 
 from dotenv import load_dotenv

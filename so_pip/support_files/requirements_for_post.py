@@ -7,6 +7,7 @@ Assumes module names match package names. This is not true.
 
 Does not run safety if no modules are successfully guessed.
 """
+
 import logging
 import os
 import subprocess  # nosec

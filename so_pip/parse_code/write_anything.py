@@ -1,6 +1,7 @@
 """
 Comment and write out anything
 """
+
 from typing import List
 
 from so_pip.support_files.generic_code_file import make_generic_code_file

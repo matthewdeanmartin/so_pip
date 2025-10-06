@@ -4,6 +4,7 @@ Scrape twitter & github urls
 https://stackapps.com/questions/7549/
 how-can-i-get-user-links-in-the-api-call-like-twitter-github-and-so-on
 """
+
 from functools import lru_cache
 from typing import Tuple
 

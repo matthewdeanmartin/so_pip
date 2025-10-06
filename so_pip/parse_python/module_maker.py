@@ -4,6 +4,7 @@ Generate all the python related files for a module
 - each post
 - sort imports
 """
+
 import logging
 import os
 from typing import Any, Dict, List, Tuple

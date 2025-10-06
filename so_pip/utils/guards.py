@@ -11,6 +11,7 @@ Hitting the guard requires an extra unit test and provides little
 value to get 100% coverage. (And to hit 90% coverage, you need to
 have 100% coverage on most files)
 """
+
 import logging
 from typing import Any, Dict
 

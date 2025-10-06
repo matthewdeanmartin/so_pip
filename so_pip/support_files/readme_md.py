@@ -1,6 +1,7 @@
 """
 Rehash some fairly non-standardized stuff about the package
 """
+
 from typing import Any, Dict, Optional
 
 import markdown

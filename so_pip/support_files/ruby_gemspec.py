@@ -4,6 +4,7 @@ Ruby support
 TODO: https://guides.rubygems.org/specification-reference/
 - has support for authors and licenses (plural!)
 """
+
 import logging
 from typing import Any, Dict, Optional
 

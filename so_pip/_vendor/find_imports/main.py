@@ -2,6 +2,7 @@
 CC BY-SA 2.5 Daniel G
 https://stackoverflow.com/questions/2572582/return-a-list-of-imported-python-modules-used-in-a-script/2572654#2572654
 """
+
 from importlib.util import find_spec
 from typing import List
 

@@ -3,6 +3,7 @@ Uninstall command.
 
 Tricky if using question id & post id
 """
+
 import os
 import shutil
 

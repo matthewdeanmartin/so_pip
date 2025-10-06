@@ -12,6 +12,7 @@ declaring-multiple-licences-in-a-github-project
 Since other tools only look at LICENSE, I'll put the "principal" one there.
 
 """
+
 import os
 import shutil
 from typing import Any, Dict, List

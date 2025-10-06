@@ -5,6 +5,7 @@ Valid syntax is valid.
 Invalid syntax could still be python
 Invalid syntax could also be something that isn't python at all.
 """
+
 import ast
 import subprocess  # nosec
 from typing import List, Tuple

@@ -1,6 +1,7 @@
 """
 File writing stuff
 """
+
 import html
 from typing import Any, Dict, List
 

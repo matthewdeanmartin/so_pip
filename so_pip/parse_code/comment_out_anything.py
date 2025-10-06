@@ -1,6 +1,7 @@
-""""
+""" "
 Add safe comments symbols to any list of string
 """
+
 import html2text
 from bs4 import BeautifulSoup
 

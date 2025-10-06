@@ -1,6 +1,7 @@
 """
 Abstract model of the package_info I'm extracting from an post.
 """
+
 import collections
 import logging
 from dataclasses import dataclass, field
