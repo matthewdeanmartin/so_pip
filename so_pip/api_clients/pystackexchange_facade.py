@@ -4,6 +4,7 @@ Wrapper around pystackexchange, mostly to cope with bugs without fully vendorizi
 Basic object fetching works fine, but attributes can be missing, or errors thrown
 when attributes aren't as expected.
 """
+
 import os
 
 import stackexchange

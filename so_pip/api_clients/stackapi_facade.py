@@ -1,6 +1,7 @@
 """
 Low level access. Makes no effort to parse results.
 """
+
 import os
 import pickle  # nosec
 from typing import Any, Dict, Tuple, cast
@@ -58,7 +59,7 @@ def get_json_by_advanced_search(
             answers=[1],
             body=[query],
             tagged=[";".join(tagged)],
-            filter="!BHMIb2uw8ZCNzk.BY)VCLpavh_59fq" if minimal else None
+            filter="!BHMIb2uw8ZCNzk.BY)VCLpavh_59fq" if minimal else None,
             # site="stackoverflow"
         ),
     )

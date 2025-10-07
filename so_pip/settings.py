@@ -1,6 +1,7 @@
 """
 Settings, eventually will be docopts
 """
+
 import ast
 
 # do we want this question/post at all?

@@ -1,6 +1,7 @@
 """
 Sett up the whats_that_code call
 """
+
 from typing import List, Optional, Tuple
 
 from whats_that_code.election import guess_language_all_methods

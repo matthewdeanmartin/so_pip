@@ -1,6 +1,7 @@
 """
 Clean up the code
 """
+
 import html2text
 from bs4 import BeautifulSoup
 

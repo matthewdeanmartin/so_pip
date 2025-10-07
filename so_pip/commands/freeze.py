@@ -1,6 +1,7 @@
 """
 List in requirements format.
 """
+
 from so_pip.commands.list_all import list_packages
 from so_pip.utils import guards as guards
 

@@ -1,6 +1,7 @@
 """
 Plain web scraper
 """
+
 import pprint
 from typing import Any
 

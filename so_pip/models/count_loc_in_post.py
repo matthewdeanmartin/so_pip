@@ -3,6 +3,7 @@ Count lines of code with the aim to identify posts with re-usuable code.
 
 Single lines of code or a single inline snippet is more than likely to be noise.
 """
+
 from typing import Any, Dict
 
 from bs4 import BeautifulSoup

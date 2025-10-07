@@ -10,6 +10,7 @@ Also draws inspiration from libraries that attempt to parse AUTHORS files.
 https://www.npmjs.com/package/stringify-author
 https://www.npmjs.com/package/author-regex
 """
+
 import logging
 from collections import defaultdict
 from typing import Any, Collection, DefaultDict, Dict, List, Optional, Sequence, Union

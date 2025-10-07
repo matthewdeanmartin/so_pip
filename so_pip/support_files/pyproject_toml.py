@@ -6,6 +6,7 @@ Supports:
 - list of inferred dependencies
 - list of tags
 """
+
 import logging
 from typing import Any, Dict, Optional
 

@@ -16,6 +16,7 @@ Shell out to run a few commands
 - pypinfo
 - vermin
 """
+
 import logging
 import os
 import shlex

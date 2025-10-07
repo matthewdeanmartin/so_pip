@@ -1,6 +1,7 @@
 """
 Separate model for authors, licenses, maybe changelog
 """
+
 import logging
 import re
 from dataclasses import dataclass, field

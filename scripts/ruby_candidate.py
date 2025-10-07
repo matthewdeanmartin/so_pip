@@ -1,6 +1,7 @@
 """
 Ruby
 """
+
 # @ https://stackoverflow.com/a/12927726/33264
 
 from so_pip.commands.vendorize import import_so_question, import_so_answer

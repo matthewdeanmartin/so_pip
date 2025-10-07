@@ -1,6 +1,7 @@
 """
 SO questions and answers look a lot alike jupyter notebooks.
 """
+
 import html
 import json
 from typing import Any, Dict, List

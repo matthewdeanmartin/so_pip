@@ -5,6 +5,7 @@ Design strategy, follow this format: https://keepachangelog.com/en/1.0.0/
 
 Focus on changes to the question/answers *only*, not who did it.
 """
+
 from datetime import datetime
 from typing import Any, Dict, List
 
@@ -59,9 +60,9 @@ def changelog_for_post(
             version["changes"]["comment"] = added
         else:
             version["changes"]["comment"] = revision.get("comment", "")
-        version[
-            "revision_url"
-        ] = f"https://stackoverflow.com/revisions/{post_id}/{revision_number}"
+        version["revision_url"] = (
+            f"https://stackoverflow.com/revisions/{post_id}/{revision_number}"
+        )
         versions.append(version)
 
     with open(

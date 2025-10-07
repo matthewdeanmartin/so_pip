@@ -3,6 +3,7 @@ Create a setup.py file
 
 DEPRECATED. I MAY DELETE THIS ALTOGETHER.
 """
+
 from typing import Dict, Sequence, Union
 
 from so_pip.make_from_template import load_template

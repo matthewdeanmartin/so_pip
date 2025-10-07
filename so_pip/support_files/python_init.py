@@ -1,6 +1,7 @@
 """
 Generate a python init file
 """
+
 from typing import Any, Dict
 
 from so_pip.make_from_template import load_template

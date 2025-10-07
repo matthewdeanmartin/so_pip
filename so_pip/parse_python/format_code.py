@@ -1,6 +1,7 @@
 """
 Format and save python.
 """
+
 import textwrap
 
 import black

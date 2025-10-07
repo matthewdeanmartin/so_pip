@@ -1,6 +1,7 @@
 """
 Reduce friction of working with subprocess
 """
+
 import logging
 import subprocess  # nosec
 from typing import Dict, List, Optional

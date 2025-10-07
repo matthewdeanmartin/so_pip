@@ -1,6 +1,7 @@
 """
 So much python 2 on stackoverflow
 """
+
 import logging
 import subprocess  # nosec
 import tempfile
